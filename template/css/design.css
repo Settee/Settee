@@ -278,8 +278,8 @@ section .content {
 section.fullwidth {
     margin-left: 0;
 }
-#feed{
-padding-bottom: 4em;
+#feed {
+    padding-bottom: 4em;
 }
 /* Content header */
 
@@ -454,7 +454,7 @@ section article.post .posthead {
     height: 4em;
     margin-bottom: 1em;
     padding: 1em;
-    border-bottom: 0.063em solid #d8d8d8; 
+    border-bottom: 0.063em solid #d8d8d8;
 }
 section article.post .posthead .avatar {
     display: inline-block;
@@ -510,7 +510,7 @@ section article.post .postimage {
     background: #2e2e2e no-repeat center;
     background-size: 100% auto;
     -webkit-background-size: cover;
-    background-size: cover; 
+    background-size: cover;
     border-top: 1px solid #6c6d6f;
     vertical-align: middle;
     overflow: hidden;
@@ -522,7 +522,7 @@ section article.post .postimage a {
     height: 100%;
 }
 section article.post .postimage a:hover {
- /*    background: rgba(00, 00, 00, 0.2);*/
+    /*    background: rgba(00, 00, 00, 0.2);*/
 }
 section article.post .postimage .downarrow {
     position: absolute;
@@ -945,12 +945,26 @@ section#page.error .title .label {
 /* Head */
 
 .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 5000;
+}
+.popup .wrap {
+    position: relative;
+    margin-top: 5em;
+    padding-bottom: 1em;
     background: #f0f0f0;
+    border-radius: 0.3em;
 }
 .popup .title {
     margin-bottom: 1em;
     border-bottom: 0.063em solid #e1e1e1;
     background: #fff;
+    border-radius: 0.3em;
 }
 .popup .title h3 {
     float: left;

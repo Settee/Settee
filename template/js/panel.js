@@ -7,7 +7,7 @@ comments.hide();
 $('section').css("margin-right", "0");
 
 // Show comments
-function showcomment(){
+function showcomment() {
     $('.comments').click(function (e) {
         e.preventDefault();
         if (clickiconcomment == false) {
@@ -18,15 +18,15 @@ function showcomment(){
                 marginRight: "20em"
             }, 500);
 
-            if($('.listcomments ul li.addcomment').length != 0){
+            if ($('.listcomments ul li.addcomment').length != 0) {
                 $('.listcomments ul li.addcomment form')[0].action = $('.listcomments ul li.addcomment form')[0].action + this.id;
                 old = $('.listcomments ul li.addcomment')[0].outerHTML;
             }
             $('.listcomments ul')[0].innerHTML = "";
-            $.getJSON(document.firstElementChild.baseURI.substring(document.domain.length + 7,document.firstElementChild.baseURI.length) + "comments/" + this.id, function(data){
+            $.getJSON(document.firstElementChild.baseURI.substring(document.domain.length + 7, document.firstElementChild.baseURI.length) + "comments/" + this.id, function (data) {
                 var comment;
                 for (var i = 0; i <= data.length - 1; i++) {
-                    var comment = comment + '<li><div class="leftcomment"><div class="avatar"><a href="" title=""><img src="' + data[i].avatar + '" alt="avatar" /></a></div></div><div class="rightcomment"><div class="headcomment"><a href="" title="" class="name">' + data[i].surname +'</a> ' + data[i].date + '</div><div class="contentcomment">' + data[i].post + '</div></div></li>';
+                    var comment = comment + '<li><div class="leftcomment"><div class="avatar"><a href="" title=""><img src="' + data[i].avatar + '" alt="avatar" /></a></div></div><div class="rightcomment"><div class="headcomment"><a href="" title="" class="name">' + data[i].surname + '</a> ' + data[i].date + '</div><div class="contentcomment">' + data[i].post + '</div></div></li>';
                 };
                 $('.listcomments ul')[0].innerHTML = comment + old;
             });
@@ -139,25 +139,25 @@ $('#navhamburger a').click(function (e) {
 });
 
 // Post loader
-$(window).scroll(function(){
+$(window).scroll(function () {
     var end = false;
     var baseurl;
-    if(document.URL.indexOf("profile") != -1){
+    if (document.URL.indexOf("profile") != -1) {
         var url = document.URL.split('/');
         baseurl = "http://" + url[2] + "/" + url[3] + "/";
-    }else{
+    } else {
         baseurl = "";
     }
     console.log(baseurl);
-    if($(window).scrollTop() == $(document).height() - $(window).height()){
+    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
         $.ajax({
             url: baseurl + "post/list/last_id/" + $('article')[$('article').length - 1].id,
-            success: function(html){
-                if(html){
+            success: function (html) {
+                if (html) {
                     $('#feed').append(html);
                     showcomment();
-                }else{
-                    
+                } else {
+
                 }
             }
         });
@@ -166,13 +166,13 @@ $(window).scroll(function(){
 
 
 // Share modalbox
-function share_this(url){
+function share_this(url) {
     window.prompt("Copy to clipboard: Ctrl+C, Enter", url);
 }
 
-if(document.URL.indexOf("#share") != -1){
-    var url = document.URL.substring(0,(document.URL.length - 6));
-    var html = '<div class="popup"><div class="title"><h3>Share this post with this link</h3><div class="closecatmobile"><a href="" title="Close Categories"><img src="/template/images/ico-close.svg" alt="Close Categories"></a></div><div class="clearfloat"></div></div><form><input type="text" value="' + url + '" readonly=""></form><a href="#" onClick="share_this(url);" title="Copy the link" id="copy-button" class="copy">Copy to clipboard</a></div>';
+if (document.URL.indexOf("#share") != -1) {
+    var url = document.URL.substring(0, (document.URL.length - 6));
+    var html = '<div class="popup"><div class="wrap"><div class="title"><h3>Share this post with this link</h3><div class="closecatmobile"><a href="" title="Close Categories"><img src="/template/images/ico-close.svg" alt="Close Categories"></a></div><div class="clearfloat"></div></div><form><input type="text" value="' + url + '" readonly=""></form><a href="#" onClick="share_this(url);" title="Copy the link" id="copy-button" class="copy">Copy to clipboard</a><div class="clearfloat"></div></div></div>';
     var old = $(".content")[0].innerHTML;
     $(".content")[0].innerHTML = html + old;
 }
