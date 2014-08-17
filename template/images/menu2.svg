@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- License Agreement at http://iconmonstr.com/license/ -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   x="0px"
+   y="0px"
+   width="40"
+   height="40"
+   viewBox="0 0 40 40"
+   enable-background="new 0 0 512 512"
+   xml:space="preserve"
+   id="svg3041"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="menu2.svg"><metadata
+     id="metadata3048"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+     id="defs3046" /><sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1280"
+     inkscape:window-height="1003"
+     id="namedview3044"
+     showgrid="false"
+     inkscape:zoom="12.890625"
+     inkscape:cx="22.234813"
+     inkscape:cy="20.715607"
+     inkscape:window-x="1920"
+     inkscape:window-y="56"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg3041" /><path
+     id="menu-7-icon"
+     d="m 12.530218,19.999995 c 0,2.07947 -1.685679,3.76515 -3.765072,3.76515 C 6.68568,23.765145 5,22.079465 5,19.999995 c 0,-2.07946 1.68568,-3.76514 3.765146,-3.76514 2.079393,0 3.765072,1.68568 3.765072,3.76514 z M 20,16.234855 c -2.079466,0 -3.765146,1.68568 -3.765146,3.76514 0,2.07947 1.68568,3.76515 3.765146,3.76515 2.079466,0 3.765146,-1.68568 3.765146,-3.76515 0,-2.07946 -1.68568,-3.76514 -3.765146,-3.76514 z m 11.234854,0 c -2.079393,0 -3.765072,1.68568 -3.765072,3.76514 0,2.07947 1.685679,3.76515 3.765072,3.76515 2.079466,0 3.765146,-1.68568 3.765146,-3.76515 0,-2.07946 -1.68568,-3.76514 -3.765146,-3.76514 z"
+     inkscape:connector-curvature="0"
+     style="fill:#eaa502;fill-opacity:1" /></svg>
