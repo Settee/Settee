@@ -978,12 +978,12 @@ section#page.error .title .label {
 }
 .popup .closecatmobile a {
     display: inherit;
-    width: inherit
-}
-.popup .closecatmobile a img {
-    padding: 0.25em;
-    width: 1.5em;
-    height: 1.5em;
+    width: inherit;
+    padding: 0.1em 0.25em;
+    color: #eaa205;
+    font-size: 3em;
+    font-weight: bold;
+    text-decoration: none;
 }
 /* Input */
 
