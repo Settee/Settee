@@ -126,7 +126,6 @@
 
 	static function article($user=null,$cat=null){
 		$database = new Database;
-		$permalink = '';
 		if($user != null){
 			$posts = $database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_posts as posts, '.CONFIG::PREFIX.'_users as users WHERE users.id=posts.author_id AND users.name="'.$database->secure($user).'" ORDER BY posts.id DESC LIMIT 0,10','query');
 		}else{
@@ -144,6 +143,21 @@
 				}
 				$html .= '<div class="postfooter"><div class="permalink"><a href="'.Dispatcher::base().'post/'.$v->id.'#share" title="Permalink">Permalink</a></div><div class="postinteractions"><ul><li><a id="'.$v->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$v->id.'" title="Like it" class="likes">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
 			}
+		return $html;
+	}
+
+	static function posts($id){
+		$database = new Database;
+		$post = current($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_posts as posts, '.CONFIG::PREFIX.'_users as users WHERE users.id=posts.author_id AND posts.id="'.$database->secure($id).'" LIMIT 1','query'));
+			$me = Template::user($post->author_id);
+			$nb_comment = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_comments WHERE post_id="'.$id.'"','query'));
+			$nb_like = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_likes WHERE post_id="'.$id.'"','query'));
+
+			$html = '<article class="post" id="'.$id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.$me->surname.'</a></div><div class="datecat">'.Template::date($post->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($post->categorie_id)->url.'" title="">'.Template::categorie($post->categorie_id)->name.'</a></div></div></div><div class="posttext">'.nl2br($post->post).'</div>';
+			if($post->image != null){
+				$html .= '<div class="postimage" style="background-image: url('.$post->image.');"><div class="downarrow"></div><a href="" title="Extend"></a></div>';
+			}
+			$html .= '<div class="postfooter"><div class="postinteractions"><ul><li><a id="'.$id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$id.'" title="Like it" class="likes">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
 		return $html;
 	}
 
