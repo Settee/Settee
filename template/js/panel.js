@@ -148,7 +148,6 @@ $(window).scroll(function () {
     } else {
         baseurl = "";
     }
-    console.log(baseurl);
     if ($(window).scrollTop() == $(document).height() - $(window).height()) {
         $.ajax({
             url: baseurl + "post/list/last_id/" + $('article')[$('article').length - 1].id,
@@ -170,12 +169,13 @@ function share_this(url) {
     window.prompt("Copy to clipboard: Ctrl+C, Enter", url);
 }
 
-if (document.URL.indexOf("#share") != -1) {
-    var url = document.URL.substring(0, (document.URL.length - 6));
-    var html = '<div class="popup"><div class="wrap"><div class="title"><h3>Share this post with this link</h3><div class="closecatmobile"><a href="" title="Close Categories">&times;</a></div><div class="clearfloat"></div></div><form><input type="text" value="' + url + '" readonly=""></form><a href="#" onClick="share_this(url);" title="Copy the link" id="copy-button" class="copy">Copy to clipboard</a><div class="clearfloat"></div></div></div>';
+$('.permalink a').click(function(e){
+    e.preventDefault();
+    var url = this.href;
+    var html = '<div class="popup"><div class="wrap"><div class="title"><h3>Share this post with this link</h3><div class="closecatmobile"><a href="" title="Close Categories">&times;</a></div><div class="clearfloat"></div></div><form><input type="text" value="' + url + '" readonly=""></form><a href="#" onClick="share_this(\'' + url + '\');" title="Copy the link" id="copy-button" class="copy">Copy to clipboard</a><div class="clearfloat"></div></div></div>';
     var old = $(".content")[0].innerHTML;
     $(".content")[0].innerHTML = html + old;
-}
+});
 
 // Add image form
 var VIGET = VIGET || {};
