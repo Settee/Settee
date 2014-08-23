@@ -505,14 +505,9 @@ section article.post .posttext {
     font-size: 1.125em;
 }
 section article.post .postimage {
-    height: 30em;
     width: 100%;
-    background: #2e2e2e no-repeat center;
-    background-size: 100% auto;
-    -webkit-background-size: cover;
-    background-size: cover;
+    background: #2e2e2e;
     border-top: 1px solid #6c6d6f;
-    vertical-align: middle;
     overflow: hidden;
     z-index: 1;
 }
@@ -520,9 +515,6 @@ section article.post .postimage a {
     display: block;
     width: 100%;
     height: 100%;
-}
-section article.post .postimage a:hover {
-    /*    background: rgba(00, 00, 00, 0.2);*/
 }
 section article.post .postimage .downarrow {
     position: absolute;
@@ -533,6 +525,11 @@ section article.post .postimage .downarrow {
     background: url(../images/downarrow.png) no-repeat;
     background-size: 20px 13px;
     z-index: 2;
+}
+section article.post .postimage img{
+    width: calc(100% + 0.126em);
+    height: auto;
+    margin-bottom: -0.159em;
 }
 /* Post Footer */
 
