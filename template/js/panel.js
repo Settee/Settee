@@ -169,13 +169,22 @@ function share_this(url) {
     window.prompt("Copy to clipboard: Ctrl+C, Enter", url);
 }
 
-$('.permalink a').click(function(e){
-    e.preventDefault();
-    var url = this.href;
-    var html = '<div class="popup"><div class="wrap"><div class="title"><h3>Share this post with this link</h3><div class="closecatmobile"><a href="" title="Close Categories">&times;</a></div><div class="clearfloat"></div></div><form><input type="text" value="' + url + '" readonly=""></form><a href="#" onClick="share_this(\'' + url + '\');" title="Copy the link" id="copy-button" class="copy">Copy to clipboard</a><div class="clearfloat"></div></div></div>';
-    var old = $(".content")[0].innerHTML;
-    $(".content")[0].innerHTML = html + old;
-});
+function permalink(){
+    $('.permalink a').click(function(e){
+        e.preventDefault();
+        var url = this.href;
+        var html = '<div class="popup"><div class="wrap"><div class="title"><h3>Share this post with this link</h3><div class="closecatmobile"><a href="#" title="Close Categories">&times;</a></div><div class="clearfloat"></div></div><form><input type="text" value="' + url + '" readonly=""></form><a href="#" onClick="share_this(\'' + url + '\');" title="Copy the link" id="copy-button" class="copy">Copy to clipboard</a><div class="clearfloat"></div></div></div>';
+        var old = $(".content")[0].innerHTML;
+        $(".content")[0].innerHTML = html + old;
+
+        $('.popup .closecatmobile a').click(function(e){
+            e.preventDefault();
+            $('.popup').remove();
+        });
+        permalink();
+    });
+}
+permalink();
 
 // Add image form
 var VIGET = VIGET || {};
