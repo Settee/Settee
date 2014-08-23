@@ -575,7 +575,6 @@ section article.post .postfooter .postinteractions a {
     display: inline-block;
     margin-left: 0.5em;
     padding: 0.25em 0.7em;
-    padding-left: 2.5em;
     color: #EAA502;
     font-size: 0.9em;
     text-decoration: none;
@@ -594,9 +593,11 @@ section article.post .postfooter .postinteractions a:hover {
     transition: all 0.3s ease;
 }
 section article.post .postfooter .postinteractions a.comments {
+    padding-left: 2.5em;
     background-image: url(../images/ico-comments.svg);
 }
 section article.post .postfooter .postinteractions a.likes {
+    padding-left: 2.5em;
     background-image: url(../images/ico-likes.svg);
 }
 /* SIGN UP PAGE */
