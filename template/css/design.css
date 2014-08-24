@@ -451,7 +451,7 @@ section article.post {
 /* Post header */
 
 section article.post .posthead {
-    height: 4em;
+    min-height: 4em;
     margin-bottom: 1em;
     padding: 1em;
     border-bottom: 0.063em solid #d8d8d8;
@@ -470,6 +470,7 @@ section article.post .posthead .avatar img {
 }
 section article.post .postinfos {
     display: inline-block;
+    max-width: calc(100% - 5em);
     vertical-align: middle;
     line-height: 1.3em;
 }
