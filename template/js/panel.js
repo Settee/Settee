@@ -6,17 +6,19 @@ comments.hide();
 $('section').css("margin-right", "0");
 
 function url(){
-    var base_url;
+    var base_url    =  document.URL.substring(window.location.protocol.length + 2 + window.location.host.length,document.URL.length);
     if(document.URL.indexOf("post") != -1){
-        var id      = document.URL.split("/").reverse()[0];
-        base_url    =  document.URL.substring(window.location.protocol.length + 2 + window.location.host.length,document.URL.length - id.length - 5);
-    }else{
-        base_url    =  document.URL.substring(window.location.protocol.length + 2 + window.location.host.length,document.URL.length);
+        var id      =   document.URL.split("/").reverse()[0];
+        base_url    =   document.URL.substring(window.location.protocol.length + 2 + window.location.host.length,document.URL.length - id.length - 5);
+    }
+    if(document.URL.indexOf("profile") != -1){
+        var id      =   document.URL.split("/").reverse()[0];
+        base_url    =   document.URL.substring(window.location.protocol.length + 2 + window.location.host.length,document.URL.length - id.length - 8);
     }
 
     return base_url;
 }
-
+console.log(url());
 // Show comments
 function showcomment() {
     $('.comments').click(function (e) {
