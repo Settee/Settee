@@ -137,7 +137,7 @@
 			$nb_comment = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_comments WHERE post_id="'.$v->id.'"','query'));
 			$nb_like = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_likes WHERE post_id="'.$v->id.'"','query'));
 
- 				$html .= '<article class="post" id="'.$v->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.$me->surname.'</a></div><div class="datecat">'.Template::date($v->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($v->categorie_id)->url.'" title="">'.Template::categorie($v->categorie_id)->name.'</a></div></div></div><div class="posttext">'.nl2br(htmlentities($v->post)).'</div>';
+ 				$html .= '<article class="post" id="'.$v->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.htmlentities($me->surname).'</a></div><div class="datecat">'.Template::date($v->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($v->categorie_id)->url.'" title="">'.Template::categorie($v->categorie_id)->name.'</a></div></div></div><div class="posttext">'.nl2br(htmlentities($v->post)).'</div>';
 				if($v->image != null){
 					$html .= '<div class="postimage"><div class="downarrow"></div><a href="" title="Extend"><img src="'.$v->image.'" /></a></div>';
 				}
@@ -153,7 +153,7 @@
 			$nb_comment = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_comments WHERE post_id="'.$id.'"','query'));
 			$nb_like = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_likes WHERE post_id="'.$id.'"','query'));
 
-			$html = '<article class="post" id="'.$id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.$me->surname.'</a></div><div class="datecat">'.Template::date($post->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($post->categorie_id)->url.'" title="">'.Template::categorie($post->categorie_id)->name.'</a></div></div></div><div class="posttext">'.nl2br(htmlentities($post->post)).'</div>';
+			$html = '<article class="post" id="'.$id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.htmlentities($me->surname).'</a></div><div class="datecat">'.Template::date($post->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($post->categorie_id)->url.'" title="">'.Template::categorie($post->categorie_id)->name.'</a></div></div></div><div class="posttext">'.nl2br(htmlentities($post->post)).'</div>';
 			if($post->image != null){
 				$html .= '<div class="postimage"><div class="downarrow"></div><a href="" title="Extend"><img src="'.$post->image.'" /></a></div>';
 			}
