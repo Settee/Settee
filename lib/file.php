@@ -125,20 +125,28 @@
 		 			}
 	 				header('Location: '.Dispatcher::base());
 	 			}elseif($param[1] == 'list' && isset($param[2]) && isset($param[3]) && $param[2] == 'last_id'){
+	 				$exp = explode('_', $param[3]);
+	 				$user = $exp[0];
+	 				$id = $exp[1];
 	 				$html = '';
-	 				if(isset($param[4]) && !empty($param[4])){
-	 					$user = ' AND author_id="'.$database->secure($param[4]).'" ';
+	 				if((isset($param[4]) && !empty($param[4])) ||(isset($user) && !empty($user))){
+	 					if(isset($param[4])){
+	 						$user_id = $param[4];
+	 					}else{
+	 						$user_id = Template::user($user)->id;
+	 					}
+	 					$user = ' AND author_id="'.$database->secure($user_id).'" ';
 	 				}else{
 	 					$user = '';
 	 				}
-	 				$posts = $database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_posts WHERE id < '.$param[3].$user.' ORDER BY id DESC LIMIT 0,10','query');
+	 				$posts = $database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_posts WHERE id < '.$id.$user.' ORDER BY id DESC LIMIT 0,10','query');
 	 				
 	 				foreach($posts as $k => $v){
 	 					$me = Template::user($v->author_id);
 						$nb_comment = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_comments WHERE post_id="'.$v->id.'"','query'));
 						$nb_like = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_likes WHERE post_id="'.$v->id.'"','query'));
 
-		 				$html .= '<article class="post" id="'.$v->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.Template::date($v->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($v->categorie_id)->url.'" title="">'.Template::categorie($v->categorie_id)->name.'</a></div></div></div><div class="posttext">'.nl2br(strip_tags($v->post)).'</div>';
+		 				$html .= '<article class="post" id="'.$me->name.'_'.$v->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.Template::date($v->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($v->categorie_id)->url.'" title="">'.Template::categorie($v->categorie_id)->name.'</a></div></div></div><div class="posttext">'.nl2br(strip_tags($v->post)).'</div>';
 						if($v->image != null){
 							$html .= '<div class="postimage"><div class="downarrow"></div><a href="" title="Extend"><img src="'.$v->image.'" /></a></div>';
 						}

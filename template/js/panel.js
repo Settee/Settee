@@ -18,7 +18,6 @@ function url(){
 
     return base_url;
 }
-console.log(url());
 // Show comments
 function showcomment() {
     $('.comments').click(function (e) {
@@ -151,15 +150,9 @@ $('#navhamburger a').click(function (e) {
 $(window).scroll(function () {
     var end = false;
     var baseurl;
-    if (document.URL.indexOf("profile") != -1) {
-        var url = document.URL.split('/');
-        baseurl = "http://" + url[2] + "/" + url[3] + "/";
-    } else {
-        baseurl = "";
-    }
     if ($(window).scrollTop() == $(document).height() - $(window).height()) {
         $.ajax({
-            url: baseurl + "post/list/last_id/" + $('article')[$('article').length - 1].id,
+            url: url() + "post/list/last_id/" + $('article')[$('article').length - 1].id,
             success: function (html) {
                 if (html) {
                     $('#feed').append(html);
@@ -202,7 +195,6 @@ function post_extras(){
             url: this.href,
             success: function(html) {
                 if(html == "Liked"){
-                    console.log($(postIdLiked));
                     $(postIdLiked).get(0).textContent = Number($(postIdLiked).get(0).textContent) + 1;
                 }
             }
