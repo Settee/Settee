@@ -4,10 +4,6 @@ body {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     background: #f0f0f0;
 }
-html,
-body {
-    height: 100%;
-}
 /* HEADER */
 
 header {
@@ -451,7 +447,7 @@ section article.post {
 /* Post header */
 
 section article.post .posthead {
-    height: 4em;
+    min-height: 4em;
     margin-bottom: 1em;
     padding: 1em;
     border-bottom: 0.063em solid #d8d8d8;
@@ -470,6 +466,7 @@ section article.post .posthead .avatar img {
 }
 section article.post .postinfos {
     display: inline-block;
+    max-width: calc(100% - 5em);
     vertical-align: middle;
     line-height: 1.3em;
 }
@@ -503,6 +500,7 @@ section article.post .posttext {
     color: #6c6760;
     line-height: 1.3em;
     font-size: 1.125em;
+    word-break: break-all;
 }
 section article.post .postimage {
     width: 100%;
@@ -872,6 +870,7 @@ section#page.error .title .label {
 }
 #asideright .postcomments .rightcomment .contentcomment {
     color: #585858;
+    word-break: break-all;
 }
 #asideright .postcomments li.addcomment {
     padding: 1em 0;
