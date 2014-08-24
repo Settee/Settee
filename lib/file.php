@@ -36,6 +36,7 @@
 					}
 				}
 				if(isset($_POST['names']) && !empty($_POST['names'])){
+					$_POST['names'] = htmlspecialchars(strip_tags($_POST['names']));
 					$database->sqlquery('UPDATE '.CONFIG::PREFIX.'_users SET surname = "'.$database->secure($_POST['names']).'" WHERE id="'.Template::me('id').'"');
 				}
 				if(isset($_POST['email']) && !empty($_POST['email'])){
@@ -137,7 +138,7 @@
 						$nb_comment = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_comments WHERE post_id="'.$v->id.'"','query'));
 						$nb_like = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_likes WHERE post_id="'.$v->id.'"','query'));
 
-		 				$html .= '<article class="post" id="'.$v->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.htmlentities($me->surname).'</a></div><div class="datecat">'.Template::date($v->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($v->categorie_id)->url.'" title="">'.Template::categorie($v->categorie_id)->url.'</a></div></div></div><div class="posttext">'.nl2br(htmlentities($v->post)).'</div>';
+		 				$html .= '<article class="post" id="'.$v->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.Template::date($v->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($v->categorie_id)->url.'" title="">'.Template::categorie($v->categorie_id)->url.'</a></div></div></div><div class="posttext">'.nl2br(strip_tags($v->post)).'</div>';
 						if($v->image != null){
 							$html .= '<div class="postimage"><div class="downarrow"></div><a href="" title="Extend"><img src="'.$v->image.'" /></a></div>';
 						}
