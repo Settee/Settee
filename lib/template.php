@@ -127,7 +127,7 @@
 	static function article($user=null,$cat=null){
 		$database = new Database;
 		if($user != null){
-			$posts = $database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_posts as posts, '.CONFIG::PREFIX.'_users as users WHERE users.id=posts.author_id AND users.name="'.$database->secure($user).'" ORDER BY posts.id DESC LIMIT 0,10','query');
+			$posts = $database->sqlquery('SELECT posts.id,posts.date,posts.post,posts.author_id,posts.categorie_id,posts.image,users.name,users.surname,users.email,users.avatar FROM '.CONFIG::PREFIX.'_posts as posts, '.CONFIG::PREFIX.'_users as users WHERE users.id=posts.author_id AND users.name="'.$database->secure($user).'" ORDER BY posts.id DESC LIMIT 0,10','query');
 		}else{
 			$posts = $database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_posts ORDER BY id DESC LIMIT 0,10','query');
 		}
