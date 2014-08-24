@@ -25,8 +25,9 @@
 					$file = $_FILES['avatar'];
 					if($file['type'] == 'image/gif' || $file['type'] == 'image/jpeg' || $file['type'] == 'image/png'){
 						if($file['error'] == '0'){
-							$ext = explode('.', $file['name']);
-							$name = strtolower(Template::me('name')).'.'.$ext[1];
+							$filename = pathinfo($file['name']);
+							$ext = $filename['extension'];
+							$name = strtolower(Template::me('name')).'.'.$ext;
 							move_uploaded_file($file['tmp_name'], ROOT.DS.'images'.DS.'avatar'.DS.$name);
 							$database->sqlquery('UPDATE '.CONFIG::PREFIX.'_users SET avatar = "images/avatar/'.$name.'" WHERE id="'.Template::me('id').'"');
 						}
@@ -98,11 +99,13 @@
 		 					$file = $_FILES['file'];
 							if($file['type'] == 'image/gif' || $file['type'] == 'image/jpeg' || $file['type'] == 'image/png'){
 								if($file['error'] == '0'){
-									$ext = explode('.', $file['name']);
+									$filename = pathinfo($file['name']);
+									$ext = $filename['extension'];
 									$id = current($database->sqlquery('SELECT id FROM '.CONFIG::PREFIX.'_posts WHERE author_id="'.Template::me('id').'" ORDER BY id DESC LIMIT 1','query'));
-									$name = $id->id.'.'.$ext[1];
+									$name = $id->id.'.'.$ext;
 									move_uploaded_file($file['tmp_name'], ROOT.DS.'images'.DS.'post'.DS.$name);
 									$image = Dispatcher::base().'images/post/'.$name;
+
 								}
 							}else{
 									$error = true;
@@ -134,7 +137,7 @@
 						$nb_comment = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_comments WHERE post_id="'.$v->id.'"','query'));
 						$nb_like = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_likes WHERE post_id="'.$v->id.'"','query'));
 
-		 				$html .= '<article class="post" id="'.$v->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.$me->surname.'</a></div><div class="datecat">'.Template::date($v->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($v->categorie_id)->url.'" title="">'.Template::categorie($v->categorie_id)->url.'</a></div></div></div><div class="posttext">'.nl2br($v->post).'</div>';
+		 				$html .= '<article class="post" id="'.$v->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.$me->surname.'</a></div><div class="datecat">'.Template::date($v->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($v->categorie_id)->url.'" title="">'.Template::categorie($v->categorie_id)->url.'</a></div></div></div><div class="posttext">'.nl2br(htmlentities($v->post)).'</div>';
 						if($v->image != null){
 							$html .= '<div class="postimage"><img src="'.$v->image.'" /><div class="downarrow"></div><a href="" title="Extend"></a></div>';
 						}
