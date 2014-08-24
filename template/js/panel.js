@@ -1,5 +1,4 @@
 var comments = $('#asiderightwrap');
-var clickiconcomment = false;
 var old;
 
 // Set default items
@@ -22,44 +21,33 @@ function url(){
 function showcomment() {
     $('.comments').click(function (e) {
         e.preventDefault();
-        if (clickiconcomment == false) {
-            comments.show("slide", {
-                direction: "right"
-            }, 500);
-            $('section').animate({
-                marginRight: "20em"
-            }, 500);
+        comments.show("slide", {
+            direction: "right"
+        }, 500);
+        $('section').animate({
+            marginRight: "20em"
+        }, 500);
 
-            if ($('.listcomments ul li.addcomment').length != 0) {
-                $('.listcomments ul li.addcomment form')[0].action = $('.listcomments ul li.addcomment form')[0].action + this.id;
-                old = $('.listcomments ul li.addcomment')[0].outerHTML;
-            }
-            $('.listcomments ul')[0].innerHTML = "";
-
-            $.ajax({
-                url: url() + "comments/" + this.id,
-                success: function (data) {
-                    if (data) {
-                        var comment;
-                        for (var i = 0; i <= data.length - 1; i++) {
-                            var comment = comment + '<li><div class="leftcomment"><div class="avatar"><a href="" title=""><img src="' + url() + data[i].avatar + '" alt="avatar" /></a></div></div><div class="rightcomment"><div class="headcomment"><a href="" title="" class="name">' + data[i].surname + '</a> ' + data[i].date + '</div><div class="contentcomment">' + data[i].post + '</div></div></li>';
-                        };
-                        $('.listcomments ul')[0].innerHTML = comment + old;
-                    }else{
-
-                    }
-                }
-            });
-            clickiconcomment = true;
-        } else {
-            comments.hide("slide", {
-                direction: "right"
-            }, 500);
-            $('section').animate({
-                marginRight: "0"
-            }, 500);
-            clickiconcomment = false;
+        if ($('.listcomments ul li.addcomment').length != 0) {
+            $('.listcomments ul li.addcomment form')[0].action = $('.listcomments ul li.addcomment form')[0].action + this.id;
+            old = $('.listcomments ul li.addcomment')[0].outerHTML;
         }
+        $('.listcomments ul')[0].innerHTML = "";
+
+        $.ajax({
+            url: url() + "comments/" + this.id,
+            success: function (data) {
+                if (data) {
+                    var comment;
+                    for (var i = 0; i <= data.length - 1; i++) {
+                        var comment = comment + '<li><div class="leftcomment"><div class="avatar"><a href="" title=""><img src="' + url() + data[i].avatar + '" alt="avatar" /></a></div></div><div class="rightcomment"><div class="headcomment"><a href="" title="" class="name">' + data[i].surname + '</a> ' + data[i].date + '</div><div class="contentcomment">' + data[i].post + '</div></div></li>';
+                    };
+                    $('.listcomments ul')[0].innerHTML = comment + old;
+                }else{
+
+                }
+            }
+        });
     });
 }
 showcomment();
@@ -73,7 +61,6 @@ $('.closecomments').click(function (e) {
     $('section').animate({
         marginRight: "0"
     }, 500);
-    clickiconcomment = false;
 });
 
 // Scrollbar custom

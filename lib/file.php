@@ -169,13 +169,21 @@
 							$data[$key]->$k = nl2br(htmlspecialchars(strip_tags(trim($data[$key]->$k,"'"))));
 						}
 						if($k == "surname"){
-							$data[$key]->$k = htmlspecialchars(strip_tags($data[$key]->$k));
+							$data[$key]->$k = strip_tags($data[$key]->$k);
 						}
 					}
 				}
 				echo json_encode($data);
 			}elseif($param == 'post'){
 				if(isset($_POST['comment']) && !empty($_POST['comment']) && isset($url[2]) && !empty($url[2]) && is_numeric($url[2])){
+					$test = $database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_posts WHERE id="'.$url[2].'"','query');
+					if(!empty($test)){
+						$database->sqlquery('INSERT INTO '.CONFIG::PREFIX.'_comments (date,post,user_id,post_id) VALUES("'.date("Y-m-d").'","'.$database->secure($_POST["comment"]).'","'.Template::me("id").'","'.$database->secure($url[2]).'")');
+					}
+				}
+				header('Location: '.Dispatcher::base().'#'.$url[2]);
+			}elseif($param == 'delete'){
+				if(isset($url[2]) && !empty($url[2]) && is_numeric($url[2])){
 					$test = $database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_posts WHERE id="'.$url[2].'"','query');
 					if(!empty($test)){
 						$database->sqlquery('INSERT INTO '.CONFIG::PREFIX.'_comments (date,post,user_id,post_id) VALUES("'.date("Y-m-d").'","'.$database->secure($_POST["comment"]).'","'.Template::me("id").'","'.$database->secure($url[2]).'")');
