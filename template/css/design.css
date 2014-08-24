@@ -874,6 +874,7 @@ section#page.error .title .label {
 }
 #asideright .postcomments .rightcomment .contentcomment {
     color: #585858;
+    word-break: break-all;
 }
 #asideright .postcomments li.addcomment {
     padding: 1em 0;
