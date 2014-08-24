@@ -504,6 +504,7 @@ section article.post .posttext {
     color: #6c6760;
     line-height: 1.3em;
     font-size: 1.125em;
+    word-break: break-all;
 }
 section article.post .postimage {
     width: 100%;
