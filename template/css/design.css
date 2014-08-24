@@ -506,6 +506,7 @@ section article.post .posttext {
 }
 section article.post .postimage {
     width: 100%;
+    text-align: center;
     background: #2e2e2e;
     border-top: 1px solid #6c6d6f;
     overflow: hidden;
@@ -527,8 +528,9 @@ section article.post .postimage .downarrow {
     z-index: 2;
 }
 section article.post .postimage img{
-    width: calc(100% + 0.126em);
+    max-width: calc(100% + 0.126em);
     height: auto;
+    margin: auto;
     margin-bottom: -0.159em;
 }
 /* Post Footer */
