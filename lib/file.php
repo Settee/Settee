@@ -166,7 +166,10 @@
 							$data[$key]->$k = Template::date($data[$key]->$k);
 						}
 						if($k == "post"){
-							$data[$key]->$k = nl2br(htmlentities(trim($data[$key]->$k,"'")));
+							$data[$key]->$k = nl2br(htmlspecialchars(strip_tags(trim($data[$key]->$k,"'"))));
+						}
+						if($k == "surname"){
+							$data[$key]->$k = htmlspecialchars(strip_tags(trim($data[$key]->$k,"'")));
 						}
 					}
 				}
