@@ -141,7 +141,7 @@
 				if($v->image != null){
 					$html .= '<div class="postimage"><div class="downarrow"></div><a href="" title="Extend"><img src="'.$v->image.'" /></a></div>';
 				}
-				$html .= '<div class="postfooter"><div class="permalink"><a href="'.Dispatcher::base().'post/'.$v->id.'" title="Permalink">Permalink</a></div><div class="postinteractions"><ul><li><a href="#" title="Delete this post">Delete</a></li><li><a id="'.$v->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$v->id.'" title="Like it" class="likes">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
+				$html .= '<div class="postfooter"><div class="permalink"><a href="'.Dispatcher::base().'post/'.$v->id.'" title="Permalink">Permalink</a></div><div class="postinteractions"><ul><li><a href="#" title="Delete this post">Delete</a></li><li><a id="'.$v->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$v->id.'" title="Like it" class="likes likes_'.$v->id.'">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
 			}
 		return $html;
 	}
@@ -157,7 +157,7 @@
 			if($post->image != null){
 				$html .= '<div class="postimage"><div class="downarrow"></div><a href="" title="Extend"><img src="'.$post->image.'" /></a></div>';
 			}
-			$html .= '<div class="postfooter"><div class="postinteractions"><ul><li><a id="'.$id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$id.'" title="Like it" class="likes">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
+			$html .= '<div class="postfooter"><div class="postinteractions"><ul><li><a id="'.$id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$id.'" title="Like it" class="likes likes_'.$id.'">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
 		return $html;
 	}
 

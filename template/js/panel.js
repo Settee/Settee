@@ -176,7 +176,7 @@ function share_this(url) {
     window.prompt("Copy to clipboard: Ctrl+C, Enter", url);
 }
 
-function permalink(){
+function post_extras(){
     $('.permalink a').click(function(e){
         e.preventDefault();
         var url = this.href;
@@ -188,10 +188,26 @@ function permalink(){
             e.preventDefault();
             $('.popup').remove();
         });
-        permalink();
+        post_extras();
+    });
+
+    //like button
+    $('.postfooter a.likes').click(function(e){
+        e.preventDefault();
+        var postIdLiked = '.' + this.className.split(' ').join('.');
+        $.ajax({
+            url: this.href,
+            success: function(html) {
+                if(html == "Liked"){
+                    console.log($(postIdLiked));
+                    $(postIdLiked).get(0).textContent = Number($(postIdLiked).get(0).textContent) + 1;
+                }
+            }
+        });
     });
 }
-permalink();
+post_extras();
+
 
 // Add image form
 var VIGET = VIGET || {};

@@ -142,7 +142,7 @@
 						if($v->image != null){
 							$html .= '<div class="postimage"><div class="downarrow"></div><a href="" title="Extend"><img src="'.$v->image.'" /></a></div>';
 						}
-						$html .= '<div class="postfooter"><div class="permalink"><a href="'.Dispatcher::base().'post/'.$v->id.'" title="Permalink">Permalink</a></div><div class="postinteractions"><ul><li><a id="'.$v->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$v->id.'" title="Like it" class="likes">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
+						$html .= '<div class="postfooter"><div class="permalink"><a href="'.Dispatcher::base().'post/'.$v->id.'" title="Permalink">Permalink</a></div><div class="postinteractions"><ul><li><a id="'.$v->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$v->id.'" title="Like it" class="likes likes_'.$v->id.'">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
 					}
 					echo $html;
 	 			}
@@ -182,14 +182,6 @@
 					}
 				}
 				header('Location: '.Dispatcher::base().'#'.$url[2]);
-			}elseif($param == 'delete'){
-				if(isset($url[2]) && !empty($url[2]) && is_numeric($url[2])){
-					$test = $database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_posts WHERE id="'.$url[2].'"','query');
-					if(!empty($test)){
-						$database->sqlquery('INSERT INTO '.CONFIG::PREFIX.'_comments (date,post,user_id,post_id) VALUES("'.date("Y-m-d").'","'.$database->secure($_POST["comment"]).'","'.Template::me("id").'","'.$database->secure($url[2]).'")');
-					}
-				}
-				header('Location: '.Dispatcher::base().'#'.$url[2]);
 			}
 		}
 	}
@@ -201,9 +193,9 @@
 			$test = $database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_likes WHERE post_id="'.$url[1].'" AND user_id="'.Template::me("id").'"','query');
 			if(empty($test)){
 				$database->sqlquery('INSERT INTO '.CONFIG::PREFIX.'_likes (post_id,user_id) VALUES("'.$url[1].'","'.Template::me("id").'")');
+				echo "Liked";
 			}
 		}
-		header('Location: '.Dispatcher::base().'#'.$url[1]);
 	}
 }
 ?>
