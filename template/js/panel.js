@@ -162,6 +162,7 @@ $(window).scroll(function () {
                 if (html) {
                     $('#feed').append(html);
                     showcomment();
+                    post_extras()
                 } else {
 
                 }
