@@ -169,7 +169,7 @@
 							$data[$key]->$k = nl2br(htmlspecialchars(strip_tags(trim($data[$key]->$k,"'"))));
 						}
 						if($k == "surname"){
-							$data[$key]->$k = htmlspecialchars(strip_tags(trim($data[$key]->$k,"'")));
+							$data[$key]->$k = htmlspecialchars(strip_tags($data[$key]->$k));
 						}
 					}
 				}
