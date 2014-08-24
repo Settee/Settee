@@ -881,7 +881,6 @@ section#page.error .title .label {
 }
 #asideright .postcomments li.addcomment .textarea textarea {
     width: 97.5%;
-    height: 1.3em;
     padding: 0.5em 1%;
     line-height: 1.1em;
     font-size: 0.9em;
@@ -890,7 +889,6 @@ section#page.error .title .label {
     border-radius: 0.3em;
 }
 #asideright .postcomments li.addcomment .textarea textarea:focus {
-    height: 6em;
     overflow: auto;
 }
 #asideright .postcomments li.addcomment .buttons {
