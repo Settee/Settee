@@ -28,6 +28,9 @@
 							$filename = pathinfo($file['name']);
 							$ext = $filename['extension'];
 							$name = strtolower(Template::me('name')).'.'.$ext;
+							if(file_exists(ROOT.DS.Template::me('avatar')) && Template::me('avatar') != '/template/images/settee.png'){
+								unlink(ROOT.DS.Template::me('avatar'));
+							}
 							move_uploaded_file($file['tmp_name'], ROOT.DS.'images'.DS.'avatar'.DS.$name);
 							$database->sqlquery('UPDATE '.CONFIG::PREFIX.'_users SET avatar = "images/avatar/'.$name.'" WHERE id="'.Template::me('id').'"');
 						}
