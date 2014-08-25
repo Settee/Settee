@@ -27,7 +27,7 @@ if(isset($var[1]) && !empty($var[1])){
 
                 <div id="feedhead">
                     <div class="title">
-                        <h2><?php echo htmlspecialchars(strip_tags(Template::user(strtolower($param))->surname)); ?>'s posts</h2>
+                        <h2><?php echo strip_tags(Template::user(strtolower($param))->surname); ?>'s posts</h2>
                     </div>
                     <div class="menubutton">
                         <a href="" title="Categories" class="showcatmobile">
