@@ -28,7 +28,7 @@
 							$filename = pathinfo($file['name']);
 							$ext = $filename['extension'];
 							$name = strtolower(Template::me('name')).'.'.$ext;
-							if(file_exists(ROOT.DS.Template::me('avatar')) && Template::me('avatar') != '/template/images/settee.png'){
+							if(file_exists(ROOT.DS.Template::me('avatar')) && Template::me('avatar') != 'template/images/settee.png'){
 								unlink(ROOT.DS.Template::me('avatar'));
 							}
 							move_uploaded_file($file['tmp_name'], ROOT.DS.'images'.DS.'avatar'.DS.$name);
@@ -142,7 +142,8 @@
 	 					$me = Template::user($v->author_id);
 						$nb_comment = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_comments WHERE post_id="'.$v->id.'"','query'));
 						$nb_like = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_likes WHERE post_id="'.$v->id.'"','query'));
-
+						$delete = '';
+						
 		 				$html .= '<article class="post" id="'.$me->name.'_'.$v->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.Template::date($v->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($v->categorie_id)->url.'" title="">'.Template::categorie($v->categorie_id)->name.'</a></div></div></div><div class="posttext">'.nl2br(strip_tags($v->post)).'</div>';
 						if($v->image != null){
 							$html .= '<div class="postimage"><div class="downarrow"></div><a href="" title="Extend"><img src="'.$v->image.'" /></a></div>';

@@ -156,6 +156,7 @@
 			$me = Template::user($post->author_id);
 			$nb_comment = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_comments WHERE post_id="'.$id.'"','query'));
 			$nb_like = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_likes WHERE post_id="'.$id.'"','query'));
+			$delete = '';
 			
 			$html = '<article class="post" id="'.$me->name.'_'.$v->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.Template::date($post->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($post->categorie_id)->url.'" title="">'.Template::categorie($post->categorie_id)->name.'</a></div></div></div><div class="posttext">'.nl2br(strip_tags($post->post)).'</div>';
 			if($post->image != null){
