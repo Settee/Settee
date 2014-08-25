@@ -124,23 +124,17 @@
 		 				$_SESSION['e_out'] = '<div class="m-error"><span>Wrong post</span><div class=".clearfloat"></div></div>';
 		 			}
 	 				header('Location: '.Dispatcher::base());
-	 			}elseif($param[1] == 'list' && isset($param[2]) && isset($param[3]) && $param[2] == 'last_id'){
+	 			}elseif($param[1] == 'list' && isset($param[2]) && isset($param[3]) && !empty($param[3]) && $param[2] == 'last_id'){
 	 				$exp = explode('_', $param[3]);
-	 				$user = $exp[0];
+	 				$users = $exp[0];
 	 				$id = $exp[1];
 	 				$html = '';
-	 				if((isset($param[4]) && !empty($param[4])) ||(isset($user) && !empty($user))){
-	 					if(isset($param[4])){
-	 						$user_id = $param[4];
-	 					}else{
-	 						$user_id = Template::user($user)->id;
-	 					}
-	 					$user = ' AND author_id="'.$database->secure($user_id).'" ';
-	 				}else{
+	 				if(isset($param[4]) && !empty($param[4]) && $param[4] == "home"){
 	 					$user = '';
+	 				}else{
+	 					$user = ' AND author_id="'.$database->secure(Template::user($users)->id).'" ';
 	 				}
 	 				$posts = $database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_posts WHERE id < '.$id.$user.' ORDER BY id DESC LIMIT 0,10','query');
-	 				
 	 				foreach($posts as $k => $v){
 	 					$me = Template::user($v->author_id);
 						$nb_comment = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_comments WHERE post_id="'.$v->id.'"','query'));
@@ -150,9 +144,18 @@
 						if($v->image != null){
 							$html .= '<div class="postimage"><div class="downarrow"></div><a href="" title="Extend"><img src="'.$v->image.'" /></a></div>';
 						}
-						$html .= '<div class="postfooter"><div class="permalink"><a href="'.Dispatcher::base().'post/'.$v->id.'" title="Permalink">Permalink</a></div><div class="postinteractions"><ul><li><a id="'.$v->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$v->id.'" title="Like it" class="likes likes_'.$v->id.'">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
+						if(($v->author_id == Template::me('id')) || Template::me('type') == 'root'){
+							$delete = '<li><a href="'.Dispatcher::base().'post/delete/'.$v->id.'" title="Delete this post" class="delete '.$me->name.'_'.$v->id.'">Delete</a></li>';
+						}
+						$html .= '<div class="postfooter"><div class="permalink"><a href="'.Dispatcher::base().'post/'.$v->id.'" title="Permalink">Permalink</a></div><div class="postinteractions"><ul>'.$delete.'<li><a id="'.$v->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$v->id.'" title="Like it" class="likes likes_'.$v->id.'">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
 					}
 					echo $html;
+	 			}elseif($param[1] == 'delete' && isset($param[2]) && !empty($param[2])){
+	 				$test = $database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_posts WHERE id="'.$param[2].'" AND author_id="'.Template::me("id").'"','query');
+	 				if(!empty($test) || Template::me('type') == 'root'){
+	 					$database->sqlquery('DELETE FROM '.CONFIG::PREFIX.'_posts WHERE id="'.$param[2].'"');
+	 					echo "Deleted";
+	 				}
 	 			}
 	 		}
  		}else{
