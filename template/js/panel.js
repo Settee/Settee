@@ -145,11 +145,10 @@ $('#navhamburger a').click(function (e) {
 // Post loader
 function loadpost(){
     $(window).scroll(function () {
-        var end = false;
         var baseurl;
         var home='';
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-            if(url() == '/'){
+            if(document.URL.indexOf("profile") == -1){
                 home = '/home';
             }
             if(end_scroll == false){
@@ -160,7 +159,6 @@ function loadpost(){
                             $('#feed').append(html);
                             showcomment();
                             post_extras();
-                            console.log();
                         }else{
                             end_scroll=true;
                         }
@@ -209,7 +207,6 @@ function post_extras(){
     $('.postfooter a.delete').click(function(e){
         e.preventDefault();
         var postIdDelete = this.className.split(' ')[1];
-        console.log(postIdDelete);
         $.ajax({
             url: this.href,
             success: function(html) {
