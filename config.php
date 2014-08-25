@@ -1,1 +1,0 @@
-<?php Class Config extends Dispatcher{/* If you don't know PHP and this CMS DON'T TOUCH THIS FILE PLEASE */ const WEBSITE = "Settee Demo";const HOST = "localhost";const USER = "root";const PASSWD = "root";const DB = "settee";const PREFIX = "st";const KEY = "4acab15252d6359023d5c3c8890c9f7de101e598";const PRIVACY = "privateadminvalitation";}?>
