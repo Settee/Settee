@@ -13,7 +13,8 @@ $('section').css("margin-right", "0");
 // FUNCTIONS
 
 function url(){
-    var base_url    =  document.URL.substring(window.location.protocol.length + 2 + window.location.host.length,document.URL.length);
+    var id          =   document.URL.split("/").reverse()[0];
+    var base_url    =   document.URL.substring(window.location.protocol.length + 2 + window.location.host.length,document.URL.length - id.length);
     if(document.URL.indexOf("post") != -1){
         var id      =   document.URL.split("/").reverse()[0];
         base_url    =   document.URL.substring(window.location.protocol.length + 2 + window.location.host.length,document.URL.length - id.length - 5);
