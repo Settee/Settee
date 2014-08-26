@@ -199,6 +199,7 @@ function post_extras(){
             success: function(html) {
                 if(html == "Liked"){
                     $(postIdLiked).get(0).textContent = Number($(postIdLiked).get(0).textContent) + 1;
+                    $(postIdLiked).addClass('active');
                 }
             }
         });

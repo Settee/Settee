@@ -1156,7 +1156,7 @@ section article.post .postfooter .permalink a:hover,
 section article.post .postfooter .postinteractions a:hover,
 section article.post .postfooter .postinteractions a.active,
 #asideright .postcomments li.addcomment .buttons input[type="submit"]:hover,
-#asideright .postcomments li.addcomment .buttons input[type="reset"]:hover {
+#asideright .postcomments li.addcomment .buttons input[type="reset"]:hover{
     background-color: #f9c23c;
 }
 /* MEDIA QUERIES */
