@@ -582,7 +582,8 @@ section article.post .postfooter .postinteractions a {
     -ms-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
-section article.post .postfooter .postinteractions a:hover {
+section article.post .postfooter .postinteractions a:hover,
+section article.post .postfooter .postinteractions a.active{
     color: #fff;
     background: no-repeat 0.7em bottom;
     -webkit-transition: all 0.3s ease;
@@ -1153,6 +1154,7 @@ section #newpost .postfooterleft .uploadfile span.button:hover,
 section #newpost input[type="submit"]:hover,
 section article.post .postfooter .permalink a:hover,
 section article.post .postfooter .postinteractions a:hover,
+section article.post .postfooter .postinteractions a.active,
 #asideright .postcomments li.addcomment .buttons input[type="submit"]:hover,
 #asideright .postcomments li.addcomment .buttons input[type="reset"]:hover {
     background-color: #f9c23c;
