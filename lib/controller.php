@@ -52,7 +52,7 @@
 			$database = new Database;
 			$result = current($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_users WHERE name="'.$database->secure($_POST["login"]).'" AND type IS NOT NULL','query'));
 			if($result){
-				if($_POST['login'] === $result->name && crypt($_POST['passwd'] . Config::KEY, $result->password) === $result->password){
+				if($_POST['login'] == $result->name && crypt($_POST['passwd'] . Config::KEY, $result->password) == $result->password){
 					$date = new DateTime(); $time = $date->getTimestamp();
 					$_SESSION['__key__'] = $time;
 					$_SESSION['user_id'] = $result->id;
@@ -87,7 +87,7 @@
 							header('Location: '.Dispatcher::base());
 						}elseif(Controller::privacy() == '2'){
 							$root = $database->sqlquery('SELECT email FROM '.CONFIG::PREFIX.'_users WHERE type="root"','query');
-							$database->sqlquery('INSERT INTO '.CONFIG::PREFIX.'_users (name,surname,password,email,avatar) VALUES("'.$database->secure($nick).'","'.$database->secure($nick).'","'.$database->secure($pass).'","'.$database->secure($email).'","/template/images/settee.png")');
+							$database->sqlquery('INSERT INTO '.CONFIG::PREFIX.'_users (name,surname,password,email,avatar) VALUES("'.$database->secure($nick).'","'.$database->secure($nick).'","'.$database->secure($pass).'","'.$database->secure($email).'","template/images/settee.png")');
 							foreach ($root as $k => $v) {
 								mail($v->email,CONFIG::WEBSITE.' Registration ask', 'The user '.$nick.' would like going into your settee app','From: contact@netart.fr.nf' . "\r\n" . 'Reply-To: contact@netart.fr.nf' . "\r\n");
 							}

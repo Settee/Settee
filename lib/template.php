@@ -127,21 +127,25 @@
 	static function article($user=null,$cat=null){
 		$database = new Database;
 		if($user != null){
-			$posts = $database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_posts as posts, '.CONFIG::PREFIX.'_users as users WHERE users.id=posts.author_id AND users.name="'.$database->secure($user).'" ORDER BY posts.id DESC LIMIT 0,10','query');
+			$posts = $database->sqlquery('SELECT posts.id,posts.date,posts.post,posts.author_id,posts.categorie_id,posts.image,users.name,users.surname,users.email,users.avatar FROM '.CONFIG::PREFIX.'_posts as posts, '.CONFIG::PREFIX.'_users as users WHERE users.id=posts.author_id AND users.name="'.$database->secure($user).'" ORDER BY posts.id DESC LIMIT 0,10','query');
 		}else{
 			$posts = $database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_posts ORDER BY id DESC LIMIT 0,10','query');
 		}
 		$html = '';
 		foreach($posts as $k => $v){
+			$delete = '';
 			$me = Template::user($v->author_id);
 			$nb_comment = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_comments WHERE post_id="'.$v->id.'"','query'));
 			$nb_like = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_likes WHERE post_id="'.$v->id.'"','query'));
 
- 				$html .= '<article class="post" id="'.$v->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.Template::date($v->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($v->categorie_id)->url.'" title="">'.Template::categorie($v->categorie_id)->name.'</a></div></div></div><div class="posttext">'.nl2br(strip_tags($v->post)).'</div>';
+ 				$html .= '<article class="post" id="'.$me->name.'_'.$v->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.Template::date($v->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($v->categorie_id)->url.'" title="">'.Template::categorie($v->categorie_id)->name.'</a></div></div></div><div class="posttext">'.nl2br(strip_tags($v->post)).'</div>';
 				if($v->image != null){
 					$html .= '<div class="postimage"><div class="downarrow"></div><a href="" title="Extend"><img src="'.$v->image.'" /></a></div>';
 				}
-				$html .= '<div class="postfooter"><div class="permalink"><a href="'.Dispatcher::base().'post/'.$v->id.'" title="Permalink">Permalink</a></div><div class="postinteractions"><ul><li><a href="#" title="Delete this post">Delete</a></li><li><a id="'.$v->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$v->id.'" title="Like it" class="likes">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
+				if(($v->author_id == Template::me('id')) || Template::me('type') == 'root'){
+					$delete = '<li><a href="'.Dispatcher::base().'post/delete/'.$v->id.'" title="Delete this post" class="delete '.$me->name.'_'.$v->id.'">Delete</a></li>';
+				}
+				$html .= '<div class="postfooter"><div class="permalink"><a href="'.Dispatcher::base().'post/'.$v->id.'" title="Permalink">Permalink</a></div><div class="postinteractions"><ul>'.$delete.'<li><a id="'.$v->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$v->id.'" title="Like it" class="likes likes_'.$v->id.'">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
 			}
 		return $html;
 	}
@@ -152,12 +156,16 @@
 			$me = Template::user($post->author_id);
 			$nb_comment = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_comments WHERE post_id="'.$id.'"','query'));
 			$nb_like = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_likes WHERE post_id="'.$id.'"','query'));
-
-			$html = '<article class="post" id="'.$id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.Template::date($post->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($post->categorie_id)->url.'" title="">'.Template::categorie($post->categorie_id)->name.'</a></div></div></div><div class="posttext">'.nl2br(strip_tags($post->post)).'</div>';
+			$delete = '';
+			
+			$html = '<article class="post" id="'.$me->name.'_'.$v->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.Template::date($post->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($post->categorie_id)->url.'" title="">'.Template::categorie($post->categorie_id)->name.'</a></div></div></div><div class="posttext">'.nl2br(strip_tags($post->post)).'</div>';
 			if($post->image != null){
 				$html .= '<div class="postimage"><div class="downarrow"></div><a href="" title="Extend"><img src="'.$post->image.'" /></a></div>';
 			}
-			$html .= '<div class="postfooter"><div class="postinteractions"><ul><li><a id="'.$id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$id.'" title="Like it" class="likes">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
+			if(($post->author_id == Template::me('id')) || Template::me('type') == 'root'){
+					$delete = '<li><a href="'.Dispatcher::base().'post/delete/'.$post->id.'" title="Delete this post" class="delete '.$me->name.'_'.$post->id.'">Delete</a></li>';
+				}
+			$html .= '<div class="postfooter"><div class="postinteractions"><ul>'.$delete.'<li><a id="'.$id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$id.'" title="Like it" class="likes likes_'.$id.'">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
 		return $html;
 	}
 
