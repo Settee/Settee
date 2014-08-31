@@ -837,8 +837,14 @@ section#page.error .title .label {
 }
 /* Post comments */
 
+#asideright .postcomments {
+    background: url(../images/ico-loader.gif) no-repeat scroll center 2em / 2.5em 2.5em transparent;
+}
 #asideright .postcomments li {
     padding: 0.5em 0.8em;
+}
+#asideright .postcomments li > * {
+    background: #fff;
 }
 #asideright .postcomments .leftcomment {
     float: left;
