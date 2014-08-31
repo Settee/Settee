@@ -48,9 +48,9 @@ function showcomment() {
             url: url() + "comments/" + this.id,
             success: function (data) {
                 if (data) {
-                    $('#asideright .postcomments').animate({
-                        background: "none"
-                    }, 500);
+                    $('#asideright .postcomments').css({
+                        background: "#fff"
+                    });
                     var comment;
                     for (var i = 0; i <= data.length - 1; i++) {
                         var comment = comment + '<li><div class="leftcomment"><div class="avatar"><a href="" title=""><img src="' + url() + data[i].avatar + '" alt="avatar" /></a></div></div><div class="rightcomment"><div class="headcomment"><a href="" title="" class="name">' + data[i].surname + '</a> ' + data[i].date + '</div><div class="contentcomment">' + data[i].post + '</div></div></li>';
