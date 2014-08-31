@@ -500,7 +500,7 @@ section article.post .posttext {
     color: #6c6760;
     line-height: 1.3em;
     font-size: 1.125em;
-    word-break: break-all;
+    word-wrap: break-word;
 }
 section article.post .postimage {
     width: 100%;
@@ -525,7 +525,7 @@ section article.post .postimage .downarrow {
     background-size: 20px 13px;
     z-index: 2;
 }
-section article.post .postimage img{
+section article.post .postimage img {
     max-width: calc(100% + 0.126em);
     height: auto;
     margin: auto;
@@ -583,7 +583,7 @@ section article.post .postfooter .postinteractions a {
     transition: all 0.3s ease;
 }
 section article.post .postfooter .postinteractions a:hover,
-section article.post .postfooter .postinteractions a.active{
+section article.post .postfooter .postinteractions a.active {
     color: #fff;
     background: no-repeat 0.7em bottom;
     -webkit-transition: all 0.3s ease;
@@ -871,7 +871,7 @@ section#page.error .title .label {
 }
 #asideright .postcomments .rightcomment .contentcomment {
     color: #585858;
-    word-break: break-all;
+    word-wrap: break-word;
 }
 #asideright .postcomments li.addcomment {
     padding: 1em 0;
@@ -1156,7 +1156,7 @@ section article.post .postfooter .permalink a:hover,
 section article.post .postfooter .postinteractions a:hover,
 section article.post .postfooter .postinteractions a.active,
 #asideright .postcomments li.addcomment .buttons input[type="submit"]:hover,
-#asideright .postcomments li.addcomment .buttons input[type="reset"]:hover{
+#asideright .postcomments li.addcomment .buttons input[type="reset"]:hover {
     background-color: #f9c23c;
 }
 /* MEDIA QUERIES */
