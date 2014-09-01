@@ -58,6 +58,7 @@ if(isset($var[1]) && !empty($var[1])){
                 <div class="postcomments" id="post_42">
                     <div class="listcomments">
                         <ul>
+                            <?php echo Template::comment(); ?>
                         </ul>
                     </div>
                 </div>
