@@ -842,8 +842,6 @@ section#page.error .title .label {
 }
 #asideright .postcomments li {
     padding: 0.5em 0.8em;
-}
-#asideright .postcomments li > * {
     background: #fff;
 }
 #asideright .postcomments .leftcomment {
