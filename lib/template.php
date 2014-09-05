@@ -145,7 +145,7 @@
 				if(($v->author_id == Template::me('id')) || Template::me('type') == 'root'){
 					$delete = '<li><a href="'.Dispatcher::base().'post/delete/'.$v->id.'" title="Delete this post" class="delete '.$me->name.'_'.$v->id.'">Delete</a></li>';
 				}
-				$html .= '<div class="postfooter"><div class="permalink"><a href="'.Dispatcher::base().'post/'.$v->id.'" title="Permalink">Permalink</a></div><div class="postinteractions"><ul>'.$delete.'<li><a id="'.$v->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$v->id.'" title="Like it" class="likes likes_'.$v->id.'">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
+				$html .= '<div class="postfooter"><div class="permalink"><a href="'.Dispatcher::base().'post/'.$v->id.'" title="Permalink">Permalink</a></div><div class="postinteractions"><ul><li><a href="" title="Edit this post">[Dev]Edit</a></li>'.$delete.'<li><a id="'.$v->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$v->id.'" title="Like it" class="likes likes_'.$v->id.'">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
 			}
 		return $html;
 	}
@@ -165,7 +165,7 @@
 			if(($post->author_id == Template::me('id')) || Template::me('type') == 'root'){
 					$delete = '<li><a href="'.Dispatcher::base().'post/delete/'.$post->id.'" title="Delete this post" class="delete '.$me->name.'_'.$post->id.'">Delete</a></li>';
 				}
-			$html .= '<div class="postfooter"><div class="postinteractions"><ul>'.$delete.'<li><a id="'.$id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$id.'" title="Like it" class="likes likes_'.$id.'">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
+			$html .= '<div class="postfooter"><div class="postinteractions"><ul><li><a href="" title="Edit this post">[Dev]Edit</a></li>'.$delete.'<li><a id="'.$id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$id.'" title="Like it" class="likes likes_'.$id.'">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
 		return $html;
 	}
 
