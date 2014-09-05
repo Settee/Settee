@@ -301,7 +301,7 @@ section #newpost {
     box-shadow: 0 1px 1px 0 #e9e9e9;
 }
 section #newpost textarea {
-    width: 98%;
+    width: 98% !important;
     height: 6em;
     padding: 0.5em 1%;
     line-height: 1.1em;
