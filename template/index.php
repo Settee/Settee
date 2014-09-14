@@ -85,6 +85,6 @@
         </div>
     </div>
     <script type="text/javascript" src="<?php echo Template::tmpdir('js'); ?>scrollbar.js"></script>
-    <script type="text/javascript" src="<?php echo Template::tmpdir('js'); ?>panel.js"></script>
+    <script type="text/javascript" src="<?php echo Template::tmpdir('js'); ?>script.js"></script>
 </body>
 </html>
