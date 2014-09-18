@@ -2,7 +2,7 @@
     <div class="container">
         <section id="page" class="fullwidth settings">
             <div class="content">
-                 <?php echo (isset($_SESSION['e_out']) && !empty($_SESSION['e_out'])) ? $_SESSION['e_out'] : ''; unset($_SESSION['e_out']); ?>
+                 <?php echo $this->pages->getNotification(); ?>
                 <div id="feedhead">
                     <div class="title">
                         <h2>Settings</h2>
@@ -19,7 +19,7 @@
                         <form enctype="multipart/form-data" method="post" action="<?php echo Dispatcher::base(); ?>settings/update">
                             <div class="avatarup">
                                 <div class="preview">
-                                    <img src="<?php echo Template::avatar(Template::me("name")); ?>" alt="Avatar preview" />
+                                    <img src="<?php echo $this->pages->getAvatar($this->pages->getInfo("id")); ?>" alt="Avatar preview" />
                                 </div>
                                 <div class="upload">
                                     <label for="upavatar">Avatar:</label>
@@ -28,7 +28,7 @@
                             </div>
 
                             <label for="names">Names:</label>
-                            <input type="text" id="names" name="names" placeholder="<?php echo Template::me('surname') ;?>" />
+                            <input type="text" id="names" name="names" placeholder="<?php echo $this->pages->getInfo('surname') ;?>" />
 
 
 
@@ -38,7 +38,7 @@
                             </div>
 
                             <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" placeholder="<?php echo Template::me('email') ;?>" />
+                            <input type="email" id="email" name="email" placeholder="<?php echo $this->pages->getInfo('email') ;?>" />
 
                             <label for="password">Password:</label>
                             <input type="password" id="password" name="password" placeholder="Change your password" />
@@ -53,7 +53,4 @@
             </div>
         </section>
     </div>
-    <script type="text/javascript" src="<?php Template::tmpdir('js'); ?>/scrollbar.js"></script>
-    <script type="text/javascript" src="<?php Template::tmpdir('js'); ?>/panel.js"></script>
-</body>
-</html>
+ <?php require_once 'footer.php'; ?>

@@ -1,25 +1,21 @@
-<?php 
-$var = explode('/', Dispatcher::whaturl());
-if(isset($var[1]) && !empty($var[1])){
-    $param = $var[1];
-    require_once 'header.php';
-}else{
-    die(Template::theme('404'));
-}?>
+<?php
+require_once 'header.php'; 
+$url = explode('/', Dispatcher::whaturl());
+?>
     <div class="container">
          <aside>
             <div class="sidecontainer">
                 <div id="headercatmobile">
                     <div class="closecatmobile">
                         <a href="" title="Close Categories">
-                            <img src="<?php echo Template::tmpdir('images'); ?>ico-close.svg" alt="Close Categories" />
+                            <img src="<?php echo $this->pages->getStyleDirectory('images'); ?>ico-close.svg" alt="Close Categories" />
                         </a>
                     </div>
                     <div class="clearfloat"></div>
                 </div>
 
                 <h2>Categories</h2>
-                <?php echo Template::categorie('list'); ?>
+                <?php echo $this->posts->getCategories(null,'list'); ?>
             </div>
         </aside>
         <section>
@@ -28,14 +24,13 @@ if(isset($var[1]) && !empty($var[1])){
                 <div id="feedhead">
                     <div class="menubutton">
                         <a href="" title="Categories" class="showcatmobile">
-                            <img src="<?php echo Template::tmpdir('images'); ?>menu2.svg" alt="Categories" />
+                            <img src="<?php echo $this->pages->getStyleDirectory('images'); ?>menu2.svg" alt="Categories" />
                         </a>
                     </div>
                     <div class="clearfloat"></div>
                 </div>
-                <?php echo (isset($_SESSION['e_out']) && !empty($_SESSION['e_out'])) ? $_SESSION['e_out'] : ''; unset($_SESSION['e_out']); ?>
                 <div id="feed">
-                    <?php echo Template::posts($param); ?>
+                    <?php echo $this->posts->getPost($url[1],true); ?>
                 </div>
             </div>
         </section>
@@ -45,7 +40,7 @@ if(isset($var[1]) && !empty($var[1])){
                     <div class="closecomments">
                         <a href="" title="Close comments">
 
-                            <img src="<?php echo Template::tmpdir('images'); ?>ico-close.svg" alt="Close comments" />
+                            <img src="<?php echo $this->pages->getStyleDirectory('images'); ?>ico-close.svg" alt="Close comments" />
                             <span>Close comments</span>
                         </a>
                     </div>
@@ -62,7 +57,4 @@ if(isset($var[1]) && !empty($var[1])){
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="<?php echo Template::tmpdir('js'); ?>scrollbar.js"></script>
-    <script type="text/javascript" src="<?php echo Template::tmpdir('js'); ?>panel.js"></script>
-</body>
-</html>
+ <?php require_once 'footer.php'; ?>

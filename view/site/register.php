@@ -21,5 +21,4 @@
             </div>
         </section>
     </div>
-</body>
-</html>
+ <?php require_once 'footer.php'; ?>

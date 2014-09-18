@@ -105,16 +105,6 @@ if(settee_test_form('website')){
                                     fclose($file);
                                     chmod("../config.php",0700);
 
-                                    if (!file_exists("../images")){
-                                    	mkdir("../images");
-                                    }
-                                    if (!file_exists("../images/avatar")){
-                                    	mkdir("../images/avatar");
-                                    }
-                                    if (!file_exists("../images/post")){
-                                    	mkdir("../images/post");
-                                    }
-
                                     /* DATABASE */
                                     try{
                                         $pdo = new PDO('mysql:host='.$_POST['host'].';dbname='.$_POST['host_db'],$_POST['host_user'],$_POST['host_passwd'],array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));

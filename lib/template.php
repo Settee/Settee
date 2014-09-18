@@ -1,6 +1,6 @@
 <?php Class Template extends File{
 
-	function load($page,$params){
+	function load($page){
 		if(method_exists('File',$page)){
 			call_user_func_array(array('File',$page),array());
 		}else{
@@ -9,53 +9,14 @@
 	}
 
 	function theme($page){
-		if(file_exists(ROOT.DS."template".DS.$page.".php")){
-			if((Controller::privacy() >= '1' && !Controller::isloged()) && (Dispatcher::whaturl() != 'login' && Dispatcher::whaturl() != 'register')){
+		if(file_exists(ROOT.DS."View/site".DS.$page.".php")){
+			if((Controller::privacy() >= '1' && !$this->auth->isLoged()) && (Dispatcher::whaturl() != 'login' && Dispatcher::whaturl() != 'register')){
 				$page = 'private';
 			}
 		}else{
 			$page = '404';
 		}
-		require_once ROOT.DS."template".DS.$page.".php";
-	}
-
-	static function date($date){
-		$d = explode('-', $date);
-
-		$date = array();
-		$date[0] = $d[2];
-		$date[1] = $d[1];
-		$date[2] = $d[0];
-
-		if($date[1] == '01'){$date[1] = 'Janvier';}elseif($date[1] == '02'){$date[1] = 'Février';}elseif($date[1] == '03'){$date[1] = 'Mars';}elseif($date[1] == '04'){$date[1] = 'Avril';}elseif($date[1] == '05'){$date[1] = 'Mai';}elseif($date[1] == '06'){$date[1] = 'Juin';}elseif($date[1] == '07'){$date[1] = 'Juillet';}elseif($date[1] == '08'){$date[1] = 'Août';}elseif($date[1] == '09'){$date[1] = 'Septembre';}elseif($date[1] == '10'){$date[1] = 'Octobre';}elseif($date[1] == '11'){$date[1] = 'Novembre';}elseif($date[1] == '12'){$date[1] = 'Décembre';}
-		return $date[0].' '.$date[1].' '.$date[2];
-	}
-
-	static function headernav(){
-		$headernavonline = '<nav><ul><li><a href="'.Dispatcher::base().'profile/'.Template::me('name').'" title="Profil" class="avatar"><img src="'.Template::avatar(Template::me("name")).'" alt="Profil" /><span>Profil</span></a></li><li><a href="'.Dispatcher::base().'settings" title="Settings" class="settings"><img src="'.Dispatcher::base().'template/images/ico-settings.svg" alt="Settings" /><span>Settings</span></a></li></ul></nav>';
-		$headernavsignin = '<nav><ul id="connections"><li><a href="'.Dispatcher::base().'" title="">Home</a></li><li><a href="'.Dispatcher::base().'register" title="">Register</a></li></ul></nav>';
-		$headernavsignup = '<nav><ul id="connections"><li><a href="'.Dispatcher::base().'" title="">Home</a></li><li><a href="'.Dispatcher::base().'login" title="">Login</a></li></ul></nav>';
-		$headernavoffline = '<nav><ul id="connections"><li><a href="'.Dispatcher::base().'register" title="">Register</a></li><li><a href="'.Dispatcher::base().'login" title="">Login</a></li></ul></nav>';
-		$headernavsettings = '<nav><ul><li><a href="'.Dispatcher::base().'profile/'.Template::me('name').'" title="Profil" class="avatar"><img src="'.Template::avatar(Template::me("name")).'" alt="Profil"></a></li></ul><ul id="connections"><li><a href="'.Dispatcher::base().'logout" title="">Logout</a></li></ul></nav>';
-
-		if(Dispatcher::whaturl() == "register"){
-			echo $headernavsignup;
-		}elseif(Dispatcher::whaturl() == "login"){
-			echo $headernavsignin;
-		}elseif(Dispatcher::whaturl() == "settings" && Controller::isloged() == true){
-			echo $headernavsettings;
-		}elseif(Controller::isloged() == true){
-			echo $headernavonline;
-		}else{
-			echo $headernavoffline;
-		}
-	}
-
-	static function tmpdir($dir){
-		if(isset($dir) && !empty($dir)){
-			$dir .= "/";
-		} 
-		return Dispatcher::base()."template/".$dir;
+		require_once ROOT.DS."View/site".DS.$page.".php";
 	}
 
 	static function categorie($opt){
@@ -85,92 +46,16 @@
 				$end .= "<ul>";
 			}
 
-			if(Template::me('type') == 'root' && $opt == "list"){
+			if($this->pages->getInfo('type') == 'root' && $opt == "list"){
 				$end .= '<div class="addbutton"><a href="" title="">Add more</a></div>';
 			}
 		}
 		return $end;
 	}
 
-	static function me($opt){
-		$database = new Database;
-		if(isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])){
-			return current($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_users WHERE id='.$database->secure($_SESSION["user_id"]),'query'))->$opt;
-		}
-	}
-
-	static function user($id){
-		$database = new Database;
-		if(is_numeric($id)){
-			$res = current($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_users WHERE id="'.$database->secure($id).'"','query'));
-		}else{
-			$res = current($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_users WHERE name="'.$database->secure($id).'"','query'));
-		}
-		return $res;
-	}
-
-	static function avatar($user){
-		$database = new Database;
-		$avatar = current($database->sqlquery('SELECT avatar FROM '.CONFIG::PREFIX.'_users WHERE name="'.$database->secure($user).'"','query'));
-		$return = Dispatcher::base()."template/images/settee.png";
-
-		if(!empty($avatar)){
-			if($avatar->avatar != null){
-				if(file_exists(ROOT.DS.$avatar->avatar)){
-					$return = Dispatcher::base().$avatar->avatar;
-				}
-			}
-		}
-		return $return;
-	}
-
-	static function article($user=null,$cat=null){
-		$database = new Database;
-		if($user != null){
-			$posts = $database->sqlquery('SELECT posts.id,posts.date,posts.post,posts.author_id,posts.categorie_id,posts.image,users.name,users.surname,users.email,users.avatar FROM '.CONFIG::PREFIX.'_posts as posts, '.CONFIG::PREFIX.'_users as users WHERE users.id=posts.author_id AND users.name="'.$database->secure($user).'" ORDER BY posts.id DESC LIMIT 0,10','query');
-		}else{
-			$posts = $database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_posts ORDER BY id DESC LIMIT 0,10','query');
-		}
-		$html = '';
-		foreach($posts as $k => $v){
-			$delete = '';
-			$me = Template::user($v->author_id);
-			$nb_comment = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_comments WHERE post_id="'.$v->id.'"','query'));
-			$nb_like = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_likes WHERE post_id="'.$v->id.'"','query'));
-
- 				$html .= '<article class="post" id="'.$me->name.'_'.$v->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.Template::date($v->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($v->categorie_id)->url.'" title="">'.Template::categorie($v->categorie_id)->name.'</a></div></div></div><div class="posttext">'.nl2br(strip_tags($v->post)).'</div>';
-				if($v->image != null){
-					$html .= '<div class="postimage"><div class="downarrow"></div><a href="" title="Extend"><img src="'.$v->image.'" /></a></div>';
-				}
-				if(($v->author_id == Template::me('id')) || Template::me('type') == 'root'){
-					$delete = '<li><a href="'.Dispatcher::base().'post/delete/'.$v->id.'" title="Delete this post" class="delete '.$me->name.'_'.$v->id.'">Delete</a></li>';
-				}
-				$html .= '<div class="postfooter"><div class="permalink"><a href="'.Dispatcher::base().'post/'.$v->id.'" title="Permalink">Permalink</a></div><div class="postinteractions"><ul><li><a href="" title="Edit this post">[Dev]Edit</a></li>'.$delete.'<li><a id="'.$v->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$v->id.'" title="Like it" class="likes likes_'.$v->id.'">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
-			}
-		return $html;
-	}
-
-	static function posts($id){
-		$database = new Database;
-		$post = current($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_posts as posts, '.CONFIG::PREFIX.'_users as users WHERE users.id=posts.author_id AND posts.id="'.$database->secure($id).'" LIMIT 1','query'));
-			$me = Template::user($post->author_id);
-			$nb_comment = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_comments WHERE post_id="'.$id.'"','query'));
-			$nb_like = count($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_likes WHERE post_id="'.$id.'"','query'));
-			$delete = '';
-			
-			$html = '<article class="post" id="'.$me->name.'_0"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.Template::avatar($me->name).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.Template::date($post->date).' in <a href="'.Dispatcher::base().'cat/'.Template::categorie($post->categorie_id)->url.'" title="">'.Template::categorie($post->categorie_id)->name.'</a></div></div></div><div class="posttext">'.nl2br(strip_tags($post->post)).'</div>';
-			if($post->image != null){
-				$html .= '<div class="postimage"><div class="downarrow"></div><a href="" title="Extend"><img src="'.$post->image.'" /></a></div>';
-			}
-			if(($post->author_id == Template::me('id')) || Template::me('type') == 'root'){
-					$delete = '<li><a href="'.Dispatcher::base().'post/delete/'.$post->id.'" title="Delete this post" class="delete '.$me->name.'_'.$post->id.'">Delete</a></li>';
-				}
-			$html .= '<div class="postfooter"><div class="postinteractions"><ul><li><a href="" title="Edit this post">[Dev]Edit</a></li>'.$delete.'<li><a id="'.$id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li><li><a href="'.Dispatcher::base().'likes/'.$id.'" title="Like it" class="likes likes_'.$id.'">'.$nb_like.'</a></li></ul></div><div class="clearfloat"></div></div></article>';
-		return $html;
-	}
-
-	static function comment(){
-		if(Controller::isloged()){
+	function comment(){
+		print_r($this);
+		if($this->auth->isLoged()){
 			$html = '<li class="addcomment">
                                 <form method="post" action="'.Dispatcher::base().'comments/post/">
                                     <div class="textarea">
