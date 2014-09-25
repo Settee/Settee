@@ -29,12 +29,12 @@
 					
 	 				$html = '<article class="post" id="'.$post->id.'_'.$me->name.'_'.$this->getComments($post->categorie_id,'info')->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.$this->pages->getAvatar($me->id).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.$this->pages->fullDate($post->date).' in <a href="'.Dispatcher::base().'category/'.$this->getComments($post->categorie_id,'info')->url.'" title="">'.$this->getComments($post->categorie_id,'info')->name.'</a></div></div></div><div class="posttext">'.nl2br(strip_tags($post->post)).'</div>';
 					if($post->image != null){
-						$html .= '<div class="postimage"><div class="downarrow"></div><a href="" title="Extend"><img src="'.$post->image.'" /></a></div>';
+						$html .= '<div class="postimage"><div class="downarrow"></div><a href="'.Dispatcher::base().'static/post/big/'.$post->image.'" title="Extend"><img src="'.Dispatcher::base().'static/post/thumbnail/'.$post->image.'" /></a></div>';
 					}
 					if(($post->author_id == $this->pages->getInfo('id')) || $this->pages->getInfo('type') == 'root'){
 						$delete = '<li><a href="'.Dispatcher::base().'post/delete/'.$post->id.'" title="Delete this post" class="delete '.$me->name.'_'.$post->id.'">Delete</a></li>';
 					}
-					$html .= '<div class="postfooter">'.$link.'<div class="postinteractions"><ul><li><a href="'.Dispatcher::base().'editpost" title="Edit this post">Edit</a></li>'.$delete.'<li><a id="'.$post->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li>'.$like_html.'</ul></div><div class="clearfloat"></div></div></article>';
+					$html .= '<div class="postfooter">'.$link.'<div class="postinteractions"><ul><li><a href="'.Dispatcher::base().'editpost/'.$post->id.'" title="Edit this post">Edit</a></li>'.$delete.'<li><a id="'.$post->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li>'.$like_html.'</ul></div><div class="clearfloat"></div></div></article>';
 					
 					echo $html;
 				}else{
@@ -46,8 +46,26 @@
  		}
 	}
 
-	public function addPost(){
-		
+	public function addPost($id,$post,$cat,$image_name=null,$image_tmp=null){
+		$alphabet = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
+		$have_image = (isset($image_name) && isset($image_tmp));
+		if($have_image){
+			$filename = pathinfo($image_name);
+			$ext = $filename['extension'];
+			$name_image = $id.'-';
+			for($i=0; $i < 20; $i++){ 
+				$name_image .= $alphabet[rand(0,25)];
+			}
+			$name_image .= '.'.$ext;
+			$this->addImage($image_tmp,'thumbnail',$name_image);
+			$this->addImage($image_tmp,'post',$name_image);
+		}
+		$database_image = ($have_image)? $name_image : null ;
+		$this->database->sqlquery('INSERT INTO '.CONFIG::PREFIX.'_posts (date,post,author_id,categorie_id,image) VALUES ("'.date('Y-m-d').'","'.$this->database->secure($post).'","'.$id.'","'.$this->database->secure($cat).'","'.$database_image.'")');
+	}
+
+	public function addComment($id,$post,$post_id){
+		$this->database->sqlquery('INSERT INTO '.CONFIG::PREFIX.'_comments (date,post,user_id,post_id) VALUES("'.date("Y-m-d").'","'.$this->database->secure($post).'","'.$id.'","'.$this->database->secure($post_id).'")');
 	}
 
 	public function editPost(){
@@ -61,15 +79,19 @@
 	}
 
 	public function addImage($path,$type,$name){
-		if($type == 'post' || $type == 'avatar'){
+		if($type == 'thumbnail' || $type == 'avatar'){
 			$imagine = new Imagine\Gd\Imagine();
-			$size = new Imagine\Image\Box(240, 240);
-			$mode = Imagine\Image\ImageInterface::THUMBNAIL_OUTBOUND;
+			if($type == 'avatar'){
+				$size = new Imagine\Image\Box(240, 240);
+				$mode = Imagine\Image\ImageInterface::THUMBNAIL_OUTBOUND;
+			}elseif($type == 'thumbnail'){
+				$type = 'post'.DS.'thumbnail';
+				$size = new Imagine\Image\Box(801, 478);
+				$mode = Imagine\Image\ImageInterface::THUMBNAIL_INSET;
+			}
 			$imagine->open($path)->thumbnail($size, $mode)->save(ROOT.DS.'static'.DS.$type.DS.$name);
-			
-			$result = true;
-		}else{
-			$result = false;
+		}elseif($type == 'post' ){
+			move_uploaded_file($path, ROOT.DS.'static'.DS.'post'.DS.'big'.DS.$name);
 		}
 	}
 

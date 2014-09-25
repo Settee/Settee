@@ -7,12 +7,7 @@
 	}
 
 	public function isLoged(){
-		if(isset($_SESSION['__key__']) && !empty($_SESSION['__key__'])){
-			$res = true;
-		}else{
-			$res = false;
-		}
-		return $res;
+		return (isset($_SESSION['__key__']) && !empty($_SESSION['__key__']));
 	}
 
 	public function isValid(){

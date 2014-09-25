@@ -1,6 +1,7 @@
 <?php 
 require_once 'header.php'; 
-$data = $this->posts->getPostInfo('1');
+$param = explode('/', Dispatcher::whaturl());
+$data = $this->posts->getPostInfo($param[1]);
 print_r($data);
 ?>
     <div class="container">
@@ -36,7 +37,7 @@ print_r($data);
                     <div class="leftavatar">
                         <form enctype="multipart/form-data" method="post" action="<?php echo Dispatcher::base(); ?>editpost/">
                             <div class="textarea">
-                                <textarea name="post" id="field1" required="required" placeholder="Write, upload, share…"></textarea>
+                                <textarea name="post" id="field1" required="required" placeholder="Write, upload, share…"><?php echo $data->post; ?></textarea>
                             </div>
                             <div class="addpostfooter">
                                 <div class="postfooterleft">

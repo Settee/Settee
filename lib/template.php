@@ -57,7 +57,7 @@
 		print_r($this);
 		if($this->auth->isLoged()){
 			$html = '<li class="addcomment">
-                                <form method="post" action="'.Dispatcher::base().'comments/post/">
+                                <form method="post" action="'.Dispatcher::base().'addcomment/">
                                     <div class="textarea">
                                         <textarea name="comment" required="required" placeholder="Add your comment…"></textarea>
                                     </div>
