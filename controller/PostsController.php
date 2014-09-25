@@ -32,7 +32,7 @@
 						$html .= '<div class="postimage"><div class="downarrow"></div><a href="'.Dispatcher::base().'static/post/big/'.$post->image.'" title="Extend"><img src="'.Dispatcher::base().'static/post/thumbnail/'.$post->image.'" /></a></div>';
 					}
 					if(($post->author_id == $this->pages->getInfo('id')) || $this->pages->getInfo('type') == 'root'){
-						$delete = '<li><a href="'.Dispatcher::base().'post/delete/'.$post->id.'" title="Delete this post" class="delete '.$me->name.'_'.$post->id.'">Delete</a></li>';
+						$delete = '<li><a href="'.Dispatcher::base().'deletepost/'.$post->id.'" title="Delete this post" class="delete '.$post->id.'_'.$me->name.'_'.$this->getComments($post->categorie_id,'info')->id.'">Delete</a></li>';
 					}
 					$html .= '<div class="postfooter">'.$link.'<div class="postinteractions"><ul><li><a href="'.Dispatcher::base().'editpost/'.$post->id.'" title="Edit this post">Edit</a></li>'.$delete.'<li><a id="'.$post->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li>'.$like_html.'</ul></div><div class="clearfloat"></div></div></article>';
 					
@@ -68,8 +68,27 @@
 		$this->database->sqlquery('INSERT INTO '.CONFIG::PREFIX.'_comments (date,post,user_id,post_id) VALUES("'.date("Y-m-d").'","'.$this->database->secure($post).'","'.$id.'","'.$this->database->secure($post_id).'")');
 	}
 
-	public function editPost(){
-
+	public function editPost($id,$user_id,$post,$cat,$image_name=null,$image_tmp=null){
+		$alphabet = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
+		$have_image = (isset($image_name) && isset($image_tmp));
+		$last_image = $this->getPostInfo($id)->image;
+		if($have_image){
+			if(isset($last_image) && !empty($last_image)){
+				unlink(ROOT.DS.'static'.DS.'post'.DS.'thumbnail'.DS.$last_image);
+				unlink(ROOT.DS.'static'.DS.'post'.DS.'big'.DS.$last_image);
+			}
+			$filename = pathinfo($image_name);
+			$ext = $filename['extension'];
+			$name_image = $user_id.'-';
+			for($i=0; $i < 20; $i++){ 
+				$name_image .= $alphabet[rand(0,25)];
+			}
+			$name_image .= '.'.$ext;
+			$this->addImage($image_tmp,'thumbnail',$name_image);
+			$this->addImage($image_tmp,'post',$name_image);
+		}
+		$database_image = ($have_image)? $name_image : $last_image ;
+		$this->database->sqlquery('UPDATE  '.CONFIG::PREFIX.'_posts  SET post="'.$this->database->secure($post).'" ,  categorie_id="'.$this->database->secure($cat).'" ,  image="'.$database_image.'" WHERE id="'.$id.'"');
 	}
 
 	public function getPostInfo($id){
@@ -144,7 +163,7 @@
 	public function getComments($id,$type){
 		if($this->auth->isLoged() || Controller::privacy() == '0'){
 			if($type == 'list'){
-				$data = $this->database->sqlquery('SELECT comments.date,comments.post,users.surname,users.avatar,users.id FROM '.CONFIG::PREFIX.'_comments AS comments,'.CONFIG::PREFIX.'_users AS users WHERE comments.post_id='.$id.' AND comments.user_id=users.id ORDER BY comments.date ASC','query');
+				$data = $this->database->sqlquery('SELECT comments.date,comments.post,users.surname,users.avatar,users.id FROM '.CONFIG::PREFIX.'_comments AS comments,'.CONFIG::PREFIX.'_users AS users WHERE comments.post_id='.$id.' AND comments.user_id=users.id ORDER BY comments.id DESC','query');
 				foreach ($data as $key => $value) {
 					foreach ($data[$key] as $k => $v){
 						if($k == "date"){
@@ -164,40 +183,36 @@
 				return json_encode($data);
 			}elseif($type == 'info'){
 				return current($this->database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_categorie WHERE id="'.$this->database->secure($id).'"','query'));
-			}elseif($param == 'post'){
-				if(isset($_POST['comment']) && !empty($_POST['comment']) && isset($url[2]) && !empty($url[2]) && is_numeric($url[2])){
-					$test = $this->database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_posts WHERE id="'.$url[2].'"','query');
-					if(!empty($test)){
-						$this->database->sqlquery('INSERT INTO '.CONFIG::PREFIX.'_comments (date,post,user_id,post_id) VALUES("'.date("Y-m-d").'","'.$this->database->secure($_POST["comment"]).'","'.Template::me("id").'","'.$this->database->secure($url[2]).'")');
-					}
-				}
-				header('Location: '.Dispatcher::base().'#'.$url[2]);
 			}
 		}
 	}
 
-	public function getCategories($opt,$type){
+	public function getCategories($opt,$type,$active=null){
 		if(is_numeric($opt)){
 			$end = current($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_categorie WHERE id="'.$database->secure($opt).'"','query'));
 		}elseif($type == 'list' || $type == 'post'){
 			if($type == "post"){
-				$end = "<select name=\"categories\">\n";
+				$end = '<select name="categories">';
 			}elseif($type == "list"){
-				$end = "<ul>\n";
+				$end = '<ul>';
 			}
 
 			foreach ($this->database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_categorie','query') as $k => $v) {
 				if($type == "post"){
-					$end .= "<option value=\"$v->id\">$v->name</option>\n";
+					if($active == $v->id){
+						$end .= '<option value="'.$v->id.'" selected="selected">'.$v->name.'</option>';
+					}else{
+						$end .= '<option value="'.$v->id.'">'.$v->name.'</option>';
+					}
 				}elseif($type == "list"){
-					$end .= "<li><a href=\"".Dispatcher::base()."category/$v->url\">$v->name</a></li>\n";
+					$end .= '<li><a href="'.Dispatcher::base().'category/'.$v->url.'">'.$v->name.'</a></li>';
 				}
 			}
 			
 			if($type == "post"){
-				$end .= "</select>";
+				$end .= '</select>';
 			}elseif($type == "list"){
-				$end .= "<ul>";
+				$end .= '<ul>';
 			}
 
 			if($type == "list" && $this->pages->getInfo('type') == "root"){

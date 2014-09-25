@@ -35,14 +35,14 @@ print_r($data);
                 <?php echo $this->pages->getNotification(); ?>
                 <div id="newpost">
                     <div class="leftavatar">
-                        <form enctype="multipart/form-data" method="post" action="<?php echo Dispatcher::base(); ?>editpost/">
+                        <form enctype="multipart/form-data" method="post" action="<?php echo Dispatcher::base(); ?>editpost/<?php echo $data->id;?>">
                             <div class="textarea">
                                 <textarea name="post" id="field1" required="required" placeholder="Write, upload, share…"><?php echo $data->post; ?></textarea>
                             </div>
                             <div class="addpostfooter">
                                 <div class="postfooterleft">
                                     <div class="selectcat">
-                                        <?php echo $this->posts->getCategories(null,'post'); ?>
+                                        <?php echo $this->posts->getCategories(null,'post',$data->categorie_id); ?>
                                     </div>
                                     <div class="uploadfile">
                                         <input type="file" accept="image/*" name="file" title="Add a image">

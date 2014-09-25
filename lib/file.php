@@ -29,16 +29,15 @@
 			if(isset($_POST) && !empty($_POST)){
 				$image_file = $_FILES['file'];
 				$image = (isset($image_file) && !empty($image_file) && !empty($image_file['name']) && !empty($image_file['type']) && !empty($image_file['tmp_name']));
-				//echo ($image)? 'OUI' : 'NON' ;
 				if($image){
 					if($image_file['error'] == '0'){
-						print_r($this->posts->addpost($this->pages->getInfo('id'),$_POST['post'],$_POST['categories'],$image_file['name'],$image_file['tmp_name']));
+						$this->posts->addpost($this->pages->getInfo('id'),$_POST['post'],$_POST['categories'],$image_file['name'],$image_file['tmp_name']);
 						$this->pages->setNotification('Post Added','info');
 					}else{
 						$this->pages->setNotification('Upload Fail','error');
 					}
 				}else{
-					print_r($this->posts->addpost($this->pages->getInfo('id'),$_POST['post'],$_POST['categories']));
+					$this->posts->addpost($this->pages->getInfo('id'),$_POST['post'],$_POST['categories']);
 					$this->pages->setNotification('Post Added','info');
 				}
 			}
@@ -70,11 +69,43 @@
 		if($this->auth->isLoged()){
 			$param = explode('/', Dispatcher::whaturl());
 			if($this->posts->getPostInfo($param[1])->author_id == $this->pages->getInfo('id')){
+				if(isset($_POST) && !empty($_POST)){
+					$url = explode('/', Dispatcher::whaturl());
+					$image_file = $_FILES['file'];
+					$image = (isset($image_file) && !empty($image_file) && !empty($image_file['name']) && !empty($image_file['type']) && !empty($image_file['tmp_name']));
+					if($image){
+						if($image_file['error'] == '0'){
+							$this->posts->editpost($url[1],$this->pages->getInfo('id'),$_POST['post'],$_POST['categories'],$image_file['name'],$image_file['tmp_name']);
+							$this->pages->setNotification('Post Edited','info');
+						}else{
+							$this->pages->setNotification('Upload Fail','error');
+						}
+					}else{
+						$this->posts->editpost($url[1],$this->pages->getInfo('id'),$_POST['post'],$_POST['categories']);
+						$this->pages->setNotification('Post Edited','info');
+					}
+					header('Location: '.Dispatcher::base());
+				}
 				Template::theme('edit');
 			}else{
 				Template::theme('404');
 			}
 		}else{
+			Template::theme($this->auth->login());
+		}
+	}
+
+	function deletepost(){
+		if($this->auth->isLoged()){
+			$param = explode('/', Dispatcher::whaturl());
+			if(isset($param[1]) && !empty($param[1])){
+ 				$test = $this->database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_posts WHERE id="'.$this->database->secure($param[1]).'" AND author_id="'.$this->pages->getInfo("id").'"','query');
+ 				if(!empty($test) || $this->pages->getInfo('type') == 'root'){
+ 					$this->database->sqlquery('DELETE FROM '.CONFIG::PREFIX.'_posts WHERE id="'.$this->database->secure($param[1]).'"');
+ 					echo "Deleted";
+ 				}
+ 			}
+ 		}else{
 			Template::theme($this->auth->login());
 		}
 	}

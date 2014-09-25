@@ -217,11 +217,13 @@ function post_extras(){
                 if(html == "Liked"){
                     $(postIdLiked).get(0).textContent = Number($(postIdLiked).get(0).textContent) + 1;
                     $(postIdLiked).get(0).href = url() + 'dislike/' + postId;
+                    $(postIdLiked).get(0).title = 'Dislike it';
                     $(postIdLiked).addClass('active');
                 }else{
                     if(html == "Disliked"){
                         $(postIdLiked).get(0).textContent = Number($(postIdLiked).get(0).textContent) - 1;
                         $(postIdLiked).get(0).href = url() + 'like/' + postId;
+                        $(postIdLiked).get(0).title = 'Like it';
                         $(postIdLiked).removeClass('active');
                     }
                 }
@@ -233,9 +235,11 @@ function post_extras(){
     $('.postfooter a.delete').click(function(e){
         e.preventDefault();
         var postIdDelete = this.className.split(' ')[1];
+        console.log(this);
         $.ajax({
             url: this.href,
             success: function(html) {
+                console.log($('article#' + postIdDelete).fadeOut());
                 if(html == "Deleted"){
                     $('article#' + postIdDelete).fadeOut();
                 }
