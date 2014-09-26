@@ -166,8 +166,12 @@
 	}
 
 	function comments(){
-		$url = explode('/', Dispatcher::whaturl());
-		echo $this->posts->getComments($url[1],'list');
+		if($this->auth->isLoged()){
+			$url = explode('/', Dispatcher::whaturl());
+			echo $this->posts->getComments($url[1],'list');
+ 		}else{
+ 			Template::theme($this->auth->register());
+ 		}
 	}
 
 	function register(){
@@ -179,19 +183,27 @@
 	}
 
 	function post(){
-		$url = explode('/', Dispatcher::whaturl());
-		$pattern = explode('_',$url[2]);
-		if($url[1] == 'home'){
-			echo $this->posts->getAllPosts($pattern[0]);
-		}elseif($url[1] == 'category'){
-			echo $this->posts->getCategoryPosts($pattern[0],$pattern[2]);
-		}elseif($url[1] == 'profile'){
-			echo $this->posts->getProfilePosts($pattern[0],$pattern[1]);
-		}
+		if($this->auth->isLoged()){
+			$url = explode('/', Dispatcher::whaturl());
+			$pattern = explode('_',$url[2]);
+			if($url[1] == 'home'){
+				echo $this->posts->getAllPosts($pattern[0]);
+			}elseif($url[1] == 'category'){
+				echo $this->posts->getCategoryPosts($pattern[0],$pattern[2]);
+			}elseif($url[1] == 'profile'){
+				echo $this->posts->getProfilePosts($pattern[0],$pattern[1]);
+			}
+ 		}else{
+ 			Template::theme($this->auth->register());
+ 		}
 	}
 
 	function share(){
-		Template::theme('post');
+		if($this->auth->isLoged()){
+			Template::theme('post');
+ 		}else{
+ 			Template::theme($this->auth->register());
+ 		}
 	}
 
 	function profile(){

@@ -27,7 +27,7 @@
 						$link = '<div class="permalink"><a href="'.Dispatcher::base().'share/'.$post->id.'" title="Permalink">Permalink</a></div>';
 					}
 					
-	 				$html = '<article class="post" id="'.$post->id.'_'.$me->name.'_'.$this->getComments($post->categorie_id,'info')->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.$this->pages->getAvatar($me->id).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.$this->pages->fullDate($post->date).' in <a href="'.Dispatcher::base().'category/'.$this->getComments($post->categorie_id,'info')->url.'" title="">'.$this->getComments($post->categorie_id,'info')->name.'</a></div></div></div><div class="posttext">'.nl2br(strip_tags($post->post)).'</div>';
+	 				$html = '<article class="post" id="'.$post->id.'_'.$me->name.'_'.$this->getComments($post->categorie_id,'info')->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.$this->pages->getAvatar($me->id).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.$this->pages->fullDate($post->date).' in <a href="'.Dispatcher::base().'category/'.$this->getComments($post->categorie_id,'info')->url.'" title="">'.$this->getComments($post->categorie_id,'info')->name.'</a></div></div></div><div class="posttext">'.$this->convertUrl(nl2br(strip_tags($post->post))).'</div>';
 					if($post->image != null){
 						$html .= '<div class="postimage"><div class="downarrow"></div><a href="'.Dispatcher::base().'static/post/big/'.$post->image.'" title="Extend"><img src="'.Dispatcher::base().'static/post/thumbnail/'.$post->image.'" /></a></div>';
 					}
@@ -220,6 +220,18 @@
 			}
 		}
 		return $end;
+	}
+
+	public function convertUrl($data){
+		$word = explode(' ', $data);
+		$pattern = '/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/';
+		foreach($word as $k => $v){
+			preg_match($pattern, $v, $matches);
+			if(isset($matches[0])){
+				$data = str_replace($matches[0],'<a target="_blank" href="'.$matches[0].'">'.$matches[0].'</a>', $data);
+			}
+		}
+		return $data;
 	}
 
 }
