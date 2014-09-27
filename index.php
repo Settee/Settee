@@ -2,9 +2,6 @@
 if(!file_exists('config.php')){
 	header('Location: install/');
 }
-if (!extension_loaded('Phar')) {
-	echo "Phar lib is not installed !";
-} 
 
 define('ROOT', dirname(__FILE__));
 define('DS', DIRECTORY_SEPARATOR);

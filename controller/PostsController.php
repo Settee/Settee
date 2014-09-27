@@ -227,7 +227,7 @@
 
 	public function convertUrl($data){
 		$word = explode(' ', $data);
-		$pattern = '/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/';
+		$pattern = '/(https?:\/\/)([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/';
 		foreach($word as $k => $v){
 			preg_match($pattern, $v, $matches);
 			if(isset($matches[0])){
