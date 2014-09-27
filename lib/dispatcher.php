@@ -2,7 +2,7 @@
 	
 	public $database,$auth,$pages,$posts;
 	
-	function __construct(){
+	public function __construct(){
 		$this->database = new Database;
 		$this->auth = new AuthController;
 		$this->pages = new PagesController;

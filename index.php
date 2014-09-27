@@ -2,16 +2,31 @@
 if(!file_exists('config.php')){
 	header('Location: install/');
 }
+if (!extension_loaded('Phar')) {
+	echo "Phar lib is not installed !";
+} 
 
 define('ROOT', dirname(__FILE__));
 define('DS', DIRECTORY_SEPARATOR);
 
 session_start();
 date_default_timezone_set('Europe/Paris');
-iconv_set_encoding("internal_encoding", "UTF-8");
 header('Content-type: text/html; charset=utf-8');
 
-require_once 'lib/imagine.phar';
+require_once 'lib/imagine/Exception/Exception.php';
+require_once 'lib/imagine/Exception/RuntimeException.php';
+require_once 'lib/imagine/Exception/InvalidArgumentException.php';
+require_once 'lib/imagine/Image/ManipulatorInterface.php';
+require_once 'lib/imagine/Image/ImageInterface.php';
+require_once 'lib/imagine/Image/ImagineInterface.php';
+require_once 'lib/imagine/Image/BoxInterface.php';
+require_once 'lib/imagine/Image/Color.php';
+require_once 'lib/imagine/Image/Box.php';
+require_once 'lib/imagine/Image/PointInterface.php';
+require_once 'lib/imagine/Image/Point.php';
+require_once 'lib/imagine/Gd/Image.php';
+require_once 'lib/imagine/Gd/Imagine.php';
+
 require_once 'lib/controller.php';
 require_once 'controller/AuthController.php';
 require_once 'controller/PagesController.php';

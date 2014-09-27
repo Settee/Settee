@@ -17,7 +17,7 @@
 					$nb_comment = count($this->database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_comments WHERE post_id="'.$post->id.'"','query'));
 					$like = $this->database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_likes WHERE post_id="'.$post->id.'"','query');
 					$like_html = '<li><a href="'.Dispatcher::base().'like/'.$post->id.'" title="Like it" class="likes likes_'.$post->id.'">'.count($like).'</a></li>';
-					$delete = '';$link = '';
+					$delete = '';$link = '';$edit = '';
 					foreach($like as $k => $v) {
 						if($v->user_id == $this->pages->getInfo('id')){
 							$like_html = '<li><a href="'.Dispatcher::base().'dislike/'.$post->id.'" title="Dislike it" class="likes active likes_'.$post->id.'">'.count($like).'</a></li>';
@@ -34,7 +34,10 @@
 					if(($post->author_id == $this->pages->getInfo('id')) || $this->pages->getInfo('type') == 'root'){
 						$delete = '<li><a href="'.Dispatcher::base().'deletepost/'.$post->id.'" title="Delete this post" class="delete '.$post->id.'_'.$me->name.'_'.$this->getComments($post->categorie_id,'info')->id.'">Delete</a></li>';
 					}
-					$html .= '<div class="postfooter">'.$link.'<div class="postinteractions"><ul><li><a href="'.Dispatcher::base().'editpost/'.$post->id.'" title="Edit this post">Edit</a></li>'.$delete.'<li><a id="'.$post->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li>'.$like_html.'</ul></div><div class="clearfloat"></div></div></article>';
+					if($post->author_id == $this->pages->getInfo('id')){
+						$edit = '<li><a href="'.Dispatcher::base().'editpost/'.$post->id.'" title="Edit this post">Edit</a></li>';
+					}
+					$html .= '<div class="postfooter">'.$link.'<div class="postinteractions"><ul>'.$edit.$delete.'<li><a id="'.$post->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li>'.$like_html.'</ul></div><div class="clearfloat"></div></div></article>';
 					
 					echo $html;
 				}else{
