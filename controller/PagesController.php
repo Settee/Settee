@@ -24,7 +24,8 @@
 
 	public function fullDate($date){
 		$d = explode('-', $date);
-		return $d[2].' '.PagesController::$month[trim($d[1],'0')].' '.$d[0]; 
+		$month = ($d[1] < 10)? trim($d[1],0) : $d[1];
+		return $d[2].' '.PagesController::$month[$month].' '.$d[0]; 
 	}
 
 	public function getStyleDirectory($dir){
