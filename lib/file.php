@@ -8,6 +8,14 @@
 		}
 	}
 
+	function addpostform(){
+		if($this->auth->isLoged()){
+			Template::theme('add');
+		}else{
+			Template::theme($this->auth->login());
+		}
+	}
+
 	function login(){
 		if($this->auth->isLoged()){
 			header('Location: '.Dispatcher::base());

@@ -1,25 +1,24 @@
 <?php require_once 'header.php'; ?>
-    <div class="container">
-        <section id="signpage" class="fullwidth">
+    <section id="signpage">
             <div class="content">
-
-                <div class="title">
+                <div id="pagehead">
                     <h2>Login</h2>
                 </div>
-
-                <div class="contentform">
-                    <form method="post" action="<?php echo Dispatcher::base(); ?>login">
-                        <input name="login" type="text" placeholder="Username" required="required" />
-                        <input name="passwd" type="password" title="" placeholder="Password" required="required" />
-                        <?php echo (isset($_SESSION['e_out']) && !empty($_SESSION['e_out'])) ? $_SESSION['e_out'] : ''; unset($_SESSION['e_out']); ?>
-                        <div class=".clearfloat"></div>
-                        <input type="submit" value="Login" />
-                    </form>
-                    <div class="signfooter">
-                        <p>Not Member? <b><a href="<?php echo Dispatcher::base(); ?>register" title="Register">Register</a></b></p>
+                <div class="pagecontent">
+                    <div class="content">
+                        <div class="contentform">
+                            <form method="post" action="<?php echo Dispatcher::base(); ?>login">
+                                <input type="text" placeholder="Username" name="login" required="required" />
+                                <input type="password" title="" placeholder="Password" name="passwd" required="required" />
+                                    <?php echo $this->posts->getNotification();?>
+                                <input type="submit" value="Sign in" />
+                            </form>
+                            <div class="signfooter">
+                                <p>Not Member? <b><a href="<?php echo Dispatcher::base(); ?>register" title="Register">Register</a></b>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
         </section>
-    </div>
  <?php require_once 'footer.php'; ?>

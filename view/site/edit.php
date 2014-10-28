@@ -2,7 +2,6 @@
 require_once 'header.php'; 
 $param = explode('/', Dispatcher::whaturl());
 $data = $this->posts->getPostInfo($param[1]);
-print_r($data);
 ?>
     <div class="container">
          <aside>

@@ -1,287 +1,53 @@
-var nav = $('nav');
-var clickiconnav = false;
-var comments = $('#asiderightwrap');
-var old;
-var aside = $('aside');
-var clickiconaside = false;
-var end_scroll = false;
+$(document).ready(function() {
 
-// Set default items
-comments.hide();
-$('section').css("margin-right", "0");
+    /* FUNCTION DELETE POST */
+    var idPostDeleteValidation;
+    var urlPostDeleteValidation;
 
-// FUNCTIONS
-
-function url(){
-    var id          =   document.URL.split("/").reverse()[0];
-    var base_url    =   document.URL.substring(window.location.protocol.length + 2 + window.location.host.length,document.URL.length - id.length);
-    if(document.URL.indexOf("post") != -1){
-        var id      =   document.URL.split("/").reverse()[0];
-        base_url    =   document.URL.substring(window.location.protocol.length + 2 + window.location.host.length,document.URL.length - id.length - 5);
-    }
-    if(document.URL.indexOf("share") != -1){
-        var id      =   document.URL.split("/").reverse()[0];
-        base_url    =   document.URL.substring(window.location.protocol.length + 2 + window.location.host.length,document.URL.length - id.length - 6);
-    }
-    if(document.URL.indexOf("profile") != -1){
-        var id      =   document.URL.split("/").reverse()[0];
-        base_url    =   document.URL.substring(window.location.protocol.length + 2 + window.location.host.length,document.URL.length - id.length - 8);
-    }
-    if(document.URL.indexOf("category") != -1){
-        var id      =   document.URL.split("/").reverse()[0];
-        base_url    =   document.URL.substring(window.location.protocol.length + 2 + window.location.host.length,document.URL.length - id.length - 9);
-    }
-
-    return base_url;
-}
-
-// Show comments
-function showcomment() {
-    $('.comments').click(function (e) {
-        e.preventDefault();
-        comments.show("slide", {
-            direction: "right"
-        }, 500);
-        $('section').animate({
-            marginRight: "20em"
-        }, 500);
-
-        if ($('.listcomments ul li.addcomment').length != 0) {
-            $('.listcomments ul li.addcomment form')[0].action = $('.listcomments ul li.addcomment form')[0].action + this.id;
-            old = $('.listcomments ul li.addcomment')[0].outerHTML;
-        }
-        $('.listcomments ul')[0].innerHTML = "";
-
-        $.ajax({
-            url: url() + "comments/" + this.id,
-            success: function (com) {
-                if (com && com != "[]") {
-                    var comment = '';
-                    var json = $.parseJSON(com);
-                    console.log(json);
-                    for (var i = json.length - 1; i >= 0; i--) {
-                        var comment = comment + '<li><div class="leftcomment"><div class="avatar"><a href="" title=""><img src="' + json[i].avatar + '" alt="avatar" /></a></div></div><div class="rightcomment"><div class="headcomment"><a href="" title="" class="name">' + json[i].surname + '</a> ' + json[i].date + '</div><div class="contentcomment">' + json[i].post + '</div></div></li>';
-                    };
-                    $('.listcomments ul')[0].innerHTML = comment + old;
-                }else{
-                    $('.listcomments ul')[0].innerHTML = "<li>Nada rien ici</li>" + old;
-                }
-            }
+    /* DETECT CLICK ON DELETE BUTTON & SAVE DATAS */
+        $('.delete').click(function(e){
+            e.preventDefault();
+            idPostDeleteValidation = this.className.substring(7,this.className.length);
+            urlPostDeleteValidation = this.href;
+            $('#' + idPostDeleteValidation + ' .postfooter').append('<div class="popvalidation"><a href="" title="Delete this post">Do you really want to delete this post?</a></div>');
+            $('#' + idPostDeleteValidation + ' .popvalidation').hide().slideDown();
+            settee_delete();
         });
-    });
-}
 
-// Hide comments
-$('.closecomments').click(function (e) {
-    e.preventDefault();
-    comments.hide("slide", {
-        direction: "right"
-    }, 500);
-    $('section').animate({
-        marginRight: "0"
-    }, 500);
-});
-
-// Scrollbar custom
-$('.postcomments').slimscroll({
-    height: $(window).height() - $('header').height() - $('.closecomments').height() - 50,
-    width: '100%'
-});
-if ($(window).width() >= '1025') {
-    $('.sidecontainer').slimscroll({
-        height: $(window).height() - $('header').height(),
-        width: '100%'
-    });
-} else {
-    $('.sidecontainer').slimscroll({
-        height: $(window).height(),
-        width: '100%'
-    });
-}
-// Support Scrollbar with resize screen
-$(window).resize(function () {
-    $('.postcomments').css("height", $(window).height() - $('header').height() - $('.closecomments').height() - 5 + "px");
-    if ($(window).width() >= '1025') {
-        $('aside').show();
-        $('.sidecontainer').css("height", $(window).height() - $('header').height() + "px");
-        $('aside .slimScrollDiv').css("height", $(window).height() - $('header').height() + "px");
-        $('#asideright .slimScrollDiv').css("height", $(window).height() - $('header').height() - $('.closecomments').height() - 5 + "px");
-    } else {
-        $('aside .slimScrollDiv').css("height", $(window).height());
-        $('.sidecontainer').css("height", $(window).height());
-        $('#asideright .slimScrollDiv').css("height", $(window).height());
-    }
-});
-
-// Show categories on mobiles
-$('.menubutton').click(function (e) {
-    e.preventDefault();
-    if (clickiconaside == false) {
-        aside.show();
-        clickiconaside = true;
-    } else {
-        aside.hide();
-        clickiconaside = false;
-    }
-});
-
-// Hide categories on mobiles
-$('#headercatmobile').click(function (e) {
-    e.preventDefault();
-    aside.hide();
-    clickiconaside = false;
-});
-
-// Disable big image
-$('.postimage a').click(function (e) {
-    e.preventDefault();
-});
-
-// Show nav on mobiles
-$('#navhamburger a').click(function (e) {
-    e.preventDefault();
-    if (clickiconnav == false) {
-        nav.show("slide", {
-            direction: "left"
-        }, 500);
-        clickiconnav = true;
-    } else {
-        nav.hide("slide", {
-            direction: "left"
-        }, 500);
-        clickiconnav = false;
-    }
-});
-
-// Post loader
-function loadpost(){
-    $(window).scroll(function () {
-        var call=null;
-        var home='';
-        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-            if(document.URL.indexOf("profile") == -1 && document.URL.indexOf("category") == -1 && document.URL.indexOf("share") == -1){
-                call = url() + "post/home/" + $('article')[$('article').length - 1].id;
-            }
-            if(document.URL.indexOf("category") != -1){
-                call = url() + "post/category/" + $('article')[$('article').length - 1].id;
-            }
-            if(document.URL.indexOf("profile") != -1){
-                call = url() + "post/profile/" + $('article')[$('article').length - 1].id;
-            }
-            if(end_scroll == false && call != null){
+    function settee_delete(){
+        /* DELETE POST WITH AJAX */
+            $('.popvalidation').click(function(e){
+                e.preventDefault();
                 $.ajax({
-                    url: call,
-                    success: function (html) {
-                        if (html) {
-                            $('#feed').append(html);
-                            showcomment();
-                            post_extras();
-                        }else{
-                            end_scroll=true;
+                    url: urlPostDeleteValidation,
+                    success: function(html) {
+                        if(html == "Deleted"){
+                            $('#' + idPostDeleteValidation).slideUp();
                         }
                     }
                 });
+            });
+    }
+
+/* ADD POST FORM */
+    var addPost = false;
+    var openPost = false;
+    $('.addpost a').click(function(e){
+        e.preventDefault();
+        var html = '<article><div id="newpost"><form><textarea placeholder="Write something" id="addtext"></textarea><table><tbody><tr><td class="upinput"><div class="upload"><label><input type="file" name="upload" id="addimage" multiple=""><i class="fa fa-picture-o"></i> Choose images</label></div><div class="upload"><label><input type="file" id="addfile"><i class="fa fa-file-text"></i> Choose a file</label></div><select name="categories"><option value="1">Test 1</option><option value="2">Test 2</option><option value="3">Test 3</option></select></td><td class="send"><input type="submit" value="Send"></td></tr></tbody></table></form></div></article>';
+        if(!addPost){
+            addPost = true;
+            $('.feed').prepend(html);
+            $('#newpost').hide().slideDown();
+            openPost = true;
+        }else{
+            if(!openPost){
+                $('#newpost').slideDown();
+                openPost = true;
+            }else{
+                $('#newpost').slideUp();
+                openPost = false;
             }
         }
     });
-}
-
-// Share modalbox
-function share_this(url) {
-    window.prompt("Copy to clipboard: Ctrl+C, Enter", url);
-}
-
-function post_extras(){
-    $('.permalink a').click(function(e){
-        e.preventDefault();
-        var url = this.href;
-        var html = '<div class="popup"><div class="wrap"><div class="title"><h3>Share this post with this link</h3><div class="closecatmobile"><a href="#" title="Close Categories">&times;</a></div><div class="clearfloat"></div></div><form><input type="text" value="' + url + '" readonly=""></form><a href="#" onClick="share_this(\'' + url + '\');" title="Copy the link" id="copy-button" class="copy">Copy to clipboard</a><div class="clearfloat"></div></div></div>';
-        var old = $(".content")[0].innerHTML;
-        $(".content")[0].innerHTML = html + old;
-
-        $('.popup .closecatmobile a').click(function(e){
-            e.preventDefault();
-            $('.popup').remove();
-        });
-        post_extras();
-    });
-
-    //like button
-    $('.postfooter a.likes').click(function(e){
-        e.preventDefault();
-        var postIdLiked = '.' + this.className.split(' ').join('.');
-        var postId = this.href.split('/').reverse()[0];
-        $.ajax({
-            url: this.href,
-            success: function(html) {
-                if(html == "Liked"){
-                    $(postIdLiked).get(0).textContent = Number($(postIdLiked).get(0).textContent) + 1;
-                    $(postIdLiked).get(0).href = url() + 'dislike/' + postId;
-                    $(postIdLiked).get(0).title = 'Dislike it';
-                    $(postIdLiked).addClass('active');
-                }else{
-                    if(html == "Disliked"){
-                        $(postIdLiked).get(0).textContent = Number($(postIdLiked).get(0).textContent) - 1;
-                        $(postIdLiked).get(0).href = url() + 'like/' + postId;
-                        $(postIdLiked).get(0).title = 'Like it';
-                        $(postIdLiked).removeClass('active');
-                    }
-                }
-            }
-        });
-    });
-
-    //delete button
-    $('.postfooter a.delete').click(function(e){
-        e.preventDefault();
-        var postIdDelete = this.className.split(' ')[1];
-        console.log(this);
-        $.ajax({
-            url: this.href,
-            success: function(html) {
-                console.log($('article#' + postIdDelete).fadeOut());
-                if(html == "Deleted"){
-                    $('article#' + postIdDelete).fadeOut();
-                }
-            }
-        });
-    });
-}
-
-// Add image form
-var VIGET = VIGET || {};
-VIGET.fileInputs = function () {
-    var $this = $(this),
-        $val = $this.val(),
-        valArray = $val.split('\\'),
-        newVal = valArray[valArray.length - 1],
-        $button = $this.siblings('.button'),
-        $fakeFile = $this.siblings('.uploadfile');
-    if (newVal !== '') {
-        $button[0].innerHTML = '<i>Photo Chosen</i>';
-    }
-};
-
-$(document).ready(function () {
-    $('.postfooterleft input[type=file]').bind('change focus click', VIGET.fileInputs);
 });
-
-
-// WebFont
-WebFontConfig = {
-        google: { families: [ 'Open+Sans:400,700:latin', 'Libre+Baskerville:400,700:latin' ] }
-    };
-    (function() {
-        var wf = document.createElement('script');
-        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-        wf.type = 'text/javascript';
-        wf.async = 'true';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(wf, s);
-})();
-
-
-// Functions start
-loadpost();
-post_extras();
-showcomment();

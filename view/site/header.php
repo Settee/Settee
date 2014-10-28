@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <title><?php echo Config::WEBSITE; ?></title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="<?php echo $this->pages->getStyleDirectory('css'); ?>reset.css" />
-    <link rel="stylesheet" href="<?php echo $this->pages->getStyleDirectory('css'); ?>design.css" />
     <meta name="viewport" content="width=device-width, initial-scape=1" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->pages->getStyleDirectory('css'); ?>reset.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->pages->getStyleDirectory('css'); ?>font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->pages->getStyleDirectory('css'); ?>design.css" />
     <link rel="shortcut icon" href="<?php echo $this->pages->getStyleDirectory('images'); ?>favicon.png" />
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-    <!--[if lt IE 9]>
-	<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
 </head>
 
 <body>
-    <header>
-        <div id="navhamburger">
-            <a href="" title="Menu">
-                <img src="<?php echo $this->pages->getStyleDirectory('images'); ?>menu.svg" alt="Menu" />
-            </a>
+    <div id="wrap">
+        <header>
+            <div id="logo">
+                <h1><?php echo Config::WEBSITE; ?></h1>
+            </div>
+            <div class="clearfloat"></div>
+        </header>
+        <label for="menu-toggle">
+            <div id="navhamburger"><i class="fa fa-bars"></i></div>
+        </label>
+        <input type="checkbox" id="menu-toggle" />
+        <div class="asidewrap">
+            <aside>
+                <nav>
+                    <div class="addpost">
+                        <a href="<?php echo Dispatcher::base(); ?>addpostform" title="Write, upload, share"><i class="fa fa-pencil-square-o"></i><span>Write</span></a>
+                    </div>
+                    <ul>
+                        <?php echo $this->pages->getSideNavBar(); ?>
+                    </ul>
+                </nav>
+                <div id="cat" role="select">
+                    <h2>Categories</h2>
+                    <?php echo $this->posts->getCategories(null,'list'); ?>
+                </div>
+            </aside>
         </div>
-        <div id="hleft">
-            <h1><a href="<?php echo Dispatcher::base(); ?>" title=""><?php echo Config::WEBSITE; ?></a></h1>
-        </div>
-        <div id="hright">
-            <?php echo $this->pages->getHeaderNavBar(); ?>
-        </div>
-        <div class="clearfloat"></div>
-    </header>

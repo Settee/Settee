@@ -17,6 +17,7 @@
 					$nb_comment = count($this->database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_comments WHERE post_id="'.$post->id.'"','query'));
 					$like = $this->database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_likes WHERE post_id="'.$post->id.'"','query');
 					$like_html = '<li><a href="'.Dispatcher::base().'like/'.$post->id.'" title="Like it" class="likes likes_'.$post->id.'">'.count($like).'</a></li>';
+					$nb_like = count($like);
 					$delete = '';$link = '';$edit = '';
 					foreach($like as $k => $v) {
 						if($v->user_id == $this->pages->getInfo('id')){
@@ -26,22 +27,21 @@
 					if(!isset($share) && $share != true){
 						$link = '<div class="permalink"><a href="'.Dispatcher::base().'share/'.$post->id.'" title="Permalink">Permalink</a></div>';
 					}
-					
-	 				$html = '<article class="post" id="'.$post->id.'_'.$me->name.'_'.$this->getComments($post->categorie_id,'info')->id.'"><div class="posthead"><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Profil"><img src="'.$this->pages->getAvatar($me->id).'" alt="avatar" /></a></div><div class="postinfos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.$this->pages->fullDate($post->date).' in <a href="'.Dispatcher::base().'category/'.$this->getComments($post->categorie_id,'info')->url.'" title="">'.$this->getComments($post->categorie_id,'info')->name.'</a></div></div></div><div class="posttext">'.$this->convertUrl(nl2br(strip_tags($post->post))).'</div>';
+
+					$html = '<article  id="'.$post->id.'_'.$me->name.'_'.$this->getComments($post->categorie_id,'info')->id.'"><div class="post"><div class="posthead"><div class="avatar"><img src="'.$this->pages->getAvatar($me->id).'" alt="Avatar" /></div><div class="infos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Posted by  '.strip_tags($me->surname).'" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.$this->pages->fullDate($post->date).' in <a href="'.Dispatcher::base().'category/'.$this->getComments($post->categorie_id,'info')->url.'" title="Posted in '.$this->getComments($post->categorie_id,'info')->name.'">'.$this->getComments($post->categorie_id,'info')->name.'</a></div></div><div class="clearfloat"></div></div><div class="posttext">'.$this->convertUrl(nl2br(strip_tags($post->post))).'</div>';
 					if($post->image != null){
-						$html .= '<div class="postimage"><div class="downarrow"></div><a href="'.Dispatcher::base().'static/post/big/'.$post->image.'" title="Extend"><img src="'.Dispatcher::base().'static/post/thumbnail/'.$post->image.'" /></a></div>';
+						$html .= '<div class="postimage"><a target="_blank" href="'.Dispatcher::base().'static/post/big/'.$post->image.'"><img src="'.Dispatcher::base().'static/post/thumbnail/'.$post->image.'" alt="Preview image" /></a></div>';
 					}
 					if(($post->author_id == $this->pages->getInfo('id')) || $this->pages->getInfo('type') == 'root'){
-						$delete = '<li><a href="'.Dispatcher::base().'deletepost/'.$post->id.'" title="Delete this post" class="delete '.$post->id.'_'.$me->name.'_'.$this->getComments($post->categorie_id,'info')->id.'">Delete</a></li>';
+						$delete = '<li><a href="'.Dispatcher::base().'deletepost/'.$post->id.'" title="Delete this post" class="delete '.$post->id.'_'.$me->name.'_'.$this->getComments($post->categorie_id,'info')->id.'"><i class="fa fa-trash"></i><span>Delete</span></a></li>';
 					}
 					if($post->author_id == $this->pages->getInfo('id')){
-						$edit = '<li><a href="'.Dispatcher::base().'editpost/'.$post->id.'" title="Edit this post">Edit</a></li>';
+						$edit = '<li><a href="'.Dispatcher::base().'editpost/'.$post->id.'" title="Edit this post"><i class="fa fa-pencil"></i><span>Edit</span></a></li>';
 					}
-					$html .= '<div class="postfooter">'.$link.'<div class="postinteractions"><ul>'.$edit.$delete.'<li><a id="'.$post->id.'" href="#" title="'.$nb_comment.' comment(s)" class="comments">'.$nb_comment.'</a></li>'.$like_html.'</ul></div><div class="clearfloat"></div></div></article>';
+					$html .= '<div class="postfooter"><ul>'.$edit.$delete.'<li><a href="" title="Like this post"><i class="fa fa-heart"></i><span>'.$nb_like.'</span></a></li><li id="'.$post->id.'"><a href="" title="Read and write comments on this post"><i class="fa fa-comment"></i><span>'.$nb_comment.'</span></a></li><li><a href="" title="Share this post"><i class="fa fa-share"></i><span>Share</span></a></li></ul><div class="clearfloat"></div></div></div>';
+					$html .= '<div class="comments"></div></article>';
 					
 					echo $html;
-				}else{
-					echo 'nop';
 				}
 			}
  		}else{
@@ -216,10 +216,6 @@
 				$end .= '</select>';
 			}elseif($type == "list"){
 				$end .= '<ul>';
-			}
-
-			if($type == "list" && $this->pages->getInfo('type') == "root"){
-				$end .= '<div class="addbutton"><a href="" title="">Add more</a></div>';
 			}
 		}
 		return $end;

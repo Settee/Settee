@@ -10,7 +10,7 @@
 
 	function theme($page){
 		if(file_exists(ROOT.DS."view/site".DS.$page.".php")){
-			if((Controller::privacy() >= '1' && !$this->auth->isLoged()) && (Dispatcher::whaturl() != 'login' && Dispatcher::whaturl() != 'register')){
+			if((Controller::privacy() > '1' && !$this->auth->isLoged()) && (Dispatcher::whaturl() != 'login' && Dispatcher::whaturl() != 'register')){
 				$page = 'private';
 			}
 		}else{
@@ -54,7 +54,6 @@
 	}
 
 	function comment(){
-		print_r($this);
 		if($this->auth->isLoged()){
 			$html = '<li class="addcomment">
                                 <form method="post" action="'.Dispatcher::base().'addcomment/">

@@ -43,7 +43,7 @@ DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `".$prefixdb."posts` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `date` DATE NOT NULL,
+  `date` DATETIME NOT NULL,
   `post` LONGTEXT NOT NULL,
   `author_id` BIGINT(20) NOT NULL,
   `categorie_id` INT(11) UNSIGNED NOT NULL,
@@ -57,7 +57,7 @@ CREATE INDEX `fk_".$prefixdb."posts_".$prefixdb."user1_idx` ON `".$prefixdb."pos
 
 CREATE TABLE IF NOT EXISTS `".$prefixdb."comments` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `date` DATE NOT NULL,
+  `date` DATETIME NOT NULL,
   `post` LONGTEXT NOT NULL,
   `user_id` BIGINT(20) NOT NULL,
   `post_id` BIGINT(20) NOT NULL,

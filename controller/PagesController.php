@@ -22,10 +22,13 @@
 		return $notif;
 	}
 
-	public function fullDate($date){
-		$d = explode('-', $date);
-		$month = ($d[1] < 10)? trim($d[1],0) : $d[1];
-		return $d[2].' '.PagesController::$month[$month].' '.$d[0]; 
+	public function fullDate($d){
+		$date = explode(' ',$d);
+		$day = explode('-', $date[0]);
+		$hour = explode(':', $date[1]);
+
+		$month = ($day[1] < 10)? trim($day[1],0) : $day[1];
+		return $day[2].' '.PagesController::$month[$month].' '.$day[0].' '.$hour[0].'h '.$hour[1]; 
 	}
 
 	public function getStyleDirectory($dir){
@@ -65,24 +68,25 @@
 		}
 	}
 
-	public function getHeaderNavBar(){
-		$headernavonline = '<nav><ul><li><a href="'.Dispatcher::base().'profile/'.$this->getInfo('name').'" title="Profil" class="avatar"><img src="'.$this->getAvatar($this->getInfo("id")).'" alt="Profil" /><span>Profil</span></a></li><li><a href="'.Dispatcher::base().'settings" title="Settings" class="settings"><img src="'.Dispatcher::base().'static/images/ico-settings.svg" alt="Settings" /><span>Settings</span></a></li></ul></nav>';
-		$headernavsignin = '<nav><ul id="connections"><li><a href="'.Dispatcher::base().'" title="">Home</a></li><li><a href="'.Dispatcher::base().'register" title="">Register</a></li></ul></nav>';
-		$headernavsignup = '<nav><ul id="connections"><li><a href="'.Dispatcher::base().'" title="">Home</a></li><li><a href="'.Dispatcher::base().'login" title="">Login</a></li></ul></nav>';
-		$headernavoffline = '<nav><ul id="connections"><li><a href="'.Dispatcher::base().'register" title="">Register</a></li><li><a href="'.Dispatcher::base().'login" title="">Login</a></li></ul></nav>';
-		$headernavsettings = '<nav><ul><li><a href="'.Dispatcher::base().'profile/'.$this->getInfo('name').'" title="Profil" class="avatar"><img src="'.$this->getAvatar($this->getInfo("id")).'" alt="Profil"></a></li></ul><ul id="connections"><li><a href="'.Dispatcher::base().'logout" title="">Logout</a></li></ul></nav>';
+	public function getSideNavBar(){
+		$in_home = (Dispatcher::whaturl() == 'index')? 'class="actived"' : '';
+		$in_login = (Dispatcher::whaturl() == 'login')? 'class="actived"' : '';
+		$in_register = (Dispatcher::whaturl() == 'register')? 'class="actived"' : '';
+		$in_settings = (Dispatcher::whaturl() == 'settings')? 'class="actived"' : '';
+		$in_post = (Dispatcher::whaturl() == 'profile/'.$this->getInfo('name'))? 'class="actived"' : '';
 
-		if(Dispatcher::whaturl() == "register"){
-			echo $headernavsignup;
-		}elseif(Dispatcher::whaturl() == "login"){
-			echo $headernavsignin;
-		}elseif(Dispatcher::whaturl() == "settings" && $this->auth->isLoged() == true){
-			echo $headernavsettings;
-		}elseif($this->auth->isLoged() == true){
-			echo $headernavonline;
+		$html = '<li><a href="'.Dispatcher::base().'" title="Home" '.$in_home.'><i class="fa fa-home"></i><span>Home</span></a></li>';
+
+		if(!$this->auth->isLoged()){
+			$html .= '<li><a href="'.Dispatcher::base().'register" title="Register" '.$in_register.'><i class="fa fa-pencil"></i><span>Register</span></a></li>';
+			$html .= '<li><a href="'.Dispatcher::base().'login" title="Login" '.$in_login.'><i class="fa fa-sign-in"></i><span>Login</span></a></li>';
 		}else{
-			echo $headernavoffline;
+			$html .= '<li><a href="'.Dispatcher::base().'profile/'.$this->getInfo('name').'" title="Profil" '.$in_post.'><i class="fa fa-user"></i><span>My posts</span></a></li>';
+			$html .= '<li><a href="'.Dispatcher::base().'settings" title="Settings" '.$in_settings.'><i class="fa fa-cog"></i><span>Settings</span></a></li>';
+			$html .= '<li><a href="'.Dispatcher::base().'logout" title="Logout"><i class="fa fa-sign-out"></i><span>Logout</span></a></li>';
 		}
+
+		return $html;
 	}
 
 }
