@@ -29,8 +29,8 @@
 				$pre->execute();
 			}
 		}catch(PDOException $e){
-			//die($e);
-			die("Database is unreachable, please wait a few minutes");
+			var_dump($e);
+			//die("Database is unreachable, please wait a few minutes");
 		}
 	}
 

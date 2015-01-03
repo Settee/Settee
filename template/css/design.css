@@ -76,6 +76,12 @@ header #logo h1 {
     background: #fff;
     border-right: 0.063em solid #D8D8D8;
 }
+aside h2 {
+    padding: 1em 10%;
+    color: #eaa205;
+    font-size: 1.3em;
+    text-align: left;
+}
 /* Add post button */
 
 aside .addpost {
@@ -109,7 +115,8 @@ aside .addpost span {
 
 aside li a {
     display: block;
-    padding: 0.5em 2em;
+    padding: 0.5em 1.7em;
+    padding-right: 1.4em;
     text-align: left;
     text-decoration: none;
     color: #353439;
@@ -124,14 +131,20 @@ aside li a.actived {
 /* Aside Nav */
 
 aside nav li .fa {
+    width: 1.250em;
     margin-right: 0.5em;
     color: #8d8d8d;
     font-size: 1.5em;
 }
 aside nav li span {
     display: inline-block;
+    width: calc(100% - 3em);
     vertical-align: top;
     line-height: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
 }
 aside nav li a:hover {
     color: #fff;
@@ -145,21 +158,12 @@ aside nav li a:hover .fa {
 aside #cat {
     text-align: left;
 }
-aside #cat h2 {
-    padding: 1em 10%;
-    color: #eaa205;
-    font-size: 1.3em;
-}
-aside #cat[role="select"] select {
-    display: none;
-    height: 3em;
-    padding: 0 10%;
-    background: #d8d8d8;
-    border: 0;
-    border-radius: 0;
-}
 aside #cat a {
+    display: block;
     line-height: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 /* SECTION */
 
@@ -227,7 +231,7 @@ section {
     color: #eaa205;
 }
 #newpost table {
-    width: calc(100% - 0.5em);
+    width: calc(100% - 2em);
     vertical-align: top;
     margin-left: 1em;
 }
@@ -250,10 +254,14 @@ section {
     font-size: 0.9em;
 }
 #newpost td.send {
+    height: 100%;
     height: 5em;
+    padding: 0.5em 0;
+}
+#newpost td.send div {
     float: right;
 }
-#newpost select {
+#newpost td.send button {} #newpost select {
     display: inline;
     margin: inherit;
     padding: 0.5em 1em;
@@ -274,20 +282,6 @@ section {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-#newpost input[type="submit"] {
-    display: block;
-    height: 100%;
-    margin-bottom: -0.128em;
-    padding: 0em 2em;
-    color: #fff;
-    background: #eaa205;
-    border: none;
-    border-radius: 0;
-}
-#newpost input[type="submit"]:hover {
-    cursor: pointer;
-    opacity: 0.95;
 }
 /* Feed */
 
@@ -500,8 +494,12 @@ section {
     font-style: italic;
 }
 .comments .commentcontent {
+    padding: 0.5em;
     font-size: 0.95em;
     line-height: 1.2em;
+    background: #fff;
+    border: 0.063em solid #d8d8d8;
+    box-shadow: 0px 1px 1px 0px #e9e9e9;
 }
 .comments .loadmore a {
     display: block;
@@ -515,6 +513,48 @@ section {
 .comments .loadmore a:hover {
     color: #fff;
     background: #eaa205;
+}
+/* Pagination */
+
+#pagination {
+    text-align: center;
+}
+#pagination ul {
+    display: inline-block;
+    margin: 0.5em auto;
+    color: #696666;
+    font-size: 1em;
+    background: none;
+    border: 0.063em solid #eaa205;
+    border-radius: 1.5em;
+    -webkit-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+#pagination li {
+    display: inline;
+    float: left;
+    border-right: 0.063em solid #eaa205;
+}
+#pagination li:last-child {
+    border-right: none;
+}
+#pagination a {
+    display: inline-block;
+    padding: 0.3em 1.5em;
+    text-decoration: none;
+    color: #6c6760;
+    -webkit-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+#pagination a:hover {
+    color: #fff;
+    background: #eaa205;
+    -webkit-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
 /* PAGES */
 
@@ -552,6 +592,7 @@ section .content .title .label {
 }
 section .pagecontent p {
     padding: 2.5em 0;
+    text-align: center;
 }
 section .pagecontent hr {
     width: 30%;
@@ -697,6 +738,33 @@ input,
 textarea {
     font-family: 'Open Sans', Arial, sans-serif;
 }
+.loglink {
+    display: block;
+    margin-bottom: 2.5em;
+    text-align: center;
+}
+.loglink a {
+    display: inline-block;
+    margin: 0.5em auto;
+    padding: 0.3em 1.5em;
+    color: #696666;
+    font-size: 1.2em;
+    background: none;
+    text-decoration: none;
+    border: 0.15em solid #eaa205;
+    border-radius: 1.5em;
+    -webkit-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+.loglink a:hover {
+    color: #fff;
+    background: #eaa205;
+    cursor: pointer;
+    -webkit-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
 /* Tooltip */
 
 .m-info,
@@ -735,16 +803,19 @@ section .upload {
     display: inline-block;
     vertical-align: top;
 }
-section .upload label {
+section .upload label,
+section button[type="submit"] {
     display: inline;
     margin: inherit;
     padding: 0.5em 1em;
     color: #606060;
+    font-size: 1em;
     background: #f7f7f7;
     border: 0.063em solid #CCC;
     border-radius: 0.3em;
 }
-section .upload label:hover {
+section .upload label:hover,
+section button[type="submit"]:hover {
     background: #e5e5e5;
     cursor: pointer;
 }
@@ -801,19 +872,6 @@ section .upload input {
     }
     #menu-toggle:checked + .asidewrap {
         display: block;
-    }
-    aside #cat[role="select"] ul {
-        display: none;
-    }
-    aside #cat[role="select"] select {
-        display: block;
-        width: 100%;
-    }
-    aside #cat[role="select"] &:after {
-        position: absolute;
-        content: "Menu";
-        right: 0;
-        bottom: -1em;
     }
     section {
         margin-left: 0;

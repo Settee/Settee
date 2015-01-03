@@ -8,15 +8,15 @@
 		}
 	}
 
-	function theme($page){
-		if(file_exists(ROOT.DS."view/site".DS.$page.".php")){
+	function theme($page, $tmp="site"){
+		if(file_exists(ROOT.DS."view".DS.$tmp.DS.$page.".php")){
 			if((Controller::privacy() > '1' && !$this->auth->isLoged()) && (Dispatcher::whaturl() != 'login' && Dispatcher::whaturl() != 'register')){
 				$page = 'private';
 			}
 		}else{
 			$page = '404';
 		}
-		require_once ROOT.DS."view/site".DS.$page.".php";
+		require_once ROOT.DS."view".DS.$tmp.DS.$page.".php";
 	}
 
 	static function categorie($opt){

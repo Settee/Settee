@@ -1,12 +1,16 @@
 <?php Class Dispatcher extends Template{
 	
-	public $database,$auth,$pages,$posts;
+	public $database,$auth,$pages,$posts,$general,$user;
 	
 	public function __construct(){
-		$this->database = new Database;
-		$this->auth = new AuthController;
-		$this->pages = new PagesController;
-		$this->posts = new PostsController;
+		$this->notif = Controller::loading_controller('NotificationController');
+		$this->general = Controller::loading_controller('GeneralController');
+		$this->pages = Controller::loading_controller('PagesController');
+		$this->posts = Controller::loading_controller('PostsController');
+		$this->auth = Controller::loading_controller('AuthController');
+		$this->lang = Controller::loading_controller('LangController');
+		$this->user = Controller::loading_controller('UserController');
+		$this->database = Controller::loading_controller('Database');
 		Dispatcher::render();
 	}
 

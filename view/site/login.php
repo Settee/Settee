@@ -2,19 +2,19 @@
     <section id="signpage">
             <div class="content">
                 <div id="pagehead">
-                    <h2>Login</h2>
+                    <h2><?php echo $this->lang->i18n('site_login'); ?></h2>
                 </div>
                 <div class="pagecontent">
                     <div class="content">
                         <div class="contentform">
                             <form method="post" action="<?php echo Dispatcher::base(); ?>login">
-                                <input type="text" placeholder="Username" name="login" required="required" />
-                                <input type="password" title="" placeholder="Password" name="passwd" required="required" />
-                                    <?php echo $this->posts->getNotification();?>
-                                <input type="submit" value="Sign in" />
+                                <input type="text" placeholder="<?php echo $this->lang->i18n('site_username'); ?>" name="login" required="required" />
+                                <input type="password" title="<?php echo $this->lang->i18n('site_password'); ?>" placeholder="<?php echo $this->lang->i18n('site_password'); ?>" name="passwd" required="required" />
+                                    <?php echo $this->notif->getNotification();?>
+                                <input type="submit" value="<?php echo $this->lang->i18n('site_signin'); ?>" />
                             </form>
                             <div class="signfooter">
-                                <p>Not Member? <b><a href="<?php echo Dispatcher::base(); ?>register" title="Register">Register</a></b>
+                                <p><?php echo $this->lang->i18n('site_not_member'); ?>? <b><a href="<?php echo Dispatcher::base(); ?>register" title="<?php echo $this->lang->i18n('site_register'); ?>"><?php echo $this->lang->i18n('site_register'); ?></a></b>
                                 </p>
                             </div>
                         </div>

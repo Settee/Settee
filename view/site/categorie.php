@@ -2,19 +2,18 @@
 <section>
             <div class="content">
                 <div class="feedhead">
-                    <h2><i class="fa fa-list"></i> General feed</h2>
+                    <h2><i class="fa fa-list"></i> <?php echo $this->lang->i18n('site_generalfeed'); ?></h2>
                     <div id="reload">
-                        <a href="<?php echo Dispatcher::base().Dispatcher::whaturl(); ?>" title="Reload the posts"></a>
+                        <a href="<?php echo Dispatcher::base().Dispatcher::whaturl(); ?>" title="<?php echo $this->lang->i18n('site_reload'); ?>"></a>
                     </div>
                     <div class="clearfloat"></div>
                 </div>
 
                 <div class="feed">
-                    <?php echo $this->pages->getNotification(); ?>
-                    <?php 
+                    <?php echo $this->notif->getNotification();
                         $param = explode('/', Dispatcher::whaturl());
                         $cat = current($this->database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_categorie WHERE url = "'.$this->database->secure($param[1]).'" LIMIT 1','query'));
-                        echo $this->posts->getPostsCategory($cat->id); 
+                        echo $this->posts->getCategoryPosts($cat->id); 
                     ?>
                 </div>
             </div>

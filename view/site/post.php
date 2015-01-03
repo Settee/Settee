@@ -1,60 +1,89 @@
 <?php
 require_once 'header.php'; 
 $url = explode('/', Dispatcher::whaturl());
+$data = $this->posts->getPostInfo($url[1]);
+$me = $this->user->getUserById($data->author_id);
+$cat = $this->posts->getComments($data->categorie_id,'info');
+$likes = $this->database->sqlquery('SELECT posts.id as like_post, COUNT(likes.post_id) as nb_like FROM '.CONFIG::PREFIX.'_posts as posts, '.CONFIG::PREFIX.'_likes as likes WHERE likes.post_id = posts.id GROUP BY likes.post_id ORDER BY posts.id','query');
+$comments = $this->database->sqlquery('SELECT posts.id as comments_post, COUNT(comments.post_id) as nb_comments FROM '.CONFIG::PREFIX.'_posts as posts, '.CONFIG::PREFIX.'_comments as comments WHERE comments.post_id = posts.id GROUP BY comments.post_id ORDER BY posts.id','query');
+
+$nb_like = 0; $nb_comments = 0;
+foreach($likes as $key => $value){
+    if($data->id == $value->like_post){
+        $nb_like = $value->nb_like;
+    }
+}
+
+foreach($comments as $key => $value){
+    if($data->id == $value->comments_post){
+        $nb_comments = $value->nb_comments;
+    }
+}
 ?>
-    <div class="container">
-         <aside>
-            <div class="sidecontainer">
-                <div id="headercatmobile">
-                    <div class="closecatmobile">
-                        <a href="" title="Close Categories">
-                            <img src="<?php echo $this->pages->getStyleDirectory('images'); ?>ico-close.svg" alt="Close Categories" />
-                        </a>
-                    </div>
-                    <div class="clearfloat"></div>
-                </div>
-
-                <h2>Categories</h2>
-                <?php echo $this->posts->getCategories(null,'list'); ?>
-            </div>
-        </aside>
-        <section>
+      <section>
             <div class="content">
-
-                <div id="feedhead">
-                    <div class="menubutton">
-                        <a href="" title="Categories" class="showcatmobile">
-                            <img src="<?php echo $this->pages->getStyleDirectory('images'); ?>menu2.svg" alt="Categories" />
-                        </a>
-                    </div>
-                    <div class="clearfloat"></div>
-                </div>
-                <div id="feed">
-                    <?php echo $this->posts->getPost($url[1],true); ?>
-                </div>
-            </div>
-        </section>
-        <div id="asiderightwrap">
-            <div id="asideright">
-                <div id="headercomments">
-                    <div class="closecomments">
-                        <a href="" title="Close comments">
-
-                            <img src="<?php echo $this->pages->getStyleDirectory('images'); ?>ico-close.svg" alt="Close comments" />
-                            <span>Close comments</span>
-                        </a>
+                <div class="feedhead">
+                    <h2><i class="fa fa-list"></i> <?php echo $this->lang->i18n('site_post'); ?></h2>
+                    <div id="reload">
+                        <a href="<?php echo Dispatcher::base().Dispatcher::whaturl(); ?>" title="<?php echo $this->lang->i18n('site_reload'); ?>"></a>
                     </div>
                     <div class="clearfloat"></div>
                 </div>
 
-                <div class="postcomments" id="post_com">
-                    <div class="listcomments">
+                <div class="feed">
+                    <?php echo $this->notif->getNotification(); ?>
+                    <article>
+                        <div class="post">
+                            <div class="posthead">
+                                <div class="avatar">
+                                    <img src="<?php echo $this->user->getUserAvatar($me->id); ?>" alt="Avatar">
+                                </div>
+                                <div class="infos">
+                                    <div class="name">
+                                        <a href="<?php echo Dispatcher::base(); ?>profile/<?php echo $me->name; ?>" title="Posted by  <?php echo $me->surname; ?>" class="name"><?php echo $me->surname; ?></a>
+                                    </div>
+                                    <div class="datecat">
+                                        <?php echo $this->general->getFullDate($data->date); ?> in <a href="<?php echo Dispatcher::base(); ?>category/<?php echo $cat->url; ?>" title="Posted in <?php echo $cat->name; ?>"><?php echo $cat->name; ?></a>
+                                    </div>
+                                </div>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div class="posttext"><?php echo $data->post; ?></div>
+                            <?php if($data->image != null): ?>
+                                <div class="postimage">
+                                    <a target="_blank" href="<?php echo Dispatcher::base(); ?>static/post/big/<?php echo $data->image; ?>">
+                                            <img src="<?php echo Dispatcher::base(); ?>static/post/thumbnail/<?php echo $data->image; ?>" alt="Preview image">
+                                    </a>
+                                </div>
+                            <?php endif; ?>
+                                <div class="postfooter"><ul>
+                                    <?php if($data->author_id == $this->user->getActiveUser('id')): ?>
+                                        <li><a href="<?php echo Dispatcher::base(); ?>editpost/<?php echo $data->id; ?>" title="Edit this post"><i class="fa fa-pencil"></i><span>Edit</span></a></li>
+                                    <?php endif; ?>
+                                    <?php if(($data->author_id == $this->user->getActiveUser('id')) || $this->user->getActiveUser('type') == 'root'): ?>
+                                        <li><a href="<?php echo Dispatcher::base(); ?>deletepost/<?php echo $data->id; ?>" title="Delete this post"><i class="fa fa-trash"></i><span>Delete</span></a></li>
+                                    <?php endif;?>
+                                    <li class="like"><a href="<?php echo Dispatcher::base(); ?>like/<?php echo $data->id; ?>" title="Like this post"><i class="fa fa-heart"></i><span><?php echo $nb_like; ?></span></a></li>
+                                    <li class="buttonComments" id="<?php echo $data->id; ?>"><a href="" title="Read and write comments on this post"><i class="fa fa-comment"></i><span><?php echo $nb_comments; ?></span></a></li>
+                                    <li><a href="<?php echo Dispatcher::base(); ?>share/<?php echo $data->id; ?>" title="Share this post"><i class="fa fa-share"></i><span>Share</span></a></li></ul>
+                                <div class="clearfloat"></div>
+                                </div>
+                            </div>
+                    </article>
+                    <?php if($this->auth->isLoged()): ?>
+                        <div class="comments opened">
+                            <div class="addcomment">
+                                <form method="post" action="<?php echo Dispatcher::base(); ?>addcomment/<?php echo $url[1]; ?>">
+                                    <textarea name="comment" name="comment" placeholder="Add a comment"></textarea>
+                                    <input type="submit" value="Send" />
+                                </form>
+                            </div>
+                        <?php endif; ?>
                         <ul>
-                            <?php echo Template::comment(); ?>
+                            <?php echo $this->posts->getComments($url[1],'list'); ?>
                         </ul>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
  <?php require_once 'footer.php'; ?>

@@ -2,65 +2,66 @@
     <section>
             <div class="content">
                 <div id="pagehead">
-                    <h2>Settings</h2>
+                    <h2><?php echo $this->lang->i18n('site_settings'); ?></h2>
                 </div>
                 <div class="pagecontent">
                     <div class="contentform">
-                        <?php echo $this->pages->getNotification(); ?>
+                        <?php echo $this->notif->getNotification(); ?>
                         <div class="title">
-                            <h3>Profile</h3>
-                            <div class="label">: Your profile informations</div>
+                            <h3><?php echo $this->lang->i18n('site_profile'); ?></h3>
+                            <div class="label">: <?php echo $this->lang->i18n('site_profile_informations'); ?></div>
                         </div>
                         <form enctype="multipart/form-data" method="post" action="<?php echo Dispatcher::base(); ?>settings/update">
                             <div class="avatarup">
                                 <div class="preview">
-                                    <img src="<?php echo $this->pages->getAvatar($this->pages->getInfo("id")); ?>" alt="Avatar preview" />
+                                    <img src="<?php echo $this->user->getUserAvatar($this->user->getActiveUser("id")); ?>" alt="Avatar preview" />
                                 </div>
                                 <div class="upload">
                                     <label>
-                                        <input type="file" id="upload" name="avatar" accept="image/*"/>Upload
+                                        <input type="file" id="upload" name="avatar" accept="image/*"/><?php echo $this->lang->i18n('site_upload'); ?>
                                     </label>
                                 </div>
                             </div>
 
-                            <label for="names">Names:</label>
-                            <input type="text" id="names" placeholder="Your public name" name="names" value="<?php echo $this->pages->getInfo('surname') ;?>" />
-                            <!--<label for="language">Language:</label>
-                            <select>
-                                <option value="#">English</option>
-                                <option value="#">Français</option>
-                                <option value="#">Español</option>
-                            </select>-->
+                            <label for="names"><?php echo $this->lang->i18n('site_name'); ?> :</label>
+                            <input type="text" id="names" placeholder="<?php echo $this->lang->i18n('site_placeholder_name'); ?>" name="names" value="<?php echo $this->user->getActiveUser('surname') ;?>" />
+                            <label for="language"><?php echo $this->lang->i18n('site_language'); ?></label>
+                            <select name="language">
+                                <?php foreach ($this->lang->getListLanguage() as $k => $v){
+                                    $mylang = ($v == $this->user->getActiveUser('lang'))? ' selected': '';
+                                    echo '<option value="'.$v.'" '.$mylang.'>'.ucfirst($v).'</option>';
+                                }?>
+                            </select>
 
                             <div class="title">
-                                <h3>Account</h3>
-                                <div class="label">: Your basic account informations</div>
+                                <h3><?php echo $this->lang->i18n('site_account'); ?></h3>
+                                <div class="label">: <?php echo $this->lang->i18n('site_account_informations'); ?></div>
                             </div>
 
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" placeholder="name@domain.tld" value="<?php echo $this->pages->getInfo('email') ;?>"/>
+                            <label for="email">Email :</label>
+                            <input type="email" id="email" name="email" placeholder="name@domain.tld" value="<?php echo $this->user->getActiveUser('email') ;?>"/>
 
-                            <label for="password">Password:</label>
-                            <input type="password" id="password" name="password" placeholder="Change your password" />
+                            <label for="password"><?php echo $this->lang->i18n('site_password'); ?> :</label>
+                            <input type="password" id="password" name="password" placeholder="<?php echo $this->lang->i18n('site_placeholder_password'); ?>" />
 
-                            <label for="password">Password again:</label>
-                            <input type="password" id="passwordagain" name="passwordagain" placeholder="Type your password again" />
+                            <label for="password"><?php echo $this->lang->i18n('site_password_again'); ?> :</label>
+                            <input type="password" id="passwordagain" name="passwordagain" placeholder="<?php echo $this->lang->i18n('site_placeholder_password_again'); ?>" />
 
-                            <input type="submit" id="submit" value="Save" />
+                            <input type="submit" id="submit" value="<?php echo $this->lang->i18n('site_save'); ?>" />
                         </form>
+                        <?php if(Controller::privacy() == 3): ?>   
+                            <hr/>
 
-                      <!--  <hr></hr>
+                            <div class="title">
+                                <h3><?php echo $this->lang->i18n('site_invite'); ?></h3>
+                                <div class="label">: <?php echo $this->lang->i18n('site_send_invite'); ?></div>
+                            </div>
 
-                        <div class="title">
-                            <h3>Invite</h3>
-                            <div class="label">: Send an invite to friend</div>
-                        </div>
-
-                        <form>
-                            <input type="email" id="invite" placeholder="friend@domain.tld" />
-                            <input type="submit" id="submit" value="Send" />
-
-                        </form> -->
+                            <form>
+                                <input type="email" id="invite" placeholder="friend@domain.tld" />
+                                <input type="submit" id="submit" value="<?php echo $this->lang->i18n('site_send_button'); ?>" />
+                            </form>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

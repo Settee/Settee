@@ -1,5 +1,9 @@
 <?php Class Controller{
 	
+	public function loading_controller($var){
+		return new $var;
+	}
+
 	static function privacy(){
 		$return = '-1';
 		if(Config::PRIVACY == 'public'){

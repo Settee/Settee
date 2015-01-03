@@ -25,15 +25,17 @@
         <div class="asidewrap">
             <aside>
                 <nav>
-                    <div class="addpost">
-                        <a href="<?php echo Dispatcher::base(); ?>addpostform" title="Write, upload, share"><i class="fa fa-pencil-square-o"></i><span>Write</span></a>
-                    </div>
+                    <?php if($this->auth->isLoged()): ?>
+                        <div class="addpost">
+                            <a href="<?php echo Dispatcher::base(); ?>addpostform" title="<?php echo $this->lang->i18n('site_placeholder_content'); ?>"><i class="fa fa-pencil-square-o"></i><span><?php echo  $this->lang->i18n('site_write'); ?></span></a>
+                        </div>
+                    <?php endif; ?>
                     <ul>
-                        <?php echo $this->pages->getSideNavBar(); ?>
+                        <?php echo $this->general->getSideNavBar(); ?>
                     </ul>
                 </nav>
                 <div id="cat" role="select">
-                    <h2>Categories</h2>
+                    <h2><?php echo $this->lang->i18n('site_categories'); ?></h2>
                     <?php echo $this->posts->getCategories(null,'list'); ?>
                 </div>
             </aside>
