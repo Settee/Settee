@@ -44,7 +44,7 @@
 							if($v->id == $value->like_post){
 								$nb_like = $value->nb_like;
 								if($this->user->getActiveUser('id') == $value->user_like){
-									$like = ' active';
+									$like = ' class="actived"';
 									$like_or_dislike = 'dislike';
 								}
 							}
@@ -70,7 +70,7 @@
 							$delete = '<li><a href="'.Dispatcher::base().'deletepost/'.$v->id.'" title="Delete this post" class="delete '.$v->id.'_'.$me->name.'_'.$cat->id.'"><i class="fa fa-trash"></i><span>Delete</span></a></li>';
 						}
 
-						$html .= '<div class="postfooter"><ul>'.$edit.$delete.'<li class="like'.$like.'"><a href="'.Dispatcher::base().$like_or_dislike.'/'.$v->id.'" title="Like or dislike this post"><i class="fa fa-heart"></i><span>'.$nb_like.'</span></a></li><li class="buttonComments" id="'.$v->id.'"><a href="" title="Read and write comments on this post"><i class="fa fa-comment"></i><span>'.$nb_comments.'</span></a></li><li><a href="'.Dispatcher::base().'share/'.$v->id.'" title="Share this post"><i class="fa fa-share"></i><span>Share</span></a></li></ul><div class="clearfloat"></div></div></div>';
+						$html .= '<div class="postfooter"><ul>'.$edit.$delete.'<li class="like"><a'.$like.' href="'.Dispatcher::base().$like_or_dislike.'/'.$v->id.'" title="Like or dislike this post"><i class="fa fa-heart"></i><span>'.$nb_like.'</span></a></li><li class="buttonComments" id="'.$v->id.'"><a href="" title="Read and write comments on this post"><i class="fa fa-comment"></i><span>'.$nb_comments.'</span></a></li><li><a href="'.Dispatcher::base().'share/'.$v->id.'" title="Share this post"><i class="fa fa-share"></i><span>Share</span></a></li></ul><div class="clearfloat"></div></div></div>';
 						$html .= '<div class="comments">';
 						if($this->auth->isLoged()){
 							$html .= '<div class="addcomment"><form method="post" action="'.Dispatcher::base().'addcomment/'.$v->id.'"><textarea name="comment" name="comment" placeholder="Add a comment"></textarea><input type="submit" value="Send" /></form></div>';
