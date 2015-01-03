@@ -43,7 +43,7 @@
 						foreach($likes as $key => $value){
 							if($v->id == $value->like_post){
 								$nb_like = $value->nb_like;
-								if($v->author_id == $value->user_like){
+								if($this->user->getActiveUser('id') == $value->user_like){
 									$like = ' active';
 									$like_or_dislike = 'dislike';
 								}
