@@ -70,15 +70,15 @@ foreach($comments as $key => $value){
                                 </div>
                             </div>
                     </article>
-                    <?php if($this->auth->isLoged()): ?>
                         <div class="comments opened">
                             <div class="addcomment">
+                             <?php if($this->auth->isLoged()): ?>
                                 <form method="post" action="<?php echo Dispatcher::base(); ?>addcomment/<?php echo $url[1]; ?>">
                                     <textarea name="comment" name="comment" placeholder="Add a comment"></textarea>
                                     <input type="submit" value="Send" />
                                 </form>
+                            <?php endif; ?>
                             </div>
-                        <?php endif; ?>
                         <ul>
                             <?php echo $this->posts->getComments($url[1],'list'); ?>
                         </ul>

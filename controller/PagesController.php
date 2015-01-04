@@ -1,10 +1,9 @@
 <?php Class PagesController extends Controller{
 
-	private $database,$auth,$lang;
+	private $database,$lang,$posts;
 
 	function __construct(){
 		$this->database = Controller::loading_controller('Database');
-		$this->auth = Controller::loading_controller('AuthController');
 	}
 
 	public function getStyleDirectory($dir){
@@ -15,6 +14,11 @@
 	}
 
 	public function getPostform(){
+		$select = '<select name="categories">';
+		foreach ($this->database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_categorie','query') as $k => $v) {
+			$select .= '<option value="'.$v->id.'">'.$v->name.'</option>';
+		}
+		$select .= '</select>';
 		return '<form method="post" action="'.Dispatcher::base().'addpost" enctype="multipart/form-data">
 					<textarea placeholder="Write something" name="post" id="addtext"></textarea>
 					<table>
@@ -27,11 +31,7 @@
 									<div class="upload">
 										<label><input type="file" name="file" id="addfile"><i class="fa fa-file-text"></i> Choose a file</label>
 									</div>
-									<select name="categories">
-										<option value="1">Test 1</option>
-										<option value="2">Test 2</option>
-										<option value="3">Test 5</option>
-									</select>
+									'.$select.'
 								</td>
 								<td class="send">
 									<input type="submit" value="Send">
