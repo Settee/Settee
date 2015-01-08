@@ -1,0 +1,14 @@
+{
+    "name": "settee/settee",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Frozennide",
+            "email": "contact@netart.fr.nf"
+        }
+    ],
+    "require": {
+        "imagine/imagine": "~0.5.0",
+        "michelf/php-markdown": "1.4.1"
+    }
+}

@@ -1,4 +1,6 @@
-.DS_Store
-static/avatar/*
 static/post/*
+static/avatar/*
+.DS_Store
 config.php
+dploy.yaml
+sftp-config.json

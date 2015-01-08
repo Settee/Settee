@@ -1,4 +1,6 @@
-<?php Class PostsController extends Controller{
+<?php 
+use \Michelf\Markdown;
+Class PostsController extends Controller{
 
 	private $database,$pages,$auth,$lang,$general,$user;
 
@@ -56,7 +58,7 @@
 							}
 						}
 						
-						$html .= '<article  id="'.$v->id.'_'.$me->name.'_'.$cat->id.'"><div class="post"><div class="posthead"><div class="avatar"><img src="'.$this->user->getUserAvatar($me->id).'" alt="Avatar" /></div><div class="infos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Posted by  '.strip_tags($me->surname).'" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.$this->general->getFullDate($v->date).' in <a href="'.Dispatcher::base().'category/'.$cat->url.'" title="Posted in '.$cat->name.'">'.$cat->name.'</a></div></div><div class="clearfloat"></div></div><div class="posttext">'.$this->convertUrl(nl2br(strip_tags($v->post))).'</div>';
+						$html .= '<article  id="'.$v->id.'_'.$me->name.'_'.$cat->id.'"><div class="post"><div class="posthead"><div class="avatar"><img src="'.$this->user->getUserAvatar($me->id).'" alt="Avatar" /></div><div class="infos"><div class="name"><a href="'.Dispatcher::base().'profile/'.$me->name.'" title="Posted by  '.strip_tags($me->surname).'" class="name">'.strip_tags($me->surname).'</a></div><div class="datecat">'.$this->general->getFullDate($v->date).' in <a href="'.Dispatcher::base().'category/'.$cat->url.'" title="Posted in '.$cat->name.'">'.$cat->name.'</a></div></div><div class="clearfloat"></div></div><div class="posttext">'.Markdown::defaultTransform(nl2br(strip_tags($v->post))).'</div>';
 
 						if($v->image != null){
 							$html .= '<div class="postimage"><a target="_blank" href="'.Dispatcher::base().'static/post/big/'.$v->image.'"><img src="'.Dispatcher::base().'static/post/thumbnail/'.$v->image.'" alt="Preview image" /></a></div>';

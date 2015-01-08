@@ -13,7 +13,7 @@ $data = $this->posts->getPostInfo($param[1]);
                 <div class="feed">
         <article>
             <div id="newpost">
-                <?php echo $this->pages->getPostForm(); ?>
+                <?php echo $this->pages->getPostForm($data); ?>
             </div>
         </article>
      </div>
