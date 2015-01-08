@@ -71,17 +71,17 @@ foreach($comments as $key => $value){
                             </div>
                     </article>
                         <div class="comments opened">
+                        <ul>
+                            <?php echo $this->posts->getComments($url[1],'list'); ?>
+                        </ul>
+                        <?php if($this->auth->isLoged()): ?>
                             <div class="addcomment">
-                             <?php if($this->auth->isLoged()): ?>
                                 <form method="post" action="<?php echo Dispatcher::base(); ?>addcomment/<?php echo $url[1]; ?>">
                                     <textarea name="comment" name="comment" placeholder="Add a comment"></textarea>
                                     <input type="submit" value="Send" />
                                 </form>
-                            <?php endif; ?>
                             </div>
-                        <ul>
-                            <?php echo $this->posts->getComments($url[1],'list'); ?>
-                        </ul>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

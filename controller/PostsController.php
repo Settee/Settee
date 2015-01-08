@@ -73,11 +73,11 @@ Class PostsController extends Controller{
 						}
 
 						$html .= '<div class="postfooter"><ul>'.$edit.$delete.'<li class="like"><a'.$like.' href="'.Dispatcher::base().$like_or_dislike.'/'.$v->id.'" title="Like or dislike this post"><i class="fa fa-heart"></i><span>'.$nb_like.'</span></a></li><li class="buttonComments" id="'.$v->id.'"><a href="" title="Read and write comments on this post"><i class="fa fa-comment"></i><span>'.$nb_comments.'</span></a></li><li><a href="'.Dispatcher::base().'share/'.$v->id.'" title="Share this post"><i class="fa fa-share"></i><span>Share</span></a></li></ul><div class="clearfloat"></div></div></div>';
-						$html .= '<div class="comments">';
+						$html .= '<div class="comments"><ul>'.$this->getComments($v->id,'list').'</ul>';
 						if($this->auth->isLoged()){
 							$html .= '<div class="addcomment"><form method="post" action="'.Dispatcher::base().'addcomment/'.$v->id.'"><textarea name="comment" name="comment" placeholder="Add a comment"></textarea><input type="submit" value="Send" /></form></div>';
 						}
-						$html .= '<ul>'.$this->getComments($v->id,'list').'</ul></div></article>';
+						$html .= '</div></article>';
 
 					}
 					echo $html.$paginate;
@@ -213,7 +213,7 @@ Class PostsController extends Controller{
 	public function getComments($id,$type){
 		if($this->auth->isLoged() || Controller::privacy() == '0'){
 			if($type == 'list'){
-				$data = $this->database->sqlquery('SELECT comments.date,comments.post,users.surname,users.name,users.avatar,users.id FROM '.CONFIG::PREFIX.'_comments AS comments,'.CONFIG::PREFIX.'_users AS users WHERE comments.post_id='.$id.' AND comments.user_id=users.id ORDER BY comments.id DESC','query');
+				$data = $this->database->sqlquery('SELECT comments.date,comments.post,users.surname,users.name,users.avatar,users.id FROM '.CONFIG::PREFIX.'_comments AS comments,'.CONFIG::PREFIX.'_users AS users WHERE comments.post_id='.$id.' AND comments.user_id=users.id ORDER BY comments.id ASC','query');
 				$html = '';
 				foreach($data as $k => $v){
 					$html .= '<li><div class="avatar"><a href="'.Dispatcher::base().'profile/'.$v->name.'" title="'.$v->surname.' profile"><img src="'.$this->user->getUserAvatar($v->id).'" alt="avatar" /></a></div><div class="commentright"><div class="commentinfos"><a href="'.Dispatcher::base().'profile/'.$v->name.'" title="'.$v->surname.' profile">'.$v->surname.'</a>  <span>'.$this->general->getFullDate($v->date).'</span></div><div class="commentcontent">'.nl2br($v->post).'</div></div></li>';

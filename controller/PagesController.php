@@ -15,12 +15,13 @@
 
 	public function getPostform($data=null){
 		$text = (isset($data->post) && !empty($data->post))? $data->post : '';
+		$add = (isset($data->post) && !empty($data->post))? 'editpost/'.$data->id : 'addpost';
 		$select = '<select name="categories">';
 		foreach ($this->database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_categorie','query') as $k => $v) {
 			$select .= '<option value="'.$v->id.'">'.$v->name.'</option>';
 		}
 		$select .= '</select>';
-		return '<form method="post" action="'.Dispatcher::base().'addpost" enctype="multipart/form-data">
+		return '<form method="post" action="'.Dispatcher::base().$add.'" enctype="multipart/form-data">
 					<textarea placeholder="Write something" name="post" id="addtext">'.$text.'</textarea>
 					<table>
 						<tbody>
