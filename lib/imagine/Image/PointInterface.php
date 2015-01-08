@@ -1,2 +1,0 @@
-<?php
- namespace Imagine\Image; use Imagine\Image\BoxInterface; use Imagine\Image\ImageInterface; interface PointInterface { public function getX(); public function getY(); public function in(BoxInterface $box); public function move($amount); public function __toString(); } 

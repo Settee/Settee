@@ -1,2 +1,0 @@
-<?php
- namespace Imagine\Image; use Imagine\Image\PointInterface; interface BoxInterface { public function getHeight(); public function getWidth(); public function scale($ratio); public function increase($size); public function contains(BoxInterface $box, PointInterface $start = null); public function square(); public function __toString(); public function widen($width); public function heighten($height); } 
