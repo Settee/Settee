@@ -91,7 +91,7 @@ $('.like').click(function(e){
             if(!html){html = '[" "]';}
             var json = $.parseJSON(html);
             if(json[0] == "Liked"){
-                $(idToLike).children(1).get(0).addClass('actived');
+                $(idToLike).children(1).addClass('actived');
                 var content = $(idToLike).children(1).children('span');
                 content.text(parseInt(content.text()) + 1);
                 var url = urlToLike.split('/');
@@ -99,7 +99,7 @@ $('.like').click(function(e){
                 $(idToLike).children(1).get(0).href = url.join('/');
             }
             if(json[0] == "Disliked"){
-                $(idToLike).children(1).get(0).removeClass('actived');
+                $(idToLike).children(1).removeClass('actived');
                 var content = $(idToLike).children(1).children('span');
                 content.text(parseInt(content.text()) - 1);
                 var url = urlToLike.split('/');

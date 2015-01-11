@@ -1,9 +1,10 @@
 <?php Class PagesController extends Controller{
 
-	private $database,$lang,$posts;
+	private $database,$lang;
 
 	function __construct(){
 		$this->database = Controller::loading_controller('Database');
+		$this->lang = Controller::loading_controller('LangController');
 	}
 
 	public function getStyleDirectory($dir){
@@ -36,7 +37,7 @@
 									'.$select.'
 								</td>
 								<td class="send">
-									<input type="submit" value="Send">
+									<input type="submit" value="'.$this->lang->i18n('site_send_button').'">
 								</td>
 							</tr>
 						</tbody>

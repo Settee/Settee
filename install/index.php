@@ -68,6 +68,14 @@ DEFAULT CHARACTER SET = utf8;
 CREATE INDEX `fk_".$prefixdb."comments_".$prefixdb."user1_idx` ON `".$prefixdb."comments` (`user_id` ASC);
 CREATE INDEX `fk_".$prefixdb."comments_".$prefixdb."post1_idx` ON `".$prefixdb."comments` (`post_id` ASC);
 
+CREATE TABLE `".$prefixdb."notification` (
+    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `dest_id` BIGINT(20) NOT NULL DEFAULT '0',
+    `origin_id` BIGINT(20) NOT NULL DEFAULT '0',
+    `post_id` BIGINT(20) NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`))
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `".$prefixdb."likes` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,

@@ -65,17 +65,17 @@ Class PostsController extends Controller{
 						}
 
 						if($v->author_id == $this->user->getActiveUser('id')){
-							$edit = '<li><a href="'.Dispatcher::base().'editpost/'.$v->id.'" title="Edit this post"><i class="fa fa-pencil"></i><span>Edit</span></a></li>';
+							$edit = '<li><a href="'.Dispatcher::base().'editpost/'.$v->id.'" title="'.$this->lang->i18n('site_edit').'"><i class="fa fa-pencil"></i><span>'.$this->lang->i18n('site_edit').'</span></a></li>';
 						}
 
 						if(($v->author_id == $this->user->getActiveUser('id')) || $this->user->getActiveUser('type') == 'root'){
-							$delete = '<li><a href="'.Dispatcher::base().'deletepost/'.$v->id.'" title="Delete this post" class="delete '.$v->id.'_'.$me->name.'_'.$cat->id.'"><i class="fa fa-trash"></i><span>Delete</span></a></li>';
+							$delete = '<li><a href="'.Dispatcher::base().'deletepost/'.$v->id.'" title="'.$this->lang->i18n('site_delete').'" class="delete '.$v->id.'_'.$me->name.'_'.$cat->id.'"><i class="fa fa-trash"></i><span>'.$this->lang->i18n('site_delete').'</span></a></li>';
 						}
 
-						$html .= '<div class="postfooter"><ul>'.$edit.$delete.'<li class="like"><a'.$like.' href="'.Dispatcher::base().$like_or_dislike.'/'.$v->id.'" title="Like or dislike this post"><i class="fa fa-heart"></i><span>'.$nb_like.'</span></a></li><li class="buttonComments" id="'.$v->id.'"><a href="" title="Read and write comments on this post"><i class="fa fa-comment"></i><span>'.$nb_comments.'</span></a></li><li><a href="'.Dispatcher::base().'share/'.$v->id.'" title="Share this post"><i class="fa fa-share"></i><span>Share</span></a></li></ul><div class="clearfloat"></div></div></div>';
+						$html .= '<div class="postfooter"><ul>'.$edit.$delete.'<li class="like"><a'.$like.' href="'.Dispatcher::base().$like_or_dislike.'/'.$v->id.'" title="Like or dislike this post"><i class="fa fa-heart"></i><span>'.$nb_like.'</span></a></li><li class="buttonComments" id="'.$v->id.'"><a href="" title="Read and write comments on this post"><i class="fa fa-comment"></i><span>'.$nb_comments.'</span></a></li><li><a href="'.Dispatcher::base().'share/'.$v->id.'" title="'.$this->lang->i18n('site_link').'"><i class="fa fa-share"></i><span>'.$this->lang->i18n('site_link').'</span></a></li></ul><div class="clearfloat"></div></div></div>';
 						$html .= '<div class="comments"><ul>'.$this->getComments($v->id,'list').'</ul>';
 						if($this->auth->isLoged()){
-							$html .= '<div class="addcomment"><form method="post" action="'.Dispatcher::base().'addcomment/'.$v->id.'"><textarea name="comment" name="comment" placeholder="Add a comment"></textarea><input type="submit" value="Send" /></form></div>';
+							$html .= '<div class="addcomment"><form method="post" action="'.Dispatcher::base().'addcomment/'.$v->id.'"><textarea name="comment" name="comment" placeholder="Add a comment"></textarea><input type="submit" value="'.$this->lang->i18n('site_send_button').'" /></form></div>';
 						}
 						$html .= '</div></article>';
 

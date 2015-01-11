@@ -55,28 +55,32 @@ Class French{
 
 	/* POST */
 	public $site_categories = "Catégories";
-	public $site_close_categories = 'Fermer la catégorie';
+	public $site_close_categories = "Fermer la catégorie";
 	public $site_add = "Ajouter un article";
 	public $site_reload = "Recharger les posts";
 	public $site_edit = "Editer l'article";
-	public $site_placeholder_content = 'Écrire, télécharger, partager...';
-	public $site_add_image = 'Ajouter une image';
+	public $site_delete = "Supprimer l'article";
+	public $site_link = "Permalien";
+	public $site_placeholder_content = "Écrire, télécharger, partager...";
+	public $site_add_image = "Ajouter une image";
 	public $site_post = "Article";
 
 	/* COMMENTS */
-	public $site_close_comments = 'Fermer les commentaires';
+	public $site_close_comments = "Fermer les commentaires";
 
 	/* LOGIN */
 	public $site_username = "Nom d'utilisateur";
-	public $site_signin = 'Se connecter';
+	public $site_signin = "Se connecter";
 	public $site_signup = "S'enregistrer";
-	public $site_already_member = 'Déjà membre';
-	public $site_not_member = 'Pas membre';
+	public $site_already_member = "Déjà membre";
+	public $site_not_member = "Pas membre";
 
 	/* PRIVATE */
 	public $site_private_area = "Espace privé";
 	public $site_private_message = "Désolé, vous devez être identifié pour accéder à ce site.";
 
 	/* NOTIFICATION */
-	public $site_notification_title = 'Centre de Notification';
+	public $site_notification_title = "Centre de Notification";
+	public $site_new_comment = "Vous avez un nouveau commentaire sur l'article";
+	public $site_del_notification = "Supprimer la notification";
 }
