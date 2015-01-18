@@ -12,6 +12,7 @@
 		}
 	}
 
+	// list language file
 	public function getListLanguage(){
 		$tab = array();
 		foreach(glob('static/language/*') as $k => $v){
@@ -20,6 +21,7 @@
 		return $tab;
 	}
 
+	// use variable for translation
 	public function i18n($var){
 		if(!property_exists($this->lang, $var)){
 			$lang_bck = new English;

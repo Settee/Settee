@@ -7,10 +7,12 @@
 		$this->database = Controller::loading_controller('Database');
 	}
 
+	// Check if user id logged
 	public function isLoged(){
 		return (isset($_SESSION['__settee_key__']) && !empty($_SESSION['__settee_key__']));
 	}
 
+	// Login function
 	public function login(){
 		if(isset($_POST['login']) && isset($_POST['passwd'])){
 			$result = current($this->database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_users WHERE name="'.$this->database->secure($_POST["login"]).'" AND type IS NOT NULL','query'));
@@ -30,6 +32,7 @@
 		return 'login';
 	}
 
+	// Register function
 	public function register(){
 		if(isset($_POST['login']) && isset($_POST['passwd']) && isset($_POST['email'])){
 			if(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){

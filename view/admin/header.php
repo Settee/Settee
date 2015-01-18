@@ -34,15 +34,5 @@
                         <?php echo $this->general->getSideNavBar(); ?>
                     </ul>
                 </nav>
-                <div id="cat" role="select">
-                    <h2><?php echo $this->lang->i18n('site_categories'); ?></h2>
-                    <ul>
-                        <?php foreach($this->posts->getCategories() as $k => $v): ?>
-                            <li>
-                                <a href="<?php echo Dispatcher::base(); ?>category/<?php echo $v->url; ?>"><?php echo $v->name; ?></a>
-                            </li>
-                        <?php endforeach; ?>             
-                    </ul>
-                </div>
             </aside>
         </div>

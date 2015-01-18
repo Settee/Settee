@@ -225,35 +225,8 @@ Class PostsController extends Controller{
 		}
 	}
 
-	public function getCategories($opt,$type,$active=null){
-		if(is_numeric($opt)){
-			$end = current($database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_categorie WHERE url="'.$database->secure($opt).'"','query'));
-		}elseif($type == 'list' || $type == 'post'){
-			if($type == "post"){
-				$end = '<select name="categories">';
-			}elseif($type == "list"){
-				$end = '<ul>';
-			}
-
-			foreach ($this->database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_categorie','query') as $k => $v) {
-				if($type == "post"){
-					if($active == $v->id){
-						$end .= '<option value="'.$v->id.'" selected="selected">'.$v->name.'</option>';
-					}else{
-						$end .= '<option value="'.$v->id.'">'.$v->name.'</option>';
-					}
-				}elseif($type == "list"){
-					$end .= '<li><a href="'.Dispatcher::base().'category/'.$v->url.'">'.$v->name.'</a></li>';
-				}
-			}
-			
-			if($type == "post"){
-				$end .= '</select>';
-			}elseif($type == "list"){
-				$end .= '<ul>';
-			}
-		}
-		return $end;
+	public function getCategories(){
+		return $this->database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_categorie','query');
 	}
 
 	public function convertUrl($data){

@@ -77,11 +77,24 @@ Class English{
 
 	/* PRIVATE */
 	public $site_private_area = "Private area";
+	public $site_privacy = "Privacy";
+	public $site_access_level = "Manage your access level";
+	public $site_level_public = "Public access";
+	public $site_level_publicregistration = "Public access with registration";
+	public $site_level_privateadminvalitation = "Private with admin validation";
+	public $site_level_privatememberinvite = "Private with a member invitation";
+	public $site_level_privateadmininvite = "Private with an admin invitation";
 	public $site_private_message = "Sorry, you must be logged to access this site.";
 
 	/* NOTIFICATION */
 	public $site_notification_title = "Notification center";
 	public $site_new_comment = "You have a new comment in post";
 	public $site_del_notification = "Delete Notification";
+
+	/* ADMIN */
+	public $site_invite_member = "Invite members";
+	public $site_members = "Members";
+	public $site_back_member_area = "Back to the members area";
+	public $admin_welcome = "Welcome in your administration area, from here you can manage your Sette’s instance";
 
 }

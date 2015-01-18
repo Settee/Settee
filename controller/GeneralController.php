@@ -8,6 +8,7 @@
 		$this->auth = Controller::loading_controller('AuthController');
 	}
 
+	// Transform DATTIME in good format
 	public function getFullDate($d){
 		$list = array('',$this->lang->i18n('site_month_01'),$this->lang->i18n('site_month_02'),$this->lang->i18n('site_month_03'),$this->lang->i18n('site_month_04'),$this->lang->i18n('site_month_05'),$this->lang->i18n('site_month_06'),$this->lang->i18n('site_month_07'),$this->lang->i18n('site_month_08'),$this->lang->i18n('site_month_09'),$this->lang->i18n('site_month_10'),$this->lang->i18n('site_month_11'),$this->lang->i18n('site_month_12'));
 
@@ -19,6 +20,7 @@
 		return $day[2].' '.$list[$month].' '.$day[0].' '.$hour[0].'h '.$hour[1]; 
 	}
 
+	// generate content of aside
 	public function getSideNavBar(){
 		$in_home = (Dispatcher::whaturl() == 'index')? 'class="actived"' : '';
 		$in_login = (Dispatcher::whaturl() == 'login')? 'class="actived"' : '';
@@ -30,11 +32,11 @@
 		
 		if(strpos(Dispatcher::whaturl(), 'admin' ) !== false && strpos(Dispatcher::whaturl(), 'category') === false){
 			$html = '
-			<li><a href="'.Dispatcher::base().'" title="Home"><i class="fa fa-arrow-left"></i><span>Back to the members area</span></a></li>
-			<li><a href="" title="Categories"><i class="fa fa-tags"></i><span>Categories</span></a></li>
-			<li><a href="" title="Members"><i class="fa fa-users"></i><span>Members</span></a></li>
-			<li><a href="" title="Invite members"><i class="fa fa-child"></i><span>Invite members</span></a></li>
-			<li><a href="" title="Settings"><i class="fa fa-cog"></i><span>Settings</span></a></li>
+			<li><a href="'.Dispatcher::base().'" title="'.$this->lang->i18n('site_back_member_area').'"><i class="fa fa-arrow-left"></i><span>'.$this->lang->i18n('site_back_member_area').'</span></a></li>
+			<li><a href="'.Dispatcher::base().'admin/categories" title="'.$this->lang->i18n('site_categories').'"><i class="fa fa-tags"></i><span>'.$this->lang->i18n('site_categories').'</span></a></li>
+			<li><a href="'.Dispatcher::base().'admin/users" title="'.$this->lang->i18n('site_members').'"><i class="fa fa-users"></i><span>'.$this->lang->i18n('site_members').'</span></a></li>
+			<li><a href="'.Dispatcher::base().'admin/invite" title="'.$this->lang->i18n('site_invite_member').'"><i class="fa fa-child"></i><span>'.$this->lang->i18n('site_invite_member').'</span></a></li>
+			<li><a href="'.Dispatcher::base().'admin/settings" title="'.$this->lang->i18n('site_settings').'"><i class="fa fa-cog"></i><span>'.$this->lang->i18n('site_settings').'</span></a></li>
 			';
 		}else{
 			$html = '<li><a href="'.Dispatcher::base().'" title="'.$this->lang->i18n('site_home').'" '.$in_home.'><i class="fa fa-home"></i><span>'.$this->lang->i18n('site_home').'</span></a></li>';

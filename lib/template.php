@@ -53,24 +53,5 @@
 		return $end;
 	}
 
-	function comment(){
-		if($this->auth->isLoged()){
-			$html = '<li class="addcomment">
-                                <form method="post" action="'.Dispatcher::base().'addcomment/">
-                                    <div class="textarea">
-                                        <textarea name="comment" required="required" placeholder="Add your comment…"></textarea>
-                                    </div>
-                                    <div class="buttons">
-                                        <input value="Post comment" type="submit">
-                                        <input value="Cancel" type="reset">
-                                    </div>
-                                    <div class="clearfloat"></div>
-                                </form>
-                            </li>';
-
-		}
-		return $html;
-	}
-
 }
 ?>

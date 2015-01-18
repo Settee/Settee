@@ -77,10 +77,24 @@ Class French{
 
 	/* PRIVATE */
 	public $site_private_area = "Espace privé";
+	public $site_privacy = "Confidentialité";
+	public $site_access_level = "Gérez votre niveau d'accès";
+	public $site_level_public = "Accès public";
+	public $site_level_publicregistration = "Accès public sur inscription";
+	public $site_level_privateadminvalitation = "Privé avec validation de l'admi";
+	public $site_level_privatememberinvite = "Privé sur invitation d'un membre";
+	public $site_level_privateadmininvite = "Privé sur invitation d'un admin";
 	public $site_private_message = "Désolé, vous devez être identifié pour accéder à ce site.";
 
 	/* NOTIFICATION */
 	public $site_notification_title = "Centre de Notification";
 	public $site_new_comment = "Vous avez un nouveau commentaire sur l'article";
 	public $site_del_notification = "Supprimer la notification";
+
+	/* ADMIN */
+	public $site_invite_member = "Inviter des utilisateurs";
+	public $site_members = "Utilisateurs";
+	public $site_back_member_area = "Retourner au site";
+	public $admin_welcome = "Bienvenu dans votre espace administratif, d'ici vous pouvez gérer votre instance de Settee";
+
 }

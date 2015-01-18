@@ -28,6 +28,12 @@
 		}
 	}
 
+	function invite_email(){
+		if($this->auth->isLoged() && (Controller::privacy() == 3 || $this->user->getActiveUser('type') == 'root')){
+			echo 'ok';
+		}
+	}
+
 	function confirmation_email(){
 		$param = explode('/', Dispatcher::whaturl());
 		if(count($param) == 3){
@@ -311,9 +317,31 @@
 
 	function admin(){
 		if($this->auth->isLoged() && $this->user->getActiveUser('type') == 'root'){
-			Template::theme('index');
-		}else{
-			echo 'private';
+			$url = explode('/', Dispatcher::whaturl());
+			if(isset($url[1])){
+				switch ($url[1]) {
+					case 'settings':
+						if(isset($_POST) && !empty($_POST)){
+							$this->admin->update_name($_POST['names']);
+							$this->admin->update_privacy($_POST['accesslevel']);
+							$this->admin->update_save();
+							header('Location: '.Dispatcher::base().Dispatcher::whaturl());
+						}
+						Template::theme('settings','admin');
+						break;
+					case 'users':
+						Template::theme('users','admin');
+						break;
+					case 'categories':
+						Template::theme('categories','admin');
+						break;
+					default:
+						Template::theme('index','admin');
+						break;
+				}
+			}else{
+				Template::theme('index','admin');
+			}
 		}
 	}
 }

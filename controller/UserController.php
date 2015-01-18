@@ -42,4 +42,8 @@
 		}
 	}
 
+	public function getAllUsers(){
+		return $this->database->sqlquery('SELECT surname, name FROM '.CONFIG::PREFIX.'_users','query');
+	}
+
 }

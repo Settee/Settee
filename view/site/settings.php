@@ -57,7 +57,7 @@
                                 <div class="label">: <?php echo $this->lang->i18n('site_send_invite'); ?></div>
                             </div>
 
-                            <form>
+                            <form method="post" action="<?php echo Dispatcher::base(); ?>invite_user">
                                 <input type="email" id="invite" placeholder="friend@domain.tld" />
                                 <input type="submit" id="submit" value="<?php echo $this->lang->i18n('site_send_button'); ?>" />
                             </form>
