@@ -1,9 +1,10 @@
 <?php Class AuthController extends Controller{
 
-	private $database,$notif;
+	private $database,$notif,$email;
 
 	function __construct(){
 		$this->notif = Controller::loading_controller('NotificationController');
+		$this->user = Controller::loading_controller('UserController');
 		$this->database = Controller::loading_controller('Database');
 	}
 
@@ -46,13 +47,13 @@
 						if(Controller::privacy() == '0' || Controller::privacy() == '1'){
 							$this->database->sqlquery('INSERT INTO '.CONFIG::PREFIX.'_users (name,surname,password,email,type) VALUES("'.$this->database->secure($nick).'","'.$this->database->secure($nick).'","'.$this->database->secure($pass).'","'.$this->database->secure($email).'","")');
 							$result = current($this->database->sqlquery('SELECT * FROM '.CONFIG::PREFIX.'_users WHERE name="'.$this->database->secure($nick).'"','query'));
-							mail($email,CONFIG::WEBSITE.' Registration confirmation', 'Hey, '.$nick.' follow this link to confirm your email. url: '.$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9).'confirmation_email/'.$email.'/'.sha1('confirmation_email-'.$email),'From: contact@netart.fr.nf' . "\r\n" . 'Reply-To: contact@netart.fr.nf' . "\r\n");
+							mail($email,CONFIG::WEBSITE.' Registration confirmation', 'Hey, '.$nick.' follow this link to confirm your email. url: http://'.$_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9).'confirmation_email/'.$email.'/'.sha1('confirmation_email-'.$email),'From: contact@netart.fr.nf' . "\r\n" . 'Reply-To: contact@netart.fr.nf' . "\r\n");
 							header('Location: '.Dispatcher::base());
 						}elseif(Controller::privacy() == '2'){
 							$root = $this->database->sqlquery('SELECT email FROM '.CONFIG::PREFIX.'_users WHERE type="root"','query');
 							$this->database->sqlquery('INSERT INTO '.CONFIG::PREFIX.'_users (name,surname,password,email) VALUES("'.$this->database->secure($nick).'","'.$this->database->secure($nick).'","'.$this->database->secure($pass).'","'.$this->database->secure($email).'")');
 							foreach ($root as $k => $v) {
-								mail($v->email,CONFIG::WEBSITE.' Registration ask', 'The user '.$nick.' would like going into your settee app','From: contact@netart.fr.nf' . "\r\n" . 'Reply-To: contact@netart.fr.nf' . "\r\n");
+								mail($v->email,CONFIG::WEBSITE.' Registration ask', 'The user '.$nick.' would like going into your settee app','From: '.$this->user->getActiveUser('email').' ' . "\r\n" . 'Reply-To: '.$this->user->getActiveUser('email').' ' . "\r\n");
 							}
 							$this->notif->setNotification('Your account is awaiting of an administrator validation','info');
 						}

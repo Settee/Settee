@@ -30,7 +30,16 @@
 
 	function invite_email(){
 		if($this->auth->isLoged() && (Controller::privacy() == 3 || $this->user->getActiveUser('type') == 'root')){
-			echo 'ok';
+			if(isset($_POST['email']) && !empty($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+				if(mail($_POST['email'], $this->user->getActiveUser('surname').' Vous invite à vous inscrire sur settee', 'Votre ami vous propose de venir sur settee: http://'.$_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9))){
+					$this->notif->setNotification('Email send','info');
+				}else{
+					$this->notif->setNotification('Error email','error');
+				}
+			}else{
+				$this->notif->setNotification('Not an email','error');
+			}
+			header('Location: '.Dispatcher::base());
 		}
 	}
 
@@ -333,7 +342,25 @@
 						Template::theme('users','admin');
 						break;
 					case 'categories':
+						if(isset($_POST) && !empty($_POST)){
+							$this->admin->add_category($_POST['category']);
+							header('Location: '.Dispatcher::base().Dispatcher::whaturl());
+						}
 						Template::theme('categories','admin');
+						break;
+					case 'invite':
+						if(isset($_POST['email']) && !empty($_POST['email'])){
+							if(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+								if(mail($_POST['email'], $this->user->getActiveUser('surname').' Vous invite à vous inscrire sur settee', 'Votre ami vous propose de venir sur settee: http://'.$_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9))){
+									$this->notif->setNotification('Email send','info');
+								}else{
+									$this->notif->setNotification('Error email','error');
+								}
+							}else{
+								$this->notif->setNotification('Not an email','error');
+							}
+						}
+						Template::theme('invite','admin');
 						break;
 					default:
 						Template::theme('index','admin');

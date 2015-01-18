@@ -11,7 +11,8 @@
 
                 <div class="feed">
                     <?php 
-                        echo $this->notif->getNotification().$this->posts->getIndexPosts();
+                        echo $this->notif->getNotification();
+                        echo $this->posts->getIndexPosts();
                     ?>
                 </div>
             </div>

@@ -32,7 +32,7 @@ Class French{
 	/* SETTINGS */
 	public $site_profile = "Profil";
 	public $site_profile_informations = "Vos informations de profil";
-	public $site_upload = "Télécharger";
+	public $site_upload = "Charger";
 	public $site_name = "Noms";
 	public $site_placeholder_name = "Votre nom public";
 	public $site_language = "Langues";
