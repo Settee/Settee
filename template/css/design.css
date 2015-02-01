@@ -441,16 +441,13 @@ section {
     border-bottom: 0.063em solid #d8d8d8;
     border-radius: 0;
 }
-.comments .addcomment input[type="submit"] {
-    padding: 0.75em 2em;
-    color: #fff;
-    background: #eaa205;
-    border: none;
-    border-radius: 0;
+.comments .addcomment button{
+    margin: 0.3em;
+    padding: 0.3em 0.75em;
 }
-.comments .addcomment input[type="submit"]:hover {
-    cursor: pointer;
-    opacity: 0.95;
+.comments .addcomment button .fa {
+    margin-right: 0.5em;
+    color: #eaa205;
 }
 /* comments list */
 

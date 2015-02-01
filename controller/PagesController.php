@@ -37,7 +37,9 @@
 									'.$select.'
 								</td>
 								<td class="send">
-									<input type="submit" value="'.$this->lang->i18n('site_send_button').'">
+                                    <div>
+									   <button type="submit" id="sendbuutton"><i class="fa fa-send"></i>'.$this->lang->i18n('site_send_button').'</button>
+                                    </div>
 								</td>
 							</tr>
 						</tbody>
