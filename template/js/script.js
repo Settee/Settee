@@ -44,7 +44,7 @@ for (var i = $('.comments').length - 1; i >= 0; i--) {
 };
 $('.buttonComments').click(function(e){
     e.preventDefault();
-    var idPost = $('#' + this.id).parent().parent().parent().parent().children('.comments');
+    var idPost = $('#' + this.id).parent().parent().parent().children('.comments');
     if(comments[$('.comments').index(idPost)] == 'closed'){
         idPost.slideDown();
         comments[$('.comments').index(idPost)] = 'open';
