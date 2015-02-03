@@ -467,13 +467,13 @@ section {
 .comments .commentright {
     display: table-cell;
     width: 100%;
-    margin-left: 1em;
     text-align: left;
     vertical-align: top;
     font-size: 0.9em;
 }
 .comments .commentinfos {
     margin-bottom: 0.25em;
+    margin-left: 1em;
 }
 .comments .commentinfos a {
     display: inline-block;
@@ -491,6 +491,7 @@ section {
 }
 .comments .commentcontent {
     padding: 0.755em;
+    margin-left: 1.1em;
     font-size: 0.95em;
     line-height: 1.25em;
     background: #e8e8e8;
