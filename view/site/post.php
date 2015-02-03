@@ -58,14 +58,14 @@ foreach($comments as $key => $value){
                             <?php endif; ?>
                                 <div class="postfooter"><ul>
                                     <?php if($data->author_id == $this->user->getActiveUser('id')): ?>
-                                        <li><a href="<?php echo Dispatcher::base(); ?>editpost/<?php echo $data->id; ?>" title="<?php echo $this->lang->i18n('site_edit'); ?>"><i class="fa fa-pencil"></i><span><?php echo $this->lang->i18n('site_edit'); ?></span></a></li>
+                                        <li><a href="<?php echo Dispatcher::base(); ?>editpost/<?php echo $data->id; ?>" title="<?php echo $this->lang->i18n('site_edit'); ?>"><i class="fa fa-pencil"></i></a></li>
                                     <?php endif; ?>
                                     <?php if(($data->author_id == $this->user->getActiveUser('id')) || $this->user->getActiveUser('type') == 'root'): ?>
-                                        <li><a href="<?php echo Dispatcher::base(); ?>deletepost/<?php echo $data->id; ?>" title="<?php echo $this->lang->i18n('site_delete'); ?>"><i class="fa fa-trash"></i><span><?php echo $this->lang->i18n('site_delete'); ?></span></a></li>
+                                        <li><a href="<?php echo Dispatcher::base(); ?>deletepost/<?php echo $data->id; ?>" title="<?php echo $this->lang->i18n('site_delete'); ?>"><i class="fa fa-trash"></i></a></li>
                                     <?php endif;?>
                                     <li class="like"><a href="<?php echo Dispatcher::base(); ?>like/<?php echo $data->id; ?>" title="Like this post"><i class="fa fa-heart"></i><span><?php echo $nb_like; ?></span></a></li>
                                     <li class="buttonComments" id="<?php echo $data->id; ?>"><a href="" title="Read and write comments on this post"><i class="fa fa-comment"></i><span><?php echo $nb_comments; ?></span></a></li>
-                                    <li><a href="<?php echo Dispatcher::base(); ?>share/<?php echo $data->id; ?>" title="<?php echo $this->lang->i18n('site_link'); ?>"><i class="fa fa-share"></i><span><?php echo $this->lang->i18n('site_link'); ?></span></a></li></ul>
+                                    <li><a href="<?php echo Dispatcher::base(); ?>share/<?php echo $data->id; ?>" title="<?php echo $this->lang->i18n('site_link'); ?>"><i class="fa fa-share"></i></a></li></ul>
                                 <div class="clearfloat"></div>
                                 </div>
                             </div>

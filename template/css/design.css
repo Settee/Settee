@@ -393,8 +393,8 @@ section {
     color: #fff;
     background: #eaa205;
 }
-.postfooter a .fa {
-    margin-right: 0.5em;
+.postfooter a span{
+    margin-left: 0.5em;
 }
 .postfooter a.actived {
     color: #eaa205;
