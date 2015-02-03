@@ -294,7 +294,7 @@ section {
 }
 /* Post head */
 
-.post .avatar {
+.post .posthead .avatar {
     position: absolute;
     width: 4em;
     margin-left: -5em;
@@ -414,10 +414,9 @@ section {
 /* Comments */
 
 .comments {
-    width: calc(95% - 7.5em);
-    margin-left: 7.5em;
+    width: calc(100% - 2em);
     margin-top: 1em;
-    padding-left: 5%;
+    padding-left: 1em;
     color: #6c6760;
 }
 /* Add a comment */
@@ -467,6 +466,8 @@ section {
 }
 .comments .commentright {
     display: table-cell;
+    width: 100%;
+    margin-left: 1em;
     text-align: left;
     vertical-align: top;
     font-size: 0.9em;
@@ -489,12 +490,14 @@ section {
     font-style: italic;
 }
 .comments .commentcontent {
-    padding: 0.5em;
+    padding: 0.755em;
     font-size: 0.95em;
-    line-height: 1.2em;
-    background: #fff;
-    border: 0.063em solid #d8d8d8;
-    box-shadow: 0px 1px 1px 0px #e9e9e9;
+    line-height: 1.25em;
+    background: #e8e8e8;
+    border-radius: 0.3em;
+
+/*    border: 0.063em solid #d8d8d8;
+    box-shadow: 0px 1px 1px 0px #e9e9e9; */
 }
 .comments .loadmore a {
     display: block;
@@ -821,7 +824,7 @@ section .upload input {
 /* MEDIAQUERIES */
 
 @media screen and (max-width: 55em) {
-    .post .avatar {
+    .post .posthead .avatar {
         position: relative;
         display: table-cell;
         width: 2em;
@@ -845,7 +848,7 @@ section .upload input {
         display: none;
     }
     .comments {
-        width: 95%;
+        /* width: 95%; */
         margin-left: inherit;
     }
     #newpost td.label span {
