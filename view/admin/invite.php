@@ -3,7 +3,7 @@
             <div class="content">
                     <?php echo $this->notif->getNotification(); ?>
                 <div id="pagehead">
-                    <h2><?php echo $this->lang->i18n('site_categories'); ?></h2>
+                    <h2><?php echo $this->lang->i18n('site_invite'); ?></h2>
                 </div>
                 <div class="pagecontent">
                     <div class="contentform">
@@ -13,7 +13,7 @@
                             </div>
 
                             <form method="post" action="<?php echo Dispatcher::base().Dispatcher::whaturl(); ?>">
-                                <input type="text" id="invite" placeholder="My category" name="email"/>
+                                <input type="text" id="invite" placeholder="user@domain.tld" name="email"/>
                                 <input type="submit" id="submit" value="<?php echo $this->lang->i18n('site_send_button'); ?>" />
                             </form>
                     </div>

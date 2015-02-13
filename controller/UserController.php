@@ -43,7 +43,7 @@
 	}
 
 	public function getAllUsers(){
-		return $this->database->sqlquery('SELECT surname, name FROM '.CONFIG::PREFIX.'_users','query');
+		return $this->database->sqlquery('SELECT id, surname, email, name, type FROM '.CONFIG::PREFIX.'_users','query');
 	}
 
 }

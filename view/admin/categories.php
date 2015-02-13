@@ -5,14 +5,27 @@
                     <h2><?php echo $this->lang->i18n('site_categories'); ?></h2>
                 </div>
                 <div class="pagecontent">
+                    <table>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Action</th>
+                    </tr>
                     <?php foreach($this->posts->getCategories() as $k => $v): ?>
-			<p><?php echo $v->name; ?></p>
+                        <tr>
+                            <td>
+                                    <?php echo $v->name; ?><br/>
+                            </td>
+                            <td>
+                                <a href="<?php echo Dispatcher::base(); ?>admin/editcategorie/<?php echo $v->id; ?>">Edit</a>
+                                <a href="<?php echo Dispatcher::base(); ?>admin/deletecategory/<?php echo $v->id; ?>">Delete</a>
+                            </td>
+                        </tr>
                     <?php endforeach; ?>
+                </table>
                     <div class="contentform">
                         <hr />
                         <div class="title">
-                                <h3><?php echo $this->lang->i18n('site_invite'); ?></h3>
-                                <div class="label">: <?php echo $this->lang->i18n('site_send_invite'); ?></div>
+                                <h3><?php echo $this->lang->i18n('site_categories'); ?></h3>
                             </div>
 
                             <form method="post" action="<?php echo Dispatcher::base(); ?>admin/categories">

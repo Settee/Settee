@@ -68,21 +68,21 @@ foreach($comments as $key => $value){
                                     <li><a href="<?php echo Dispatcher::base(); ?>share/<?php echo $data->id; ?>" title="<?php echo $this->lang->i18n('site_link'); ?>"><i class="fa fa-share"></i></a></li></ul>
                                 <div class="clearfloat"></div>
                                 </div>
+                                <div class="comments opened">
+                                    <ul>
+                                        <?php echo $this->posts->getComments($url[1],'list'); ?>
+                                    </ul>
+                                    <?php if($this->auth->isLoged()): ?>
+                                        <div class="addcomment">
+                                            <form method="post" action="<?php echo Dispatcher::base(); ?>addcomment/<?php echo $url[1]; ?>">
+                                                <textarea name="comment" name="comment" placeholder="Add a comment"></textarea>
+                                                <input type="submit" value="<?php echo $this->lang->i18n('site_send_button'); ?>" />
+                                            </form>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                     </article>
-                        <div class="comments opened">
-                        <ul>
-                            <?php echo $this->posts->getComments($url[1],'list'); ?>
-                        </ul>
-                        <?php if($this->auth->isLoged()): ?>
-                            <div class="addcomment">
-                                <form method="post" action="<?php echo Dispatcher::base(); ?>addcomment/<?php echo $url[1]; ?>">
-                                    <textarea name="comment" name="comment" placeholder="Add a comment"></textarea>
-                                    <input type="submit" value="<?php echo $this->lang->i18n('site_send_button'); ?>" />
-                                </form>
-                            </div>
-                        <?php endif; ?>
-                    </div>
                 </div>
             </div>
         </section>

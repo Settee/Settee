@@ -81,7 +81,7 @@ Class French{
 	public $site_access_level = "Gérez votre niveau d'accès";
 	public $site_level_public = "Accès public";
 	public $site_level_publicregistration = "Accès public sur inscription";
-	public $site_level_privateadminvalitation = "Privé avec validation de l'admi";
+	public $site_level_privateadminvalitation = "Privé avec validation de l'administrateur";
 	public $site_level_privatememberinvite = "Privé sur invitation d'un membre";
 	public $site_level_privateadmininvite = "Privé sur invitation d'un admin";
 	public $site_private_message = "Désolé, vous devez être identifié pour accéder à ce site.";

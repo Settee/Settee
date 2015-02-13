@@ -42,6 +42,7 @@
 			'Ãº'=>'u', 'Ã»'=>'u', 'Ã½'=>'y', 'Ã½'=>'y', 'Ã¾'=>'b', 'Ã¿'=>'y', 'Æ’'=>'f',
 		);
 		$url = strtolower(strtr($name, $alphabet));
+		$url = str_replace(' ', '-', $url);
 		$this->database->sqlquery('INSERT INTO '.CONFIG::PREFIX.'_categorie (name,url) VALUES ("'.$this->database->secure($name).'","'.$this->database->secure($url).'")');
 	}
 

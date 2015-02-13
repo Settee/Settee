@@ -362,12 +362,64 @@
 						}
 						Template::theme('invite','admin');
 						break;
+					case 'setadmin':
+						if(isset($url[2]) && !empty($url[2]) && is_numeric($url[2])){
+							$etat = ($this->user->getUserById($url[2])->type == 'root')? 'user' : 'root';
+							$this->database->sqlquery('UPDATE '.CONFIG::PREFIX.'_users SET type = "'.$etat.'" WHERE id="'.$url[2].'"');
+							header('Location: '.Dispatcher::base().'admin/users');
+						}else{
+							Template::theme('404');
+						}
+						break;
+					case 'deletecategory':
+						if(isset($url[2]) && !empty($url[2]) && is_numeric($url[2])){
+							$this->database->sqlquery('DELETE FROM '.CONFIG::PREFIX.'_categorie WHERE id="'.$url[2].'"');
+							header('Location: '.Dispatcher::base().'admin/categories');
+						}else{
+							Template::theme('404');
+						}
+						break;
+					case 'editcategorie':
+						if(isset($url[2]) && !empty($url[2]) && is_numeric($url[2])){
+							if(isset($_POST['name']) && isset($_POST['slug']) && !empty($_POST['name']) && !empty($_POST['slug'])){
+								$this->database->sqlquery('UPDATE '.CONFIG::PREFIX.'_categorie SET name = "'.$_POST['name'].'", url = "'.$_POST['slug'].'" WHERE id="'.$url[2].'"');
+								header('Location: '.Dispatcher::base().'admin/categories');
+							}
+							Template::theme('edit','admin');
+						}else{
+							Template::theme('404');
+						}
+						break;
 					default:
 						Template::theme('index','admin');
 						break;
 				}
 			}else{
 				Template::theme('index','admin');
+			}
+		}else{
+			Template::theme('404');
+		}
+	}
+
+	function deleteuser(){
+		if($this->auth->isLoged()){
+			$url = explode('/', Dispatcher::whaturl());
+			if(isset($url[1]) && !empty($url[1]) && ($this->user->getActiveUser('id') == $url[1] ||$this->user->getActiveUser('type') == 'root')){
+				var_dump($this->user->getActiveUser('id'));
+				$this->database->sqlquery('DELETE FROM '.CONFIG::PREFIX.'_posts WHERE author_id="'.$url[1].'"');
+				$this->database->sqlquery('DELETE FROM '.CONFIG::PREFIX.'_likes WHERE user_id="'.$url[1].'"');
+				$this->database->sqlquery('DELETE FROM '.CONFIG::PREFIX.'_comments WHERE user_id="'.$url[1].'"');
+				$this->database->sqlquery('DELETE FROM '.CONFIG::PREFIX.'_notification WHERE dest_id="'.$url[1].'"');
+				$this->database->sqlquery('DELETE FROM '.CONFIG::PREFIX.'_users WHERE id="'.$url[1].'"');
+
+				if($this->user->getActiveUser('type') != 'root'){
+					$this->logout();
+				}else{
+					header('Location: '.Dispatcher::base().'admin/users');
+				}
+			}else{
+				Template::theme('404');
 			}
 		}
 	}

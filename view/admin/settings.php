@@ -40,11 +40,11 @@
                                         break;
                                 }
                                 ?>
-                                <p><input type="radio" name="accesslevel" id="public" value="public" required="required"<?php echo $public; ?>><?php echo $this->lang->i18n('site_level_public'); ?></p>
-                                <p><input type="radio" name="accesslevel" id="publicregistration" value="publicregistration" required="required"<?php echo $publicregistration; ?>><?php echo $this->lang->i18n('site_level_publicregistration'); ?></p>
-                                <p><input type="radio" name="accesslevel" id="privateadminvalitation" value="privateadminvalitation" required="required"<?php echo $privateadminvalitation; ?>><?php echo $this->lang->i18n('site_level_privateadminvalitation'); ?></p>
-                                <p><input type="radio" name="accesslevel" id="privatememberinvite" value="privatememberinvite" required="required"<?php echo $privatememberinvite; ?>><?php echo $this->lang->i18n('site_level_privatememberinvite'); ?></p>
-                                <p><input type="radio" name="accesslevel" id="privateadmininvite" value="privateadmininvite" required="required"<?php echo $privateadmininvite; ?>><?php echo $this->lang->i18n('site_level_privateadmininvite'); ?></p>
+                                <input type="radio" name="accesslevel" id="public" value="public" required="required"<?php echo $public; ?>><?php echo $this->lang->i18n('site_level_public'); ?><br/>
+                                <input type="radio" name="accesslevel" id="publicregistration" value="publicregistration" required="required"<?php echo $publicregistration; ?>><?php echo $this->lang->i18n('site_level_publicregistration'); ?><br/>
+                                <input type="radio" name="accesslevel" id="privateadminvalitation" value="privateadminvalitation" required="required"<?php echo $privateadminvalitation; ?>><?php echo $this->lang->i18n('site_level_privateadminvalitation'); ?><br/>
+                                <input type="radio" name="accesslevel" id="privatememberinvite" value="privatememberinvite" required="required"<?php echo $privatememberinvite; ?>><?php echo $this->lang->i18n('site_level_privatememberinvite'); ?><br/>
+                                <input type="radio" name="accesslevel" id="privateadmininvite" value="privateadmininvite" required="required"<?php echo $privateadmininvite; ?>><?php echo $this->lang->i18n('site_level_privateadmininvite'); ?><br/>
                             <input type="submit" id="submit" value="<?php echo $this->lang->i18n('site_save'); ?>" />
                         </form>
                     </div>
